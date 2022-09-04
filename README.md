@@ -24,7 +24,7 @@
 ## Local Deployment
 (If deploy on linux, see change at the bottom )
 1. Get Project 
-  - ```git clone https://github.com/dynamit8/Arkarus.git```
+  - ```https://github.com/SirisakUnknowss/LotteryMatching2022.git```
   - ``` cd Arkarus ```
 2. See [Setup container ip](#setup-container-ip)
   
