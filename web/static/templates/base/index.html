@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load custom_tags %}
+
+{% block head_css_site %}
+    {{ block.super }}
+    <link href="{{ STATIC_URL }}css/statusPage.css" rel="stylesheet">
+{% endblock head_css_site %}
+
+{% block content %}
+<section id="banner">
+    <div class="wrapper text-white text-center">
+    </div>
+</section>
+
+{% include 'base/trailer.html' %}
+{% include 'base/features.html' %}
+{% include 'base/tokenAllocation.html' %}
+{% include 'base/character.html' %}
+{% include 'base/roadmap.html' %}
+{% include 'base/team.html' %}
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="https://scripts.sirv.com/sirvjs/v3/sirv.js" type="application/json"></script>
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}slick/slick.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ STATIC_URL }}js/character_select.js"></script>
+    <script src="{{ STATIC_URL }}js/landing.js"></script>
+    <script src="{{ STATIC_URL }}js/copyToClipboard.js"></script>
+{% endblock %}
