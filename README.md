@@ -3,6 +3,7 @@
  
 ## Table of Centents
 - [Prerequisites](#prerequisites)
+- [Local Deployment](#local-deployment)
 
 ## Prerequisites
 1. Install
@@ -17,3 +18,36 @@
     https://www.postgresql.org/download/windows/
 - gcloud CLI
   https://cloud.google.com/sdk/docs/install
+
+---
+
+## Local Deployment
+(If deploy on linux, see change at the bottom )
+1. Get Project 
+  - ```git clone https://github.com/dynamit8/Arkarus.git```
+  - ``` cd Arkarus ```
+2. See [Setup container ip](#setup-container-ip)
+  
+3. Prepare web service to chosen \<IP\>
+  - ``` docker-compose up -d ```
+  - Stop web service
+    ``` docker-compose stop ```
+  
+4. See [Setup Postgres](#setup-postgres)
+
+5. Start web service
+  ``` docker-compose up -d ```
+
+6. Run Migrations
+  - ``` docker-compose exec web sh -c "python manage.py makemigrations --noinput" ```
+  - ``` docker-compose exec web sh -c "python manage.py migrate --noinput" ```
+7. Create superuser
+  - ``` docker-compose exec web sh -c "python manage.py createsuperuser --noinput" ```
+8. go to http://localhost:8000
+
+> PS. admin page: http://localhost:8000/admin  
+  user: admin  
+  password: Ark!R6u1S9  
+  (From .dev file) 
+
+---
