@@ -17,9 +17,12 @@ from django.contrib import admin
 from django.urls import path
 # Project
 from base import views as baseViews
+from account import views as accountViews
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', accountViews.homepage, name='homepage'),
+    path('signin', accountViews.signin, name='signinpage'),
 ]
 urlpatterns.append(path('', baseViews.landing, name='landing'))
 

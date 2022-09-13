@@ -46,8 +46,9 @@ INSTALLED_APPS = [
     'import_export',
     'rest_framework.authtoken',
     # Project
-    # 'base.apps.BaseConfig',
-    # 'account.apps.AccountConfig',
+    'base.apps.BaseConfig',
+    'account.apps.AccountConfig',
+    'shop.apps.ShopConfig',
 ]
 
 MIDDLEWARE = [
