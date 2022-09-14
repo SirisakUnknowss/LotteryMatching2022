@@ -23,6 +23,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', accountViews.homepage, name='homepage'),
     path('signin', accountViews.signin, name='signinpage'),
+    path('shop', accountViews.shoppage, name='shoppage'),
+    path('user', accountViews.userpage, name='userpage'),
+    path('logout', accountViews.logoutpage, name='logoutpage'),
+    
 ]
 urlpatterns.append(path('', baseViews.landing, name='landing'))
 

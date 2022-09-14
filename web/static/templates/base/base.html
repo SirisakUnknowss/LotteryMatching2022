@@ -4,151 +4,51 @@
 <head>
     <meta charset="utf-8">
     <title>{% block title %}Lottery Matching{% endblock title %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="description" content="Unleash the spirit of steel within you!">
-    <meta name="author" content="LotteryMatching">
-    <meta name="keywords" content="">
-    <meta property="og:title" content="Lottery Matching">
-    <meta property="og:type" content="website">
-
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ STATIC_URL }}images/logo/token_aks.ico">
-    <link rel="apple-touch-icon" href="{{ STATIC_URL }}images/logo/token_aks.ico">
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="{{ STATIC_URL }}images/logo/logo.png" rel="icon">
+    <link href="{{ STATIC_URL }}vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ STATIC_URL }}vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ STATIC_URL }}css/ruang-admin.min.css" rel="stylesheet">
 
     {% block head_css %}
     {% block head_css_site %}
 
-    <!-- Bootstrap -->
-    <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet" />
-    <link href="{{ STATIC_URL }}css/tiny-slider.css" rel="stylesheet" />
-    <link href="{{ STATIC_URL }}css/tobii.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet"> 
-
-    <!-- Main css -->
-    <link href="{{ STATIC_URL }}css/style-dark.css" rel="stylesheet" type="text/css" id="theme-opt" />
-    <link href="{{ STATIC_URL }}css/colors/default.css" rel="stylesheet" id="color-opt">
-
-    <!-- CSS Template -->
-    <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet">
-    <link href="{{ STATIC_URL }}css/custom.css" rel="stylesheet">
-    <link href="{{ STATIC_URL }}css/frame_youtube.css" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}slick/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}slick/slick-theme.css"/>
-
-    <!-- Font -->
-    <link href="http://fonts.cdnfonts.com/css/roboto-condensed" rel="stylesheet">
-    
-    <style>
-        .banner-image {
-            background-image:  url('/static/images/bg/bg_landing.png');
-            background-size: cover;
-        }
-    </style>
-    {% comment %} <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" type="text/css" id="theme-opt" /> {% endcomment %}
     {% endblock head_css_site %}
     {% block head_css_section %}{% endblock head_css_section %}
     {% block head_css_page %}{% endblock head_css_page %}
     {% endblock head_css %}
-
-    <!-- JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3DW810JD50"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-3DW810JD50');
-    </script>
 </head>
-<body>
-    {% block main %}
-        <div id="loading" class="preloader">
-            <div class="spinner-border text-white" role="status">
-                <span class="sr-only">Loading...</span>
+<body id="page-top">
+    <div id="wrapper">
+        {% block main %}
+            {% block sidebar %}{% include 'base/sidebar.html' %}
+            {% endblock %}
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    {% block topbar %}{% include 'base/topBar.html' %}{% endblock %}
+                    {% block content %}{% endblock %}
+                    {% block footer %}{% include 'base/footer.html' %}{% endblock %}
+                </div>
             </div>
-        </div>
-
-        {% block topnav %}{% include 'base/topnav.html' %}{% endblock %}
-        {% block content %}{% endblock %}
-        {% block footer %}{% include 'base/footer.html' %}{% endblock %}
-        {% block js %}
-
-        <!-- javascript -->
-        <script src="{{ STATIC_URL }}js/bootstrap.bundle.min.js"></script>
-        <script src="{{ STATIC_URL }}js/feather.min.js"></script>
-
-        {% comment %} <script src="{{ STATIC_URL }}js/apexcharts.min.js"></script> {% endcomment %}
-        {% comment %} <script src="{{ STATIC_URL }}js/areachart.init.js"></script> {% endcomment %}
-
-        <script src="{{ STATIC_URL }}js/tiny-slider.js "></script>
-        <script src="{{ STATIC_URL }}js/tobii.min.js "></script>
-
-        <!-- Main Js -->
-        <script src="{{ STATIC_URL }}js/plugins.init.js"></script>
-        <script src="{{ STATIC_URL }}js/app.js"></script>
-        <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
-
-        <!-- add-ons -->
-        <script src="{{ STATIC_URL }}js/walletAuthen.js"></script>
-
-        <!-- appear -->
-        <script src="{{ STATIC_URL }}vendor/appear/jquery.appear.js"></script>
-
-        <!--bootstrap-->
-        {% comment %} <script src="{{ STATIC_URL }}vendor/bootstrap/js/bootstrap.bundle.min.js"></script> {% endcomment %}
-
-        <!-- countTo -->
-        <script src="{{ STATIC_URL }}vendor/counter/jquery.countTo.js"></script>
-
-        <!-- typed -->
-        <script src="{{ STATIC_URL }}vendor/typed/typed.js"></script>
-
-        <!-- owl-carousel -->
-        <script src="{{ STATIC_URL }}vendor/owl-carousel/js/owl.carousel.min.js"></script>
-
-        <!-- magnific -->
-        <script src="{{ STATIC_URL }}vendor/magnific/jquery.magnific-popup.min.js"></script>
-
-        <!-- isotope -->
-        <script src="{{ STATIC_URL }}vendor/isotope/isotope.pkgd.min.js"></script>
-
-        <!-- svg-injector -->
-        <script src="{{ STATIC_URL }}vendor/svginjector/svg-injector.min.js"></script>
-
-        <!-- Wow -->
-        <script src="{{ STATIC_URL }}vendor/wow/wow.min.js"></script>
-
-        <!-- easy pie chart -->
-        <script src="{{ STATIC_URL }}vendor/easy-pie-chart/jquery.easypiechart.min.js"></script>
-
-        <!-- working form -->
-        <script src="{{ STATIC_URL }}vendor/mail/js/form.min.js"></script>
-        <script src="{{ STATIC_URL }}vendor/mail/js/script.js"></script>
-
-        <!-- Theme Js -->
-        <script src="{{ STATIC_URL }}js/custom.js"></script>
-
-        <script>
-            let nonceApi = `{% url 'getNonce' %}`
-        </script>
-{% comment %}
-        {% if user.is_authenticated %}  
-        {% csrf_token %}
-        <script>
-            let checkTransactionURL = `{% url 'api-check-transaction' %}`
-        </script>
-        <script src="{{ STATIC_URL }}js/checkTransaction.js"></script>
-        {% endif %}
-{% endcomment %}
+            {% block js %}
+            <!-- javascript -->
+                <script src="{{ STATIC_URL }}vendor/jquery/jquery.min.js"></script>
+                <script src="{{ STATIC_URL }}vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                <script src="{{ STATIC_URL }}vendor/jquery-easing/jquery.easing.min.js"></script>
+                <script src="{{ STATIC_URL }}js/ruang-admin.min.js"></script>
+            {% endblock %}
         {% endblock %}
-    {% endblock %}
+        {% block popupLogout %}{% include 'base/popupLogout.html' %}{% endblock %}
+    </div>
+
+    <!-- Scroll to top -->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
 </body>
 </html>

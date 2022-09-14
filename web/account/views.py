@@ -1,9 +1,7 @@
 #Django
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.http import Http404
-from django.contrib.auth import login
-from django.contrib.auth.models import User
+from django.contrib.auth import login, logout
 from django.views.decorators.csrf import csrf_exempt
 
 #Project
@@ -17,7 +15,7 @@ def signin(request):
     if request.method == "GET":
         if not(request.user.is_authenticated):
             return render(request, 'base/login.html')
-        return render(request, 'base/index.html')
+        return render(request, 'base/base.html')
     form = AuthenForm(request.POST)
     if not form.is_valid():
         return redirect(reverse('homepage'))
@@ -37,5 +35,25 @@ def signin(request):
 
 def homepage(request):
     if not(request.user.is_authenticated):
-        return redirect(reverse('loginpage'))
+        return redirect(reverse('signinpage'))
+    return render(request, 'base/index.html')
+
+def homepage(request):
+    if not(request.user.is_authenticated):
+        return redirect(reverse('signinpage'))
+    return render(request, 'base/index.html')
+
+def shoppage(request):
+    if not(request.user.is_authenticated):
+        return redirect(reverse('signinpage'))
+    return render(request, 'shop.html')
+def userpage(request):
+    if not(request.user.is_authenticated):
+        return redirect(reverse('userpage'))
+    return render(request, 'user.html')
+
+def logoutpage(request):
+    logout(request)
+    if not(request.user.is_authenticated):
+        return redirect(reverse('signinpage'))
     return render(request, 'base/index.html')

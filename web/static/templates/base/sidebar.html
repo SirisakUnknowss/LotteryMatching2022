@@ -1,0 +1,53 @@
+<!-- Sidebar -->
+<ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'homepage' %}">
+        <div class="sidebar-brand-icon">
+        <img src="{{ STATIC_URL }}images/logo/logo2.png">
+        </div>
+        <div class="sidebar-brand-text mx-3">Lottery</div>
+    </a>
+    <hr class="sidebar-divider my-0">
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'homepage' %}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>หน้าหลัก</span></a>
+    </li>
+    <hr class="sidebar-divider">
+    <li class="nav-item">
+        <a class="nav-link" href="">
+        <i class="far fa-fw fa fa-list-ol"></i>
+        <span>กรอกหมายเลข</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">
+      จัดการระบบ
+    </div>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'userpage' %}">
+        <i class="fab fa fa-users"></i>
+        <span>ผู้ใช้งาน</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'shoppage' %}">
+        <i class="fas fa-fw fa-shopping-cart"></i>
+        <span>ร้านค้า</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ STATIC_URL }}#">
+        <i class="fas fa-fw fa fa-list"></i>
+        <span>หมายเลขทั้งหมด</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
+        <i class="fas fa-fw fa-sign-out-alt"></i>
+        <span>ออกจากระบบ</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider">
+    <div class="version" id="version-ruangadmin"></div>
+</ul>
+<!-- Sidebar -->
