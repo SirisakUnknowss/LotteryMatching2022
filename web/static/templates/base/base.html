@@ -12,8 +12,10 @@
     <meta name="author" content="">
     <link href="{{ STATIC_URL }}images/logo/logo.png" rel="icon">
     <link href="{{ STATIC_URL }}vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="{{ STATIC_URL }}vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="{{ STATIC_URL }}css/ruang-admin.min.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}vendor/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="{{ STATIC_URL }}vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" type="text/css">
+    
+    <link href="{{ STATIC_URL }}css/ruang-admin.css" rel="stylesheet">
 
     {% block head_css %}
     {% block head_css_site %}
@@ -30,7 +32,7 @@
             {% endblock %}
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
-                    {% block topbar %}{% include 'base/topBar.html' %}{% endblock %}
+                    {% comment %} {% block topbar %}{% include 'base/topBar.html' %}{% endblock %} {% endcomment %}
                     {% block content %}{% endblock %}
                     {% block footer %}{% include 'base/footer.html' %}{% endblock %}
                 </div>
@@ -40,7 +42,7 @@
                 <script src="{{ STATIC_URL }}vendor/jquery/jquery.min.js"></script>
                 <script src="{{ STATIC_URL }}vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
                 <script src="{{ STATIC_URL }}vendor/jquery-easing/jquery.easing.min.js"></script>
-                <script src="{{ STATIC_URL }}js/ruang-admin.min.js"></script>
+                <script src="{{ STATIC_URL }}js/ruang-admin.js"></script>
             {% endblock %}
         {% endblock %}
         {% block popupLogout %}{% include 'base/popupLogout.html' %}{% endblock %}

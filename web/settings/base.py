@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'base.apps.BaseConfig',
     'account.apps.AccountConfig',
     'shop.apps.ShopConfig',
+    'numberLottery.apps.NumberlotteryConfig',
 ]
 
 MIDDLEWARE = [

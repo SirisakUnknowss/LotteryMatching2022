@@ -11388,7 +11388,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sNext": "Next",
+				"sNext": "ถัดไป",
 	
 	
 				/**
@@ -11411,7 +11411,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sPrevious": "Previous"
+				"sPrevious": "ก่อนหน้า"
 			},
 	
 			/**
@@ -11466,7 +11466,8 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
+			// "sInfo": "แสดงข้อมูล _START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายการ",
+			"sInfo": "",
 	
 	
 			/**
@@ -11487,7 +11488,8 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoEmpty": "Showing 0 to 0 of 0 entries",
+			// "sInfoEmpty": "แสดงข้อมูล 0 ถึง 0 จากทั้งหมด 0 รายการ",
+			"sInfoEmpty": "",
 	
 	
 			/**
@@ -11627,7 +11629,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sLengthMenu": "Show _MENU_ entries",
+			"sLengthMenu": "แสดงข้อมูล _MENU_ รายการ",
 	
 	
 			/**
@@ -11707,7 +11709,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sSearch": "Search:",
+			"sSearch": " ",
 	
 	
 			/**
@@ -11718,7 +11720,7 @@
 			 *  @dtopt Language
 			 *  @name DataTable.defaults.language.searchPlaceholder
 			 */
-			"sSearchPlaceholder": "",
+			"sSearchPlaceholder": "ค้นหาหมายเลข...",
 	
 	
 			/**
