@@ -1,0 +1,81 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block head_css_site %}
+{{ block.super }}
+{% endblock head_css_site %}
+{% block content %}
+
+
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mt-3 mb-4">
+        <h1 class="h3 mb-0 text-gray-800">เพิ่มข้อมูลลอตเตอรี่</h1>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-lg-12">
+            <div class="card mb-4">
+                <div class="card-header mb-n4">
+                    <div class="h5 font-weight-bold text-uppercase mb-1">รายการหมายเลขลอตเตอรี่</div>
+                </div>
+                <div class="card-body">
+                    <div class="row align-items-center text-center">
+                        <div class="col mr-2">
+                            <form>
+                                <input class="form-control form-input-one-number mb-3" type="text" id="input_length1" maxlength="1" onkeyup="inputLength1()">
+                                <input class="form-control form-input-one-number mb-3" type="text" id="input_length2" maxlength="1" onkeyup="inputLength2()">
+                                <input class="form-control form-input-one-number mb-3" type="text" id="input_length3" maxlength="1" onkeyup="inputLength3()">
+                                <input class="form-control form-input-one-number mb-3" type="text" id="input_length4" maxlength="1" onkeyup="inputLength4()">
+                                <input class="form-control form-input-one-number mb-3" type="text" id="input_length5" maxlength="1" onkeyup="inputLength5()">
+                                <input class="form-control form-input-one-number mb-3" type="text" id="input_length6" maxlength="1" onkeyup="inputLength6()">
+                                <button type="submit" class="btn btn-primary">เพิ่มหมายเลข</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- DataTable -->
+        <div class="col-lg-12">
+            <div class="card mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"></div>
+                <div class="table-responsive p-3">
+                    <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>เลขลอตเตอรี่</th>
+                                <th>ร้านค้า</th>
+                                <th>ผู้เพิ่มข้อมูล</th>
+                                <th>สถานะ</th>
+                                <th>การจัดการข้อมูล</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %} 
+{% block js %} 
+{{ block.super }}
+
+  <script src="{{ STATIC_URL }}vendor/datatables/jquery.dataTables.js"></script>
+  <script src="{{ STATIC_URL }}vendor/datatables/dataTables.bootstrap4.js"></script>
+  <script src="{{ STATIC_URL }}js/add/checkInput.js"></script>
+  {% comment %} <script src="{{ STATIC_URL }}js/homepage/loadAllNumber.js"></script>
+  <script src="{{ STATIC_URL }}js/homepage/display.js"></script> {% endcomment %}
+
+  <!-- Page level custom scripts -->
+  <script>
+    {% comment %} const url = 'api/numberLottery/list' {% endcomment %}
+    $(document).ready(function ()
+    {
+      $('#dataTableHover').DataTable();
+    });
+  </script>
+{% endblock %}

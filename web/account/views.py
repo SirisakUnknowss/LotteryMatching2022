@@ -6,7 +6,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 #Project
 from account.models import Account
-
+from numberLottery.models import NumberLottery
+from numberLottery.urls import urlpatterns
+from shop.models import Shop
 from .form import AuthenForm
 
 # Create your views here.
@@ -25,35 +27,39 @@ def signin(request):
         account = Account.objects.get(username=username, password=password)
         user = account.user
         login(request, user)
-        print(f"username ---- {username}")
-        print(f"password ---- {password}")
         return redirect(reverse('homepage'))
     except Account.DoesNotExist:
         context = { 'accountDoesNotExist': 'บัญชีผู้ใช้งานนี้ไม่ถูกต้อง' }
-        print(f" ------- {context} ------- ")
         return render(request, 'base/login.html', context)
 
 def homepage(request):
     if not(request.user.is_authenticated):
         return redirect(reverse('signinpage'))
-    return render(request, 'base/index.html')
-
-def homepage(request):
-    if not(request.user.is_authenticated):
-        return redirect(reverse('signinpage'))
-    return render(request, 'base/index.html')
+    lotteryCount = NumberLottery.objects.all().count
+    matchNumberCount = NumberLottery.objects.all().count
+    shopCount = Shop.objects.all().count
+    context = { 
+               'lotteryCount': lotteryCount,
+               'matchNumberCount': matchNumberCount,
+               'shopCount': shopCount,
+            }
+    return render(request, 'base/index.html', context)
 
 def shoppage(request):
     if not(request.user.is_authenticated):
         return redirect(reverse('signinpage'))
     return render(request, 'shop.html')
+
 def userpage(request):
     if not(request.user.is_authenticated):
-        return redirect(reverse('userpage'))
+        return redirect(reverse('homepage'))
     return render(request, 'user.html')
+
+def addlotterypage(request):
+    if not(request.user.is_authenticated):
+        return redirect(reverse('homepage'))
+    return render(request, 'addLottery.html')
 
 def logoutpage(request):
     logout(request)
-    if not(request.user.is_authenticated):
-        return redirect(reverse('signinpage'))
-    return render(request, 'base/index.html')
+    return redirect(reverse('homepage'))

@@ -12,3 +12,6 @@ class Account(models.Model):
     shop        = models.ForeignKey(Shop, null=True, blank=True, related_name="shopUser", on_delete=models.SET_NULL)
     admin       = models.BooleanField(default=False)
     user        = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE, related_name='account')
+
+    def __str__(self):
+        return self.name

@@ -2930,8 +2930,8 @@ fieldset:disabled a.btn {
 
 .btn-primary:hover {
   color: #fff;
-  background-color: #394EEA;
-  border-color: #394EEA;
+  background-color: #44BAB7;
+  border-color: #44BAB7;
 }
 
 .btn-primary:focus,
@@ -2951,8 +2951,8 @@ fieldset:disabled a.btn {
 .btn-primary:not(:disabled):not(.disabled).active,
 .show>.btn-primary.dropdown-toggle {
   color: #fff;
-  background-color: #394EEA;
-  border-color: #394EEA;
+  background-color: #44BAB7;
+  border-color: #44BAB7;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active:focus,
@@ -5358,7 +5358,7 @@ input[type="button"].btn-block {
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
-  border-radius: .375rem;
+  border-radius: 0.5rem;
 }
 
 .card>hr {
@@ -5412,7 +5412,7 @@ input[type="button"].btn-block {
 }
 
 .card-header:first-child {
-  border-radius: calc(0.35rem - 1px) calc(0.35rem - 1px) 0 0;
+  border-radius: 0.5rem;
 }
 
 .card-header+.list-group .list-group-item:first-child {
@@ -11475,12 +11475,12 @@ button.bg-dark:focus {
 }
 
 .text-primary {
-  color: #44BAB7 !important;
+  color: #1188F9 !important;
 }
 
 a.text-primary:hover,
 a.text-primary:focus {
-  color: #44BAB7 !important;
+  color: #1188F9 !important;
 }
 
 .text-secondary {
@@ -11689,4 +11689,11 @@ a.text-dark:focus {
     color: inherit;
     border-color: #e3e6f0;
   }
+}
+
+.form-input-one-number {
+  font-size: 1.25rem;
+  width: 2.5rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
 }

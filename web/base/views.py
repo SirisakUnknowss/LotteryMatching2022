@@ -45,7 +45,3 @@ class LottListPaginatedView(LottAPIView):
         serializer              = self.get_serializer(queryset, many=True, context={"request": request})
         self.response["result"] = serializer.data
         return Response(self.response)
-
-def landing(request):
-    context = {}
-    return render(request, 'base/index.html', context)

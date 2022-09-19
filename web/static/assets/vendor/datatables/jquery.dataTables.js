@@ -11434,7 +11434,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sEmptyTable": "No data available in table",
+			"sEmptyTable": "ไม่พบข้อมูล",
 	
 	
 			/**
@@ -11511,7 +11511,8 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoFiltered": "(filtered from _MAX_ total entries)",
+			// "sInfoFiltered": "(filtered from _MAX_ total entries)",
+			"sInfoFiltered": "",
 	
 	
 			/**
