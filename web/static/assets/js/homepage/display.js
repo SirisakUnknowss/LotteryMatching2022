@@ -24,11 +24,29 @@ function createCol(result)
     numberEle = document.createElement(tag)
     numberEle.innerHTML = result.numberLottery
     shopEle = document.createElement(tag)
-    shopEle.innerHTML = result.user.shop.name
+    nameShop = ""
+    if (result.user.shop == null) nameShop = "ไม่มีข้อมูล"
+    else nameShop = result.user.shop.name
+    shopEle.innerHTML =nameShop
     userAddEle = document.createElement(tag)
     userAddEle.innerHTML = result.user.username
     statusEle = document.createElement(tag)
-    statusEle.innerHTML = result.isRead
+    imageRead = imgUnRead
+    isRead = ""
+    if (isRead)
+    {
+        imageRead = imgRead
+        isRead = "อ่านแล้ว"
+    }
+    else isRead = "ยังไม่อ่าน"
+    
+    imgEle = document.createElement('img')
+    pEle = document.createElement('span')
+    imgEle.className = "mx-2"
+    imgEle.src = imageRead
+    pEle.innerHTML = isRead
+    statusEle.appendChild(imgEle)
+    statusEle.appendChild(pEle)
     manageEle = document.createElement(tag)
     row.appendChild(numberEle)
     row.appendChild(shopEle)

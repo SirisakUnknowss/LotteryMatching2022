@@ -26,8 +26,10 @@ urlpatterns = [
     path('shop', accountViews.shoppage, name='shoppage'),
     path('user', accountViews.userpage, name='userpage'),
     path('logout', accountViews.logoutpage, name='logoutpage'),
-    path('add', accountViews.addlotterypage, name='addlotterypage'),   
+    path('add', accountViews.addlotterypage, name='addlotterypage'),
     ## numberLottery ##
     path('api/numberLottery/', include('numberLottery.urls')), 
+    ## shop ##
+    path('api/shop/', include('shop.urls')), 
 ]
 

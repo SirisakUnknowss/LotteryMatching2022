@@ -7,8 +7,8 @@ from django.views.decorators.csrf import csrf_exempt
 #Project
 from account.models import Account
 from numberLottery.models import NumberLottery
-from numberLottery.urls import urlpatterns
 from shop.models import Shop
+from shop.views import addShopApi
 from .form import AuthenForm
 
 # Create your views here.
@@ -46,9 +46,16 @@ def homepage(request):
     return render(request, 'base/index.html', context)
 
 def shoppage(request):
-    if not(request.user.is_authenticated):
-        return redirect(reverse('signinpage'))
-    return render(request, 'shop.html')
+    if request.method == "GET":
+        if not(request.user.is_authenticated):
+            return redirect(reverse('signinpage'))
+        return render(request, 'shop.html')
+    form, isAddShop = addShopApi(request=request)
+    if not isAddShop:
+        context = { 'errorAddShop':form }
+        return render(request, 'shop.html', context=context)
+    context = { 'successAddShop':"เพิ่มข้อมูลสำเร็จ" }
+    return render(request, 'shop.html', context=context)
 
 def userpage(request):
     if not(request.user.is_authenticated):

@@ -67,15 +67,13 @@
   <script src="{{ STATIC_URL }}vendor/datatables/jquery.dataTables.js"></script>
   <script src="{{ STATIC_URL }}vendor/datatables/dataTables.bootstrap4.js"></script>
   <script src="{{ STATIC_URL }}js/add/checkInput.js"></script>
-  {% comment %} <script src="{{ STATIC_URL }}js/homepage/loadAllNumber.js"></script>
-  <script src="{{ STATIC_URL }}js/homepage/display.js"></script> {% endcomment %}
+  <script src="{{ STATIC_URL }}js/homepage/loadAllNumber.js"></script>
+  <script src="{{ STATIC_URL }}js/homepage/display.js"></script>
 
   <!-- Page level custom scripts -->
   <script>
-    {% comment %} const url = 'api/numberLottery/list' {% endcomment %}
-    $(document).ready(function ()
-    {
-      $('#dataTableHover').DataTable();
-    });
+    const imgRead = "{{ STATIC_URL }}images/read.png"
+    const imgUnRead = "{{ STATIC_URL }}images/unread.png"
+    const url = 'api/numberLottery/list'
   </script>
 {% endblock %}

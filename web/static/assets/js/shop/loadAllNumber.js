@@ -27,7 +27,5 @@ async function loadContent(params = "") {
 async function requestContent(params) {
     clearData()
     .then( () => loadContent(params))
-    // .then(jsonObject => console.log(jsonObject))
     .then(jsonObject => display(jsonObject))
-    // .catch(reason => console.log(reason.toString()))
 }

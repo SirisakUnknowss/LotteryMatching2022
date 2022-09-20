@@ -1,0 +1,38 @@
+ <!-- Modal AddShop -->
+ <div class="modal fade" id="addShopModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabelAddShop" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabelAddShop">เพิ่มร้านค้า</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form role="form" class="user" id="login-form" method="post" action="{% url 'shoppage' %}">
+            {% csrf_token %}
+              <div class="form-group modal-body mx-5">
+                <p class="text-sm-left">ชื่อร้านค้า : </p>
+                <input type="text" class="form-control form-login" id="name" name="name" placeholder="กรุณากรอกชื่อร้านค้า">
+                {% if errorAddShop %}<p class="text-danger text-sm-left mt-3 mx-1">{{ errorAddShop }}</p>{% endif %}
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-primary" data-dismiss="modal">ยกเลิก</button>
+                  <button type="submit" class="btn btn-primary">ตกลง</button>
+              </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!---Container Fluid-->
+<!-- Modal AddShop Success -->
+<div class="modal fade" id="addShopSuccessModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabelAddShop" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src="{{ STATIC_URL }}images/check.png">
+                <h4 class="text-success mt-4 mb-3">เพิ่มข้อมูลสำเร็จ</h4>
+            </div>
+        </div>
+    </div>
+</div>
+<!---Container Fluid-->

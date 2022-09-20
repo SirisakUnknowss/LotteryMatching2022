@@ -33,7 +33,7 @@
                 <div id="content">
                     {% comment %} {% block topbar %}{% include 'base/topBar.html' %}{% endblock %} {% endcomment %}
                     {% block content %}{% endblock %}
-                    {% block footer %}{% include 'base/footer.html' %}{% endblock %}
+                    {% comment %} {% block footer %}{% include 'base/footer.html' %}{% endblock %} {% endcomment %}
                 </div>
             </div>
             {% block js %}
