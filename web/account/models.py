@@ -14,4 +14,4 @@ class Account(models.Model):
     user        = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE, related_name='account')
 
     def __str__(self):
-        return self.name
+        return self.username

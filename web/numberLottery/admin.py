@@ -6,13 +6,14 @@ from numberLottery.models import NumberLottery
 
 # Register your models here.
 
-class AccountResource(resources.ModelResource):
+class NumberLotteryResource(resources.ModelResource):
     class Meta:
         model = NumberLottery
         import_id_fields = ('numberLottery',)
+        exclude = ('id',)
 
 
 @admin.register(NumberLottery)
-class AccountAdmin(ImportExportModelAdmin):
-
+class NumberLotteryAdmin(ImportExportModelAdmin):
+    resource_class = NumberLotteryResource
     list_display = ['id', 'numberLottery', 'isRead']

@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from base.views import LottListView, LottAPIView
 from numberLottery.models import NumberLottery
 from numberLottery.serializers import SlzListNumber, SlzAddNumberInput
-from web.account.models import Account
+from account.models import Account
 
 # Create your views here.
 class ListNumberLottery(LottListView):

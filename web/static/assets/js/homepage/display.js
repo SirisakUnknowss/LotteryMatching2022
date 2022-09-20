@@ -11,6 +11,9 @@ async function display(jsonObject)
             appendHTMLEle(row, parentClassSelector)
             // createColBlock(result[index], parentClassSelector)
         }
+        // const scriptDatabase = document.querySelector("#scriptDatabase")
+        // scriptDatabase.src = urlDataTables
+        $('#dataTableHover').DataTable();
     }
 }
 
@@ -63,10 +66,6 @@ function createHTMLEle(tag, className)
 
 function appendHTMLEle(ele, parentClass)
 {
-    console.log("ele ---- " + ele)
-    console.log("parentClass ---- " + parentClass)
     parentEle = document.querySelector(parentClass)
-    
-    console.log("parentEle ---- " + parentEle)
     parentEle.appendChild(ele)
 }

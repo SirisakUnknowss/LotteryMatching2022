@@ -2279,6 +2279,10 @@ pre code {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
 }
 
+.form-login {
+  width: 100%;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .form-control {
     -webkit-transition: none;
