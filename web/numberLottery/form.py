@@ -12,8 +12,8 @@ class AddNumberLotteryForm(forms.Form):
     def clean(self):
         cleaned_data = super().clean()
         try:
-            name = cleaned_data['number']
-            if not name:
+            number = cleaned_data['number']
+            if not number:
                 self.add_error('number', "incorrect")
             self.existNumber(cleaned_data)
             return cleaned_data
@@ -22,7 +22,7 @@ class AddNumberLotteryForm(forms.Form):
 
     def existNumber(self, cleaned_data):
         try:
-            NumberLottery.objects.get(name=cleaned_data['number'])
+            NumberLottery.objects.get(numberLottery=cleaned_data['number'])
             self.add_error('number', "exist")
         except NumberLottery.DoesNotExist:
             return

@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 #Project
 from account.models import Account
 from numberLottery.models import NumberLottery
+from numberLottery.views import addNumberApi
 from shop.models import Shop
 from shop.views import addShopApi
 from .form import AuthenForm
@@ -67,7 +68,7 @@ def addlotterypage(request):
         if not(request.user.is_authenticated):
             return redirect(reverse('homepage'))
         return render(request, 'addLottery.html')
-    form, isAddShop = addShopApi(request=request)
+    form, isAddShop = addNumberApi(request=request)
     if not isAddShop:
         context = { 'errorAddNumber':form }
         return render(request, 'addLottery.html', context=context)
