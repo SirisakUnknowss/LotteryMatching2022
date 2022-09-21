@@ -63,9 +63,16 @@ def userpage(request):
     return render(request, 'user.html')
 
 def addlotterypage(request):
-    if not(request.user.is_authenticated):
-        return redirect(reverse('homepage'))
-    return render(request, 'addLottery.html')
+    if request.method == "GET":
+        if not(request.user.is_authenticated):
+            return redirect(reverse('homepage'))
+        return render(request, 'addLottery.html')
+    form, isAddShop = addShopApi(request=request)
+    if not isAddShop:
+        context = { 'errorAddNumber':form }
+        return render(request, 'addLottery.html', context=context)
+    context = { 'successAddNumber':"เพิ่มข้อมูลสำเร็จ" }
+    return render(request, 'addLottery.html', context=context)
 
 def logoutpage(request):
     logout(request)

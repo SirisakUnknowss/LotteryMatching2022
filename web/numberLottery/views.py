@@ -1,10 +1,9 @@
-from django.shortcuts import render
-from rest_framework.response import Response
-
-from base.views import LottListView, LottAPIView
-from numberLottery.models import NumberLottery
-from numberLottery.serializers import SlzListNumber, SlzAddNumberInput
+#Project
+from base.views import LottListView
 from account.models import Account
+from .models import NumberLottery
+from .form import AddNumberLotteryForm
+from .serializers import SlzListNumber
 
 # Create your views here.
 class ListNumberLottery(LottListView):
@@ -14,16 +13,15 @@ class ListNumberLottery(LottListView):
     serializer_class = SlzListNumber
     pagination_class = None
     
-class AddNumberLottery(LottAPIView):
-    queryset            = NumberLottery.objects.all()
-    serializer_class    = SlzListNumber
-
-    def post(self, request, *args, **kwargs):
-        serializerInput         = SlzAddNumberInput(data=self.request.data)
-        serializerInput.is_valid(raise_exception=True)
-        numberInput             = serializerInput.validated_data['numberInput']
-        account                 = Account.objects.get(user=self.request.user)
-        NumberLottery.createNumberRecord(numberInput, account)
-        serializer              = self.get_serializer(account)
-        self.response["result"] = serializer.data
-        return Response(self.response)
+def addNumberApi(request):
+    form = AddNumberLotteryForm(request.POST)
+    if not form.is_valid():
+        if 'exist' in str(form):
+            return 'หมายเลขนี้มีอยู่แล้ว', False
+        if 'incorrect' in str(form):
+            return 'หมายเลขนี้ไม่ถูกต้อง', False
+        return 'กรุณากรอกข้อมูลใหม่อีกครั้ง', False
+    numberLottery = form['number'].data
+    account = Account.objects.get(user=request.user)
+    NumberLottery.objects.create(numberLottery=numberLottery, user=account)
+    return form, True

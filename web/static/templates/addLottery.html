@@ -21,14 +21,16 @@
                 <div class="card-body">
                     <div class="row align-items-center text-center">
                         <div class="col mr-2">
-                            <form>
+                            <form id="formSendNumber" method="post" action="{% url 'addlotterypage' %}">
+                                {% csrf_token %}
                                 <input class="form-control form-input-one-number mb-3" type="text" id="input_length1" maxlength="1" onkeyup="inputLength1()">
                                 <input class="form-control form-input-one-number mb-3" type="text" id="input_length2" maxlength="1" onkeyup="inputLength2()">
                                 <input class="form-control form-input-one-number mb-3" type="text" id="input_length3" maxlength="1" onkeyup="inputLength3()">
                                 <input class="form-control form-input-one-number mb-3" type="text" id="input_length4" maxlength="1" onkeyup="inputLength4()">
                                 <input class="form-control form-input-one-number mb-3" type="text" id="input_length5" maxlength="1" onkeyup="inputLength5()">
                                 <input class="form-control form-input-one-number mb-3" type="text" id="input_length6" maxlength="1" onkeyup="inputLength6()">
-                                <button type="submit" class="btn btn-primary">เพิ่มหมายเลข</button>
+                                <input type="hidden" id="number" name="number">
+                                <button id="confirmAddNumber" class="btn btn-primary">เพิ่มหมายเลข</button>
                             </form>
                         </div>
                     </div>
@@ -75,5 +77,13 @@
     const imgRead = "{{ STATIC_URL }}images/read.png"
     const imgUnRead = "{{ STATIC_URL }}images/unread.png"
     const url = 'api/numberLottery/list'
+    $(window).on('load', function() {
+        const success = "{{ successAddNumber }}"
+        const error = "{{ errorAddNumber }}"
+        if (success != "")
+        {
+            $('#addSuccessModal').modal('show')
+        }
+    })
   </script>
 {% endblock %}

@@ -45,9 +45,6 @@
   - ``` docker-compose exec web sh -c "python manage.py createsuperuser --noinput" ```
 8. go to http://localhost:8000
 
-> PS. admin page: http://localhost:8000/admin  
-  user: admin  
-  password: Ark!R6u1S9  
-  (From .dev file) 
+> PS. admin page: http://localhost:8000/admin
 
 ---

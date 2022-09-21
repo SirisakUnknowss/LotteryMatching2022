@@ -17,3 +17,4 @@ class NumberLotteryResource(resources.ModelResource):
 class NumberLotteryAdmin(ImportExportModelAdmin):
     resource_class = NumberLotteryResource
     list_display = ['id', 'numberLottery', 'isRead']
+    search_fields = ['numberLottery']
