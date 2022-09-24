@@ -54,6 +54,17 @@ function createCol(result)
     return row
 }
 
+function createDeleteButton(manageEle, numberID)
+{
+    var button = document.createElement("button")
+    button.setAttribute("type", "button")
+    button.id = numberID
+    button.innerHTML = "ลบข้อมูล"
+    button.className = "btn btn-danger mb-1"
+    manageEle.appendChild(button)
+    onclickDelete(button)
+}
+
 function createRow()
 {
     tag = "tr"

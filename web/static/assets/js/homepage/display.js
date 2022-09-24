@@ -48,12 +48,33 @@ function createCol(result)
     statusEle.appendChild(imgEle)
     statusEle.appendChild(pEle)
     manageEle = document.createElement(tag)
+    createDeleteButton(manageEle, result.id)
     row.appendChild(numberEle)
     row.appendChild(shopEle)
     row.appendChild(userAddEle)
     row.appendChild(statusEle)
     row.appendChild(manageEle)
     return row
+}
+
+function createDeleteButton(manageEle, numberID)
+{
+    var button = document.createElement("button")
+    button.setAttribute("type", "button")
+    button.id = numberID
+    button.innerHTML = "ลบข้อมูล"
+    button.className = "btn btn-danger mb-1"
+    manageEle.appendChild(button)
+    onclickDelete(button)
+}
+
+function onclickDelete(button)
+{
+    button.addEventListener('click', event => {
+        console.log(button.id)
+        // event.preventDefault()
+        
+    })
 }
 
 function createRow()
