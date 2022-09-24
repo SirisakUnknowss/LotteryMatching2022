@@ -7,7 +7,7 @@ DJANGO_SUPERUSER_PASSWORD=Unknowss172540
 DJANGO_SUPERUSER_EMAIL=sirisak.unknowss@gmail.com
 # DB settings
 DJANGO_DB_ENGINE=django.db.backends.postgresql_psycopg2
-DJANGO_DB_NAME=LotteryMatching
+DJANGO_DB_NAME=LotteryMatching2022
 DJANGO_DB_USER=postgres
 DJANGO_DB_PASSWORD=Unknowss172540
 DJANGO_DB_HOST=10.148.0.2
