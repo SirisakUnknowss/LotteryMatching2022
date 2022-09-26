@@ -24,8 +24,9 @@ urlpatterns = [
     path('', accountViews.homepage, name='homepage'),
     path('signin', accountViews.signin, name='signinpage'),
     path('shop', accountViews.shoppage, name='shoppage'),
-    path('user', accountViews.userpage, name='userpage'),
+    # path('user', accountViews.userpage, name='userpage'),
     path('logout', accountViews.logoutpage, name='logoutpage'),
+    path('deletelottery', accountViews.deletelotterypage, name='deletelotterypage'),
     path('numberLottery', accountViews.addlotterypage, name='addlotterypage'),
     # path('add', accountViews.addlotterypage, name='addlotterypage'),
     ## numberLottery ##

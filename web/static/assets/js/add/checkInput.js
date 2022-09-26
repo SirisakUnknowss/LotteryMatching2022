@@ -44,8 +44,8 @@ confirmAddNumber.addEventListener('click', event => {
     if (input_length1.value.length == 0 || input_length2.value.length == 0 ||
         input_length3.value.length == 0 || input_length4.value.length == 0 ||
         input_length5.value.length == 0 || input_length6.value.length == 0) return alert("กรุณากรอกหมายเลขให้ครบถ้วน!")
+    else { checkTypeNumber() }
     event.preventDefault()
-    checkTypeNumber()
     
 })
 
@@ -56,31 +56,34 @@ function checkTypeNumber()
         input_length1.focus()
         return alert("กรุณากรอกหมายเลขให้ถูกต้อง!")
     }
-    if (isNaN(input_length2.value))
+    else if (isNaN(input_length2.value))
     {
         input_length2.focus()
         return alert("กรุณากรอกหมายเลขให้ถูกต้อง!")
     }
-    if (isNaN(input_length3.value))
+    else if (isNaN(input_length3.value))
     {
         input_length3.focus()
         return alert("กรุณากรอกหมายเลขให้ถูกต้อง!")
     }
-    if (isNaN(input_length4.value))
+    else if (isNaN(input_length4.value))
     {
         input_length4.focus()
         return alert("กรุณากรอกหมายเลขให้ถูกต้อง!")
     }
-    if (isNaN(input_length5.value))
+    else if (isNaN(input_length5.value))
     {
         input_length5.focus()
         return alert("กรุณากรอกหมายเลขให้ถูกต้อง!")
     }
-    if (isNaN(input_length6.value))
+    else if (isNaN(input_length6.value))
     {
         input_length6.focus()
         return alert("กรุณากรอกหมายเลขให้ถูกต้อง!")
     }
-    number.value = (input_length1.value + input_length2.value + input_length3.value + input_length4.value + input_length5.value + input_length6.value)
-    formSendNumber.submit()
+    else
+    {
+        number.value = (input_length1.value + input_length2.value + input_length3.value + input_length4.value + input_length5.value + input_length6.value)
+        formSendNumber.submit()
+    }
 }

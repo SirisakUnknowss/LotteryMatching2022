@@ -12,3 +12,5 @@ DJANGO_DB_USER=postgres
 DJANGO_DB_PASSWORD=Unknowss01
 DJANGO_DB_HOST=34.124.136.3
 DJANGO_DB_PORT=5432
+
+#sudo docker-compose -f docker-compose-prod.yaml exec web sh -c "python manage.py createsuperuser --noinput"

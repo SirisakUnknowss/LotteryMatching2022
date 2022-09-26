@@ -70,8 +70,9 @@
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between mt-3 mb-3">
       <h5 class="m-0 font-weight-bold text-primary">รายการหมายเลขลอตเตอรี่ที่ตรงกัน</h5>
     </div>
-  
-    <!-- DataTable -->
+    {% include 'base/dataTable.html' %}
+    {% include 'base/popupDelete.html' %}
+    {% comment %} <!-- DataTable -->
     <div class="col-lg-12">
       <div class="card mb-4">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -92,7 +93,7 @@
           </table>
         </div>
       </div>
-    </div>
+    </div> {% endcomment %}
   
   </div>
 </div>
@@ -100,7 +101,6 @@
 {% endblock %} 
 {% block js %} 
 {{ block.super }}
-
   <script id="scriptDatabase" src="{{ STATIC_URL }}vendor/datatables/jquery.dataTables.js"></script>
   <script src="{{ STATIC_URL }}vendor/datatables/dataTables.bootstrap4.js"></script>
   <script src="{{ STATIC_URL }}js/homepage/loadAllNumber.js"></script>
@@ -110,6 +110,6 @@
   <script>
     const imgRead = "{{ STATIC_URL }}images/read.png"
     const imgUnRead = "{{ STATIC_URL }}images/unread.png"
-    const url = 'api/numberLottery/list'
+    const url = 'api/numberLottery/listMatching'
   </script>
 {% endblock %}

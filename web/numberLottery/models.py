@@ -10,6 +10,21 @@ class NumberLottery(models.Model):
     isRead          = models.BooleanField(default=False)
     user            = models.ForeignKey(Account, null=True, blank=True, related_name='accountNumberLottery', on_delete=models.SET_NULL)
     
+    def __str__(self):
+        return self.numberLottery
+    
     @staticmethod
     def createNumberRecord(number, user):
         NumberLottery.objects.create(numberLottery=number, user=user)
+
+class PrototypeNumberLottery(models.Model):
+        
+    numberLottery   = models.CharField(max_length=6, unique=True)
+    matching        = models.ManyToManyField(NumberLottery, blank=True)
+    
+    def __str__(self):
+        return self.numberLottery
+
+    @staticmethod
+    def createNumberRecord(number):
+        PrototypeNumberLottery.objects.create(numberLottery=number)

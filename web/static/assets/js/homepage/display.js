@@ -9,10 +9,7 @@ async function display(jsonObject)
             parentClassSelector = "#dataTableBody"
             row = createCol(result[index])
             appendHTMLEle(row, parentClassSelector)
-            // createColBlock(result[index], parentClassSelector)
         }
-        // const scriptDatabase = document.querySelector("#scriptDatabase")
-        // scriptDatabase.src = urlDataTables
         $('#dataTableHover').DataTable();
     }
 }
@@ -48,7 +45,7 @@ function createCol(result)
     statusEle.appendChild(imgEle)
     statusEle.appendChild(pEle)
     manageEle = document.createElement(tag)
-    createDeleteButton(manageEle, result.id)
+    createDeleteButton(manageEle, result)
     row.appendChild(numberEle)
     row.appendChild(shopEle)
     row.appendChild(userAddEle)
@@ -57,25 +54,34 @@ function createCol(result)
     return row
 }
 
-function createDeleteButton(manageEle, numberID)
+function createDeleteButton(manageEle, result)
 {
-    var button = document.createElement("button")
-    button.setAttribute("type", "button")
-    button.id = numberID
-    button.innerHTML = "ลบข้อมูล"
-    button.className = "btn btn-danger mb-1"
-    manageEle.appendChild(button)
-    onclickDelete(button)
+    var a = document.createElement("a")
+    a.href = "javascript:void(0);"
+    a.setAttribute("data-toggle", "modal")
+    a.setAttribute("data-target", "#deleteModal")
+    a.innerHTML = "ลบข้อมูล"
+    a.className = "btn btn-danger mb-1"
+    manageEle.appendChild(a)
+    onclickDelete(a, result)
 }
 
-function onclickDelete(button)
+function onclickDelete(button, result)
 {
     button.addEventListener('click', event => {
-        console.log(button.id)
-        // event.preventDefault()
-        
+        console.log(result.id)
+        const numberDelete = document.querySelector("#numberDelete")
+        const IDNumberDelete = document.querySelector("#IDNumberDelete")
+        IDNumberDelete.value = result.id
+        numberDelete.innerHTML = result.numberLottery
     })
 }
+
+const confirmDeleteNumber = document.querySelector("#confirmDeleteNumber")
+const formDeleteNumber = document.querySelector("#formDeleteNumber")
+confirmDeleteNumber.addEventListener('click', event => {
+    formDeleteNumber.submit()
+})
 
 function createRow()
 {
