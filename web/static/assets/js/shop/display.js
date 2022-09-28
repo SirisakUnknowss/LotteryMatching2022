@@ -47,6 +47,8 @@ function createCol(result)
     userNameEle = document.createElement(tag)
     passwordEle = document.createElement(tag)
     manageEle = document.createElement(tag)
+    createDeleteButton(manageEle, result)
+    createAddUserButton(manageEle, result)
     row.appendChild(shopEle)
     row.appendChild(userNameEle)
     row.appendChild(passwordEle)
@@ -54,16 +56,59 @@ function createCol(result)
     return row
 }
 
-function createDeleteButton(manageEle, numberID)
+function createDeleteButton(manageEle, result)
 {
-    var button = document.createElement("button")
-    button.setAttribute("type", "button")
-    button.id = numberID
-    button.innerHTML = "ลบข้อมูล"
-    button.className = "btn btn-danger mb-1"
-    manageEle.appendChild(button)
-    onclickDelete(button)
+    manageEle.className = "text-right"
+    var a = document.createElement("a")
+    a.href = "javascript:void(0);"
+    a.setAttribute("data-toggle", "modal")
+    a.setAttribute("data-target", "#deleteModal")
+    a.innerHTML = "ลบข้อมูล"
+    a.className = "btn btn-danger mb-1"
+    manageEle.appendChild(a)
+    onclickDelete(a, result)
 }
+
+function createAddUserButton(manageEle, result)
+{
+    manageEle.className = "text-right"
+    var a = document.createElement("a")
+    a.href = "javascript:void(0);"
+    a.setAttribute("data-toggle", "modal")
+    a.setAttribute("data-target", "#addUserModal")
+    a.innerHTML = "เพิ่มผู้ใช้งาน"
+    a.className = "btn btn-info mx-3 mb-1"
+    manageEle.appendChild(a)
+    onclickShopPopup(a, result)
+}
+
+function onclickDelete(button, result)
+{
+    button.addEventListener('click', event => {
+        console.log(result.id)
+        const shopDelete = document.querySelector("#shopDelete")
+        const IDShopDelete = document.querySelector("#IDShopDelete")
+        IDShopDelete.value = result.id
+        shopDelete.innerHTML = result.name
+    })
+}
+
+function onclickShopPopup(button, result)
+{
+    button.addEventListener('click', event => {
+        console.log(result.id)
+        const shopID = document.querySelector("#shopID")
+        const shopName = document.querySelector("#shopName")
+        shopID.value = result.id
+        shopName.value = result.name
+    })
+}
+
+const confirmDeleteShop = document.querySelector("#confirmDeleteShop")
+const formDeleteShop = document.querySelector("#formDeleteShop")
+confirmDeleteShop.addEventListener('click', event => {
+    formDeleteShop.submit()
+})
 
 function createRow()
 {

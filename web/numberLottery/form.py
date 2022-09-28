@@ -3,9 +3,6 @@ from django import forms
 from django.shortcuts import redirect
 from django.urls import reverse
 
-#Project
-from .models import NumberLottery
-
 class DeleteNumberLotteryForm(forms.Form):
     IDNumberDelete = forms.CharField(max_length=6)
 

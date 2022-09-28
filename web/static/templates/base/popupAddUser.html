@@ -1,0 +1,52 @@
+ <!-- Modal AddUser -->
+ <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="ModalAddUser" aria-hidden="true">
+    <div class="modal-dialog w-75" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabelAddUser">เพิ่มผู้ใช้งาน</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form role="form" class="user" id="login-form" method="post" action="{% url 'shoppage' %}">
+                {% csrf_token %}
+                <div class="form-group modal-body mx-5 mb-n3">
+                    <p class="text-sm-left">ชื่อร้านค้า : </p>
+                    <input type="hidden" id="statusPost" name="addUser">
+                    <input type="hidden" id="shopID" name="shopID">
+                    <input type="text" class="form-control form-login" id="shopName" name="shopName" disabled>
+                </div>
+                <div class="form-group modal-body mx-5 mt-n3 mb-n3">
+                    <p class="text-sm-left">ชื่อจริง : </p>
+                    <input type="text" class="form-control form-login" id="inputName" name="inputName" placeholder="ชื่อจริง..." minlength="2" required>
+                </div>
+                <div class="form-group modal-body mx-5 mt-n3 mb-n3">
+                    <p class="text-sm-left">ชื่อผู้ใช้งาน : </p><p class="text-sm-left text-danger small mt-n3">(*ใช้สำหรับเข้าสู่ระบบ)</p>
+                    <input type="text" class="form-control form-login" id="inputUsername" name="inputUsername" placeholder="ชื่อผู้ใช้งาน..." minlength="8" required>
+                    {% if errorAddUser %}<p class="text-danger text-sm-left mt-3 mx-1">{{ errorAddUser }}</p>{% endif %}
+                </div>
+                <div class="form-group modal-body mx-5 mt-n3">
+                    <p class="text-sm-left">รหัสผ่าน : </p><p class="text-sm-left text-danger small mt-n3">(*ใช้สำหรับเข้าสู่ระบบ)</p>
+                    <input type="text" class="form-control form-login" id="inputPassword" name="inputPassword" placeholder="รหัสผ่าน..." minlength="8" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">ยกเลิก</button>
+                    <button type="submit" class="btn btn-primary">ตกลง</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!---Container Fluid-->
+<!-- Modal AddUser Success -->
+<div class="modal fade" id="addUserSuccessModal" tabindex="-1" role="dialog" aria-labelledby="ModalAddUser" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src="{{ STATIC_URL }}images/check.png">
+                <h4 class="text-success mt-4 mb-3">เพิ่มข้อมูลสำเร็จ</h4>
+            </div>
+        </div>
+    </div>
+</div>
+<!---Container Fluid-->

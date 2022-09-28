@@ -10,7 +10,7 @@ from account.models import Account
 from numberLottery.models import NumberLottery, PrototypeNumberLottery
 from numberLottery.views import addNumberApi, deleteNumberApi
 from shop.models import Shop
-from shop.views import addShopApi
+from shop.views import addShopApi, addUsernameApi
 from .form import AuthenForm
 
 # Create your views here.
@@ -54,7 +54,17 @@ def shoppage(request):
         if not(request.user.is_authenticated) or not request.user.account.admin:
             return redirect(reverse('homepage'))
         return render(request, 'shop.html')
-    form, isAddShop = addShopApi(request=request)
+    STATUS_POST = [ 'addShop', 'addUSer']   
+    statusPost = request.POST['statusPost']
+    if not statusPost in STATUS_POST:
+        context = { 'statusPostError':"สถานะไม่ถูกต้อง" }
+        return render(request, 'shop.html', context=context)
+    errorForm = ""
+    isAddData = False
+    if statusPost == STATUS_POST[0]:
+        form, isAddShop = addUsernameApi(request=request)
+    elif statusPost == STATUS_POST[1]:
+        form, isAddShop = addShopApi(request=request)
     if not isAddShop:
         context = { 'errorAddShop':form }
         return render(request, 'shop.html', context=context)

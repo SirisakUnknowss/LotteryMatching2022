@@ -7,13 +7,13 @@
         <div class="sidebar-brand-text mx-3">Lottery</div>
     </a>
     {% if user.account.admin %}
-    <li class="nav-item">
+    <li class="nav-item mt-0 my-0">
         <a class="nav-link" href="">
         <i class="far fa-fw fa fa-list-ol"></i>
         <span>จับคู่ลอตเตอรี่</span>
         </a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item mt-0 my-0">
         <a class="nav-link" href="{% url 'addlotterypage' %}">
         <i class="far fa-fw fa fa-list-ol"></i>
         <span>เพิ่มข้อมูลลอตเตอรี่</span>
@@ -25,13 +25,13 @@
         <span>ผู้ใช้งาน</span>
         </a>
     </li> {% endcomment %}
-    <li class="nav-item">
+    <li class="nav-item mt-0 my-0">
         <a class="nav-link" href="{% url 'shoppage' %}">
         <i class="fas fa-fw fa-shopping-cart"></i>
         <span>จัดการข้อมูล</span>
         </a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item mt-0 my-0">
         <a class="nav-link" href="{{ STATIC_URL }}#">
         <i class="fas fa-fw fa fa-list"></i>
         <span>หมายเลขทั้งหมด</span>
@@ -39,7 +39,7 @@
     </li>
     
     {% else %}
-    <li class="nav-item">
+    <li class="nav-item mt-0 my-0">
         <a class="nav-link" href="{% url 'addlotterypage' %}">
         <i class="far fa-fw fa fa-list-ol"></i>
         <span>เพิ่มข้อมูลลอตเตอรี่</span>
@@ -47,7 +47,7 @@
     </li>
     {% endif %}
     
-    <li class="nav-item">
+    <li class="nav-item mt-0 my-0">
         <a class="nav-link" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
         <i class="fas fa-fw fa-sign-out-alt"></i>
         <span>ออกจากระบบ</span>
