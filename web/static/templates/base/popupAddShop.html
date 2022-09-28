@@ -12,7 +12,7 @@
             {% csrf_token %}
               <div class="form-group modal-body mx-5">
                 <p class="text-sm-left">ชื่อร้านค้า : </p>
-                <input type="hidden" id="statusPost" name="addShop">
+                <input type="hidden" id="statusPost" name="statusPost" value="addShop">
                 <input type="text" class="form-control form-login" id="name" name="name" placeholder="กรุณากรอกชื่อร้านค้า">
                 {% if errorAddShop %}<p class="text-danger text-sm-left mt-3 mx-1">{{ errorAddShop }}</p>{% endif %}
               </div>

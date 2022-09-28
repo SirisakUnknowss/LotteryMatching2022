@@ -6,6 +6,7 @@ from .serializers import SlzShop
 from .form import AddShopForm, DeleteShopForm, AddUserForm
 from .models import Shop
 from base.views import LottListView
+from account.models import Account
 
 # Create your views here.
 def addShopApi(request):
@@ -30,8 +31,13 @@ def addUsernameApi(request):
         if 'incorrect' in str(form):
             return 'ชื่อร้านค้านี้ไม่ถูกต้อง', False
         return 'กรุณากรอกข้อมูลใหม่อีกครั้ง', False
-    name = form['name'].data
-    Shop.objects.create(name=name)
+    inputName = form['inputName'].data
+    inputUsername = form['inputUsername'].data
+    inputPassword = form['inputPassword'].data
+    shopID = form['shopID'].data
+    shop = Shop.objects.get(pk=shopID)
+    user = Account.createUser()
+    Account.objects.create(name=inputName, username=inputUsername, password=inputPassword, shop=shop, user=user)
     return form, True
 
 class ListShow(LottListView):

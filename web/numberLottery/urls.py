@@ -7,4 +7,5 @@ urlpatterns = [
     path('list', numberLotteryViews.ListNumberLottery.as_view(), name='listNumberLottery'),
     path('listMatching', numberLotteryViews.ListNumberLotteryMatching.as_view(), name='listNumberLotteryMatching'),
     path('addDuplicateNumber', numberLotteryViews.addDuplicateNumber, name='addDuplicateNumber'),
+    path('readNumber', numberLotteryViews.readNumberLottery, name='readNumberLottery'),
 ]

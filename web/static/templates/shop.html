@@ -22,6 +22,7 @@
                     <thead class="thead-light">
                     <tr>
                         <th>ชื่อร้านค้า</th>
+                        <th>ชื่อจริง</th>
                         <th>ชื่อผู้ใช้งาน</th>
                         <th>รหัสผ่าน</th>
                         <th>Status</th>
@@ -41,18 +42,21 @@
 {% endblock %} 
 {% block js %} 
 {{ block.super }}
-<script src="{{ STATIC_URL }}js/shop/loadAllNumber.js"></script>
+<script src="{{ STATIC_URL }}js/shop/loadAllShop.js"></script>
 <script src="{{ STATIC_URL }}js/shop/display.js"></script>
 <script type="text/javascript">
     const url = 'api/shop/list'
     $(window).on('load', function() {
-        const success = "{{ successAddShop }}"
-        const error = "{{ errorAddShop }}"
-        if (error != "")
+        const statusPostError= "{{ statusPostError }}"
+        const successAddUser= "{{ successAddUser }}"
+        const errorAddUser = "{{ errorAddUser }}"
+        const successAddShop = "{{ successAddShop }}"
+        const errorAddShop = "{{ errorAddShop }}"
+        if (errorAddShop != "")
         {
             $('#addShopModal').modal('show')
         }
-        if (success != "")
+        if (successAddShop != "")
         {
             $('#addShopSuccessModal').modal('show')
         }

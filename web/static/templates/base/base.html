@@ -31,7 +31,7 @@
             {% block sidebar %}{% include 'base/sidebar.html' %}{% endblock %}
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
-                    {% comment %} {% block topbar %}{% include 'base/topBar.html' %}{% endblock %} {% endcomment %}
+                    {% block topbar %}{% include 'base/topBar.html' %}{% endblock %}
                     {% block content %}{% endblock %}
                     {% comment %} {% block footer %}{% include 'base/footer.html' %}{% endblock %} {% endcomment %}
                 </div>

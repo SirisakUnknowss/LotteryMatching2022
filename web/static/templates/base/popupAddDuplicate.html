@@ -4,6 +4,7 @@
         <div class="modal-content">
             <form id="formDuplicateNumber" method="post" action="{% url 'addDuplicateNumber' %}">
                 {% csrf_token %}
+                <input type="hidden" id="shopSelectDuplicate" name="shopSelect">
                 <input type="hidden" id="numberDuplicate" name="numberDuplicate">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

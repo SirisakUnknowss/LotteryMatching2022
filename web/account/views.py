@@ -54,22 +54,27 @@ def shoppage(request):
         if not(request.user.is_authenticated) or not request.user.account.admin:
             return redirect(reverse('homepage'))
         return render(request, 'shop.html')
-    STATUS_POST = [ 'addShop', 'addUSer']   
+    STATUS_POST = [ 'addUser', 'addShop']   
     statusPost = request.POST['statusPost']
     if not statusPost in STATUS_POST:
         context = { 'statusPostError':"สถานะไม่ถูกต้อง" }
         return render(request, 'shop.html', context=context)
-    errorForm = ""
-    isAddData = False
     if statusPost == STATUS_POST[0]:
-        form, isAddShop = addUsernameApi(request=request)
-    elif statusPost == STATUS_POST[1]:
-        form, isAddShop = addShopApi(request=request)
-    if not isAddShop:
-        context = { 'errorAddShop':form }
+        print(f"statusPost  === {statusPost}")
+        form, isAddUser = addUsernameApi(request=request)
+        if not isAddUser:
+            context = { 'errorAddUser':form }
+            return render(request, 'shop.html', context=context)
+        context = { 'successAddUser':"เพิ่มข้อมูลสำเร็จ" }
         return render(request, 'shop.html', context=context)
-    context = { 'successAddShop':"เพิ่มข้อมูลสำเร็จ" }
-    return render(request, 'shop.html', context=context)
+    elif statusPost == STATUS_POST[1]:
+        print(f"statusPost  === {statusPost}")
+        form, isAddShop = addShopApi(request=request)
+        if not isAddShop:
+            context = { 'errorAddShop':form }
+            return render(request, 'shop.html', context=context)
+        context = { 'successAddShop':"เพิ่มข้อมูลสำเร็จ" }
+        return render(request, 'shop.html', context=context)
 
 # def userpage(request):
 #     if not(request.user.is_authenticated):
@@ -81,9 +86,9 @@ def addlotterypage(request):
         if not(request.user.is_authenticated):
             return redirect(reverse('homepage'))
         return render(request, 'addLottery.html')
-    form, numberList, isAddShop = addNumberApi(request=request)
+    form, isAddShop = addNumberApi(request=request)
     if not isAddShop:
-        context = { 'errorAddNumber':form, "numberList":numberList }
+        context = form
         return render(request, 'addLottery.html', context=context)
     context = { 'successAddNumber':"เพิ่มข้อมูลสำเร็จ" }
     return render(request, 'addLottery.html', context=context)

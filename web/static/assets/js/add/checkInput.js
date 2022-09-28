@@ -41,6 +41,8 @@ function inputLength6()
 }
 
 confirmAddNumber.addEventListener('click', event => {
+    console.log(shopSelect.value)
+    
     if (input_length1.value.length == 0 || input_length2.value.length == 0 ||
         input_length3.value.length == 0 || input_length4.value.length == 0 ||
         input_length5.value.length == 0 || input_length6.value.length == 0) return alert("กรุณากรอกหมายเลขให้ครบถ้วน!")

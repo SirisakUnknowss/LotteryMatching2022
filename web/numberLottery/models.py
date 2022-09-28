@@ -8,6 +8,7 @@ class NumberLottery(models.Model):
         
     numberLottery   = models.CharField(max_length=6, null=True, blank=True)
     isRead          = models.BooleanField(default=False)
+    idShop          = models.CharField(max_length=9, null=True, blank=True)
     user            = models.ForeignKey(Account, null=True, blank=True, related_name='accountNumberLottery', on_delete=models.SET_NULL)
     
     def __str__(self):

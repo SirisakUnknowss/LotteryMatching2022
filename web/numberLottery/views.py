@@ -3,8 +3,9 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from rest_framework.response import Response
 from django.db.models import Count
+from rest_framework.permissions import AllowAny
 #Project
-from base.views import LottAPIGetView
+from base.views import LottAPIGetView, LottAPIView
 from account.models import Account
 from .models import NumberLottery, PrototypeNumberLottery
 from .form import DeleteNumberLotteryForm
@@ -44,18 +45,26 @@ class ListNumberLottery(LottAPIGetView):
 
 def addNumberApi(request):
     numberLottery = request.POST['number']
+    shopSelect = request.POST['shopSelect']
     account = Account.objects.get(user=request.user)
     number = NumberLottery.objects.filter(numberLottery=numberLottery, user=account)
+    form = { "errorAddNumber":None, "numberList":None, "idShop":None }
     if len(numberLottery) != 6:
-        return 'หมายเลขนี้ไม่ถูกต้อง', numberLottery, False
+        form["errorAddNumber"] = "หมายเลขนี้ไม่ถูกต้อง"
+        form["numberList"] = numberLottery
+        form["idShop"] = shopSelect
+        return form, False
     if number.exists():
-        return 'หมายเลขนี้มีอยู่แล้ว', numberLottery, False
-    checkNumber(numberLottery, account)
-    return "", "", True
+        form["errorAddNumber"] = "หมายเลขนี้มีอยู่แล้ว"
+        form["numberList"] = numberLottery
+        form["idShop"] = shopSelect
+        return form, False
+    checkNumber(numberLottery, shopSelect, account)
+    return form, True
 
-def checkNumber(numberLottery, account):
+def checkNumber(numberLottery, shopSelect, account):
     prototype = PrototypeNumberLottery.objects.filter(numberLottery=numberLottery)
-    number = NumberLottery.objects.create(numberLottery=numberLottery, user=account)
+    number = NumberLottery.objects.create(numberLottery=numberLottery, user=account, idShop=shopSelect)
     if prototype.exists():
         prototype[0].matching.add(number)
     else:
@@ -72,13 +81,20 @@ def deleteNumberApi(request):
 
 def addDuplicateNumber(request):
     numberLottery = request.POST['numberDuplicate']
+    shopSelect = request.POST['shopSelect']
     if len(numberLottery) != 6:
         return redirect(reverse('addlotterypage'))
     prototype = PrototypeNumberLottery.objects.filter(numberLottery=numberLottery)
-    number = NumberLottery.objects.create(numberLottery=numberLottery, user=request.user.account)
+    number = NumberLottery.objects.create(numberLottery=numberLottery, user=request.user.account, idShop=shopSelect)
     if prototype.exists():
         prototype[0].matching.add(number)
     else:
         prototype = PrototypeNumberLottery.objects.create(numberLottery=numberLottery)
         prototype.matching.add(number)
     return redirect(reverse('addlotterypage'))
+
+def readNumberLottery(request):
+    idNumber = request.POST['idNumber']
+    page = request.POST['page']
+    NumberLottery.objects.filter(pk=idNumber).update(isRead=True)
+    return redirect(reverse(page))

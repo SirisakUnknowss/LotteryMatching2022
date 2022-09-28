@@ -1,3 +1,4 @@
+
 async function display(jsonObject)
 {
     let result = jsonObject.result
@@ -8,6 +9,7 @@ async function display(jsonObject)
             index = number - 1
             parentClassSelector = "#dataTableBody"
             row = createCol(result[index])
+            console.log("row ==="+row)
             appendHTMLEle(row, parentClassSelector)
         }
         $('#dataTableHover').DataTable();
@@ -22,7 +24,8 @@ function createCol(result)
     numberEle.innerHTML = result.numberLottery
     shopEle = document.createElement(tag)
     nameShop = ""
-    if (result.user.shop == null) nameShop = "ไม่มีข้อมูล"
+    if (result.idShop != null) nameShop = result.idShop
+    else if (result.user.shop == null) nameShop = "ไม่มีข้อมูล"
     else nameShop = result.user.shop.name
     shopEle.innerHTML =nameShop
     userAddEle = document.createElement(tag)
@@ -30,7 +33,7 @@ function createCol(result)
     statusEle = document.createElement(tag)
     imageRead = imgUnRead
     isRead = ""
-    if (isRead)
+    if (result.isRead)
     {
         imageRead = imgRead
         isRead = "อ่านแล้ว"
@@ -42,6 +45,15 @@ function createCol(result)
     imgEle.className = "mx-2"
     imgEle.src = imageRead
     pEle.innerHTML = isRead
+    imgEle.addEventListener('click', event => {
+        idNumber = document.querySelector("#idNumber")
+        page = document.querySelector("#page")
+        idNumber.value = result.id
+        page.value = pageName
+        event.preventDefault()
+        formIsRead = document.querySelector("#from-readNumber")
+        formIsRead.submit()
+    })
     statusEle.appendChild(imgEle)
     statusEle.appendChild(pEle)
     manageEle = document.createElement(tag)
@@ -99,7 +111,7 @@ function createColBlock(name, parentClassSelector)
     className = "name"
     nameEle = createHTMLEle(tag, className)
     nameEle.innerHTML = name
-    appendHTMLEle(nameEle, parentClassSelector)
+    // appendHTMLEle(nameEle, parentClassSelector)
 }
 
 function createHTMLEle(tag, className)

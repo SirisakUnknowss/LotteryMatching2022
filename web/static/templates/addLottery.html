@@ -23,6 +23,11 @@
                         <div class="col mr-2">
                             <form id="formSendNumber" method="post" action="{% url 'addlotterypage' %}">
                                 {% csrf_token %}
+                                {% if user.account.admin %}
+                                <label for="shopSelect">กรุณาเลือกร้านค้า</label>
+                                <select class="form-control mb-3" id="shopSelect" name="shopSelect"></select>
+                                <label for="exampleFormControlSelect1" class="text-danger">*สำหรับ admin เท่านั้น</label></br>
+                                {% endif %}
                                 <input class="form-control form-input-one-number mb-3" type="text" id="input_length1" maxlength="1" onkeyup="inputLength1()">
                                 <input class="form-control form-input-one-number mb-3" type="text" id="input_length2" maxlength="1" onkeyup="inputLength2()">
                                 <input class="form-control form-input-one-number mb-3" type="text" id="input_length3" maxlength="1" onkeyup="inputLength3()">
@@ -54,26 +59,35 @@
     <script src="{{ STATIC_URL }}js/add/checkInput.js"></script>
     <script src="{{ STATIC_URL }}js/homepage/loadAllNumber.js"></script>
     <script src="{{ STATIC_URL }}js/homepage/display.js"></script>
+    
+    {% if user.account.admin %}
+    <script src="{{ STATIC_URL }}js/add/loadShopData.js"></script>
+    {% endif %}
 
   <!-- Page level custom scripts -->
   <script>
     const imgRead = "{{ STATIC_URL }}images/read.png"
     const imgUnRead = "{{ STATIC_URL }}images/unread.png"
     const url = 'api/numberLottery/list'
+    const urlshop = 'api/shop/list'
+    const pageName = "addlotterypage"
+    const csrf_token = "{{csrf_token}}"
     $(window).on('load', function() {
         const success = "{{ successAddNumber }}"
         const error = "{{ errorAddNumber }}"
         const numberList = "{{ numberList }}"
+        const idShop = "{{ idShop }}"
         if (success != "")
         {
             $('#addSuccessModal').modal('show')
         }
         if (error == "หมายเลขนี้มีอยู่แล้ว")
         {
-            
             $('#duplicateModal').modal('show')
             const numberDuplicateText = document.querySelector("#numberDuplicateText")
             const numberDuplicate = document.querySelector("#numberDuplicate")
+            const shopSelectDuplicate = document.querySelector("#shopSelectDuplicate")
+            shopSelectDuplicate.value = idShop
             numberDuplicate.value = numberList
             numberDuplicateText.innerHTML = numberList
             confirm()
