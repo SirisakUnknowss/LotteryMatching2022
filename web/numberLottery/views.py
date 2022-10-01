@@ -21,6 +21,7 @@ class ListNumberLotteryMatching(LottAPIGetView):
     def get(self, request, *args, **kwargs):
         prototype = PrototypeNumberLottery.objects.filter(matching__isnull=False).values('id', 'numberLottery').annotate(count=Count('id')).filter(count__gt=1)
         listNumber = []
+        queryset = None
         for numberMatching in prototype:
             listNumber.append(numberMatching['numberLottery'])
             queryset = NumberLottery.objects.filter(numberLottery__in=listNumber)
