@@ -46,7 +46,9 @@ class ListNumberLottery(LottAPIGetView):
 
 def addNumberApi(request):
     numberLottery = request.POST['number']
-    shopSelect = request.POST['shopSelect']
+    shopSelect = ""
+    if request.user.account.admin:
+        shopSelect = request.POST['shopSelect']
     account = Account.objects.get(user=request.user)
     number = NumberLottery.objects.filter(numberLottery=numberLottery, user=account)
     form = { "errorAddNumber":None, "numberList":None, "idShop":None }
@@ -60,8 +62,55 @@ def addNumberApi(request):
         form["numberList"] = numberLottery
         form["idShop"] = shopSelect
         return form, False
+    if not numberLottery.isnumeric():
+        form["errorAddNumber"] = "หมายเลขนี้ไม่ถูกต้อง"
+        form["numberList"] = numberLottery
+        form["idShop"] = shopSelect
+        return form, False
+    
     checkNumber(numberLottery, shopSelect, account)
     return form, True
+
+def addManyNumberApi(request):
+    shopSelect = ""
+    if request.user.account.admin:
+        shopSelect = request.POST['shopSelect']
+    numberList = request.POST['numberList']
+    print(numberList)
+    account = Account.objects.get(user=request.user)
+    formData, isSuccess = validateAndAddNumber(account, shopSelect, numberList)
+    form = { "errorAddNumber":None, "numberList":None, "idShop":None }
+    if isSuccess:
+        return form, True
+    form["errorAddNumber"] = formData
+    return form, False
+
+def validateAndAddNumber(account, shopSelect, numberList):
+    listNumberError = []
+    numberLists = numberList.split("\n")
+    print(numberLists)
+    for number in numberLists:
+        number = number.replace("\r", "")
+        if len(number) < 6:
+            continue
+        if len(number) > 6:
+            numbers = number.split("-")
+            number = getNumberScan(numbers)
+        if number == None:
+            continue
+        if len(number) == 6 and number.isnumeric():
+            try:
+                checkNumber(number, shopSelect, account)
+            except:
+                listNumberError.append(number)
+    if listNumberError.count == 0:
+         return "", True
+    return listNumberError, False
+
+def getNumberScan(numbers:list):
+    for number in numbers:
+        if len(number) == 6:
+            return number
 
 def checkNumber(numberLottery, shopSelect, account):
     prototype = PrototypeNumberLottery.objects.filter(numberLottery=numberLottery)

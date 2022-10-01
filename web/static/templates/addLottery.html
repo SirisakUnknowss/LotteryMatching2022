@@ -9,14 +9,14 @@
 <!-- Container Fluid-->
 <div class="container-fluid" id="container-wrapper">
     <div class="d-sm-flex align-items-center justify-content-between mt-3 mb-4">
-        <h1 class="h3 mb-0 text-gray-800">เพิ่มข้อมูลลอตเตอรี่</h1>
+        <h1 class="h3 mb-0 text-gray-800">รายการหมายลอตเตอรี่</h1>
     </div>
 
     <div class="row mb-3">
         <div class="col-lg-12">
             <div class="card mb-4">
                 <div class="card-header mb-n4">
-                    <div class="h5 font-weight-bold text-uppercase mb-1">รายการหมายเลขลอตเตอรี่</div>
+                    <div class="h5 font-weight-bold text-uppercase mb-1">เพิ่มหมายเลขลอตเตอรี่</div>
                 </div>
                 <div class="card-body">
                     <div class="row align-items-center text-center">
@@ -35,6 +35,31 @@
                                 <input class="form-control form-input-one-number mb-3" type="text" id="input_length5" maxlength="1" onkeyup="inputLength5()">
                                 <input class="form-control form-input-one-number mb-3" type="text" id="input_length6" maxlength="1" onkeyup="inputLength6()">
                                 <input type="hidden" id="number" name="number">
+                                <input type="hidden" id="statusAdd" name="statusAdd" value="one">
+                                <button id="confirmAddNumber" class="btn btn-primary">เพิ่มหมายเลข</button>
+                            </form>
+                            <p id="errorAddNumber"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header mb-n4">
+                    <div class="h5 font-weight-bold text-uppercase mb-1">เพิ่มหลายหมายเลข</div>
+                </div>
+                <div class="card-body">
+                    <div class="row align-items-center text-center">
+                        <div class="col mr-2">
+                            <form id="formSendNumber" method="post" action="{% url 'addlotterypage' %}">
+                                {% csrf_token %}
+                                {% if user.account.admin %}
+                                <label for="shopSelect">กรุณาเลือกร้านค้า</label>
+                                <select class="form-control mb-3" id="shopAddManySelect" name="shopSelect"></select>
+                                <label for="exampleFormControlSelect1" class="text-danger">*สำหรับ admin เท่านั้น</label></br>
+                                {% endif %}
+                                <textarea class="form-control w-50" id="numberList" name="numberList" rows="5"></textarea>
+                                <input type="hidden" id="number" name="number">
+                                <input type="hidden" id="statusAdd" name="statusAdd" value="many"></br>
                                 <button id="confirmAddNumber" class="btn btn-primary">เพิ่มหมายเลข</button>
                             </form>
                             <p id="errorAddNumber"></p>

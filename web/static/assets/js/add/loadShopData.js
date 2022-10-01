@@ -1,4 +1,5 @@
 const shopSelect = document.querySelector("#shopSelect")
+const shopAddManySelect = document.querySelector("#shopAddManySelect")
 window.addEventListener('load', (event) => {
     requestContentShop()
 })
@@ -36,6 +37,11 @@ async function displayShop(jsonObject)
             optionEle.value = result[index].id
             optionEle.innerHTML = result[index].name
             shopSelect.appendChild(optionEle)
+
+            optionAddManyEle = document.createElement("option")
+            optionAddManyEle.value = result[index].id
+            optionAddManyEle.innerHTML = result[index].name
+            shopAddManySelect.appendChild(optionAddManyEle)
         }
     }
 }

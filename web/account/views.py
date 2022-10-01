@@ -8,7 +8,7 @@ from django.db.models import Count
 #Project
 from account.models import Account
 from numberLottery.models import NumberLottery, PrototypeNumberLottery
-from numberLottery.views import addNumberApi, deleteNumberApi
+from numberLottery.views import addNumberApi, deleteNumberApi, addManyNumberApi
 from shop.models import Shop
 from shop.views import addShopApi, addUsernameApi
 from .form import AuthenForm
@@ -86,8 +86,17 @@ def addlotterypage(request):
         if not(request.user.is_authenticated):
             return redirect(reverse('homepage'))
         return render(request, 'addLottery.html')
-    form, isAddShop = addNumberApi(request=request)
-    if not isAddShop:
+    
+    statusAdd = request.POST['statusAdd']
+    form = ""
+    isAddNumber = False
+    if statusAdd == "one":
+        form, isAddNumber = addNumberApi(request=request)
+    elif statusAdd == "many":
+        form, isAddNumber = addManyNumberApi(request=request)
+    else:
+        return render(request, 'addLottery.html', context=context)
+    if not isAddNumber:
         context = form
         return render(request, 'addLottery.html', context=context)
     context = { 'successAddNumber':"เพิ่มข้อมูลสำเร็จ" }

@@ -9,7 +9,6 @@ async function display(jsonObject)
             index = number - 1
             parentClassSelector = "#dataTableBody"
             row = createCol(result[index])
-            console.log("row ==="+row)
             appendHTMLEle(row, parentClassSelector)
         }
         $('#dataTableHover').DataTable();
@@ -23,10 +22,20 @@ function createCol(result)
     numberEle = document.createElement(tag)
     numberEle.innerHTML = result.numberLottery
     shopEle = document.createElement(tag)
-    nameShop = ""
-    if (result.idShop != null) nameShop = result.idShop
-    else if (result.user.shop == null) nameShop = "ไม่มีข้อมูล"
-    else nameShop = result.user.shop.name
+    var nameShop = ""
+    if (result.idShop != null && result.idShop.length > 0)
+    {
+        nameShop = result.idShop
+    }
+    else if (result.user.shop == null)
+    {
+        nameShop = "ไม่มีข้อมูล"
+    }
+    else
+    {
+        nameShop = result.user.shop.name
+    }
+    console.log(nameShop)
     shopEle.innerHTML =nameShop
     userAddEle = document.createElement(tag)
     userAddEle.innerHTML = result.user.username
@@ -81,7 +90,6 @@ function createDeleteButton(manageEle, result)
 function onclickDelete(button, result)
 {
     button.addEventListener('click', event => {
-        console.log(result.id)
         const numberDelete = document.querySelector("#numberDelete")
         const IDNumberDelete = document.querySelector("#IDNumberDelete")
         IDNumberDelete.value = result.id

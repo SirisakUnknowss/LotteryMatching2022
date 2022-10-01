@@ -40,9 +40,7 @@ function inputLength6()
     else input_length5.focus()
 }
 
-confirmAddNumber.addEventListener('click', event => {
-    console.log(shopSelect.value)
-    
+confirmAddNumber.addEventListener('click', event => {    
     if (input_length1.value.length == 0 || input_length2.value.length == 0 ||
         input_length3.value.length == 0 || input_length4.value.length == 0 ||
         input_length5.value.length == 0 || input_length6.value.length == 0) return alert("กรุณากรอกหมายเลขให้ครบถ้วน!")
@@ -86,6 +84,7 @@ function checkTypeNumber()
     else
     {
         number.value = (input_length1.value + input_length2.value + input_length3.value + input_length4.value + input_length5.value + input_length6.value)
+        console.log(number.value)
         formSendNumber.submit()
     }
 }
