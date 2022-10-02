@@ -3,19 +3,18 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from rest_framework.response import Response
 from django.db.models import Count
-from rest_framework.permissions import AllowAny
 #Project
-from base.views import LottAPIGetView, LottAPIView
+from base.views import LottAPIGetView
 from account.models import Account
 from .models import NumberLottery, PrototypeNumberLottery
 from .form import DeleteNumberLotteryForm
-from .serializers import SlzListNumber
+from .serializers import SlzListNumber, SlzListNumberMatching
 
 # Create your views here.
 class ListNumberLotteryMatching(LottAPIGetView):
 
     queryset = NumberLottery.objects.all()
-    serializer_class = SlzListNumber
+    serializer_class = SlzListNumberMatching
     pagination_class = None
     
     def get(self, request, *args, **kwargs):
@@ -24,7 +23,7 @@ class ListNumberLotteryMatching(LottAPIGetView):
         queryset = None
         for numberMatching in prototype:
             listNumber.append(numberMatching['numberLottery'])
-            queryset = NumberLottery.objects.filter(numberLottery__in=listNumber)
+        queryset = PrototypeNumberLottery.objects.filter(numberLottery__in=listNumber)
         serializer = self.get_serializer(queryset, many=True)
         self.response["result"] = serializer.data
         return Response(self.response)
@@ -46,11 +45,11 @@ class ListNumberLottery(LottAPIGetView):
 
 def addNumberApi(request):
     numberLottery = request.POST['number']
-    shopSelect = ""
-    if request.user.account.admin:
-        shopSelect = request.POST['shopSelect']
+    # shopSelect = ""
+    # if request.user.account.admin:
+    shopSelect = request.POST['shopSelect']
     account = Account.objects.get(user=request.user)
-    number = NumberLottery.objects.filter(numberLottery=numberLottery, user=account)
+    number = NumberLottery.objects.filter(numberLottery=numberLottery, user=account, idShop=shopSelect)
     form = { "errorAddNumber":None, "numberList":None, "idShop":None }
     if len(numberLottery) != 6:
         form["errorAddNumber"] = "หมายเลขนี้ไม่ถูกต้อง"
@@ -72,9 +71,9 @@ def addNumberApi(request):
     return form, True
 
 def addManyNumberApi(request):
-    shopSelect = ""
-    if request.user.account.admin:
-        shopSelect = request.POST['shopSelect']
+    # shopSelect = ""
+    # if request.user.account.admin:
+    shopSelect = request.POST['shopSelect']
     numberList = request.POST['numberList']
     print(numberList)
     account = Account.objects.get(user=request.user)

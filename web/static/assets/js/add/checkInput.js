@@ -8,6 +8,8 @@ const input_length6 = document.querySelector("#input_length6")
 const confirmAddNumber = document.querySelector("#confirmAddNumber")
 const formSendNumber = document.querySelector("#formSendNumber")
 const number = document.querySelector("#number")
+// const shopAddSelect = document.querySelector("#shopSelect")
+// const shopAddManySelect = document.querySelector("#shopAddManySelect")
 
 function inputLength1()
 {
@@ -40,7 +42,9 @@ function inputLength6()
     else input_length5.focus()
 }
 
-confirmAddNumber.addEventListener('click', event => {    
+confirmAddNumber.addEventListener('click', event => {
+    shopSelect.value = shopSelect.options[shopSelect.selectedIndex].value
+    shopAddManySelect.value = shopAddManySelect.options[shopAddManySelect.selectedIndex].value
     if (input_length1.value.length == 0 || input_length2.value.length == 0 ||
         input_length3.value.length == 0 || input_length4.value.length == 0 ||
         input_length5.value.length == 0 || input_length6.value.length == 0) return alert("กรุณากรอกหมายเลขให้ครบถ้วน!")

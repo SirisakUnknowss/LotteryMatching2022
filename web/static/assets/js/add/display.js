@@ -22,66 +22,29 @@ function createCol(result)
     numberEle = document.createElement(tag)
     numberEle.innerHTML = result.numberLottery
     shopEle = document.createElement(tag)
-    nameShop = getnameShops(result.matching)
+    var nameShop = ""
+    if (result.idShop != null && result.idShop.length > 0)
+    {
+        nameShop = result.idShop
+    }
+    else if (result.user.shop == null)
+    {
+        nameShop = "ไม่มีข้อมูล"
+    }
+    else
+    {
+        nameShop = result.user.shop.name
+    }
     shopEle.innerHTML =nameShop
     userAddEle = document.createElement(tag)
-    userAddEle.innerHTML = getuserNames(result.matching)
-    statusEle = document.createElement(tag)
-    imageRead = imgUnRead
-    isRead = ""
-    if (result.isRead)
-    {
-        imageRead = imgRead
-        isRead = "อ่านแล้ว"
-    }
-    else isRead = "ยังไม่อ่าน"
-    
-    imgEle = document.createElement('img')
-    pEle = document.createElement('span')
-    imgEle.className = "mx-2"
-    imgEle.src = imageRead
-    pEle.innerHTML = isRead
-    imgEle.addEventListener('click', event => {
-        idNumber = document.querySelector("#idNumber")
-        page = document.querySelector("#page")
-        idNumber.value = result.id
-        page.value = pageName
-        event.preventDefault()
-        formIsRead = document.querySelector("#from-readNumber")
-        formIsRead.submit()
-    })
-    statusEle.appendChild(imgEle)
-    statusEle.appendChild(pEle)
+    userAddEle.innerHTML = result.user.username
     manageEle = document.createElement(tag)
     createDeleteButton(manageEle, result)
     row.appendChild(numberEle)
     row.appendChild(shopEle)
     row.appendChild(userAddEle)
-    row.appendChild(statusEle)
     row.appendChild(manageEle)
     return row
-}
-
-function getnameShops(numbers)
-{
-    var nameShop = ""
-    for (let i=0; i < numbers.length; i++)
-    {
-        if (numbers[i].idShop != null && numbers[i].idShop.length > 0) nameShop += numbers[i].idShop + "<br />"
-        else if (numbers[i].user.shop == null) nameShop += "ไม่มีข้อมูล<br />"
-        else nameShop += numbers[i].user.shop.name + "<br />"
-    }
-    return nameShop
-}
-
-function getuserNames(usernames)
-{
-    var usernameList = ""
-    for (let i=0; i < usernames.length; i++)
-    {
-        usernameList += usernames[i].user.username + "<br />"
-    }
-    return usernameList
 }
 
 function createDeleteButton(manageEle, result)

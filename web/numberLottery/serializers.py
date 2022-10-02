@@ -21,6 +21,7 @@ class SlzListNumber(serializers.ModelSerializer):
 
 class SlzListNumberMatching(serializers.ModelSerializer):
     # user = SlzAccount()
+    matching = SlzListNumber(many=True)
     class Meta:
         model = PrototypeNumberLottery
         fields = '__all__'
