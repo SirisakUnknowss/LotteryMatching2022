@@ -50,21 +50,18 @@ def addNumberApi(request):
     shopSelect = request.POST['shopSelect']
     account = Account.objects.get(user=request.user)
     number = NumberLottery.objects.filter(numberLottery=numberLottery, user=account, idShop=shopSelect)
-    form = { "errorAddNumber":None, "numberList":None, "idShop":None }
+    form = { "errorAddNumber":None, "numberList":None, "idShop":shopSelect }
     if len(numberLottery) != 6:
         form["errorAddNumber"] = "หมายเลขนี้ไม่ถูกต้อง"
         form["numberList"] = numberLottery
-        form["idShop"] = shopSelect
         return form, False
     if number.exists():
         form["errorAddNumber"] = "หมายเลขนี้มีอยู่แล้ว"
         form["numberList"] = numberLottery
-        form["idShop"] = shopSelect
         return form, False
     if not numberLottery.isnumeric():
         form["errorAddNumber"] = "หมายเลขนี้ไม่ถูกต้อง"
         form["numberList"] = numberLottery
-        form["idShop"] = shopSelect
         return form, False
     
     checkNumber(numberLottery, shopSelect, account)
@@ -75,10 +72,9 @@ def addManyNumberApi(request):
     # if request.user.account.admin:
     shopSelect = request.POST['shopSelect']
     numberList = request.POST['numberList']
-    print(numberList)
     account = Account.objects.get(user=request.user)
     formData, isSuccess = validateAndAddNumber(account, shopSelect, numberList)
-    form = { "errorAddNumber":None, "numberList":None, "idShop":None }
+    form = { "errorAddNumber":None, "numberList":None, "idShop":shopSelect }
     if isSuccess:
         return form, True
     form["errorAddNumber"] = formData
@@ -87,7 +83,6 @@ def addManyNumberApi(request):
 def validateAndAddNumber(account, shopSelect, numberList):
     listNumberError = []
     numberLists = numberList.split("\n")
-    print(numberLists)
     for number in numberLists:
         number = number.replace("\r", "")
         if len(number) < 6:

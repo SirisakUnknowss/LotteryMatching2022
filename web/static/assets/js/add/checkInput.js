@@ -5,8 +5,10 @@ const input_length3 = document.querySelector("#input_length3")
 const input_length4 = document.querySelector("#input_length4")
 const input_length5 = document.querySelector("#input_length5")
 const input_length6 = document.querySelector("#input_length6")
+const confirmAddManyNumber = document.querySelector("#confirmAddManyNumber")
 const confirmAddNumber = document.querySelector("#confirmAddNumber")
 const formSendNumber = document.querySelector("#formSendNumber")
+const formSendManyNumber = document.querySelector("#formSendManyNumber")
 const number = document.querySelector("#number")
 // const shopAddSelect = document.querySelector("#shopSelect")
 // const shopAddManySelect = document.querySelector("#shopAddManySelect")
@@ -51,6 +53,14 @@ confirmAddNumber.addEventListener('click', event => {
     else { checkTypeNumber() }
     event.preventDefault()
     
+})
+
+confirmAddManyNumber.addEventListener('click', event => {
+    shopSelect.value = shopSelect.options[shopSelect.selectedIndex].value
+    shopAddManySelect.value = shopAddManySelect.options[shopAddManySelect.selectedIndex].value
+    event.preventDefault()
+    console.log(number.value)
+    formSendManyNumber.submit()
 })
 
 function checkTypeNumber()

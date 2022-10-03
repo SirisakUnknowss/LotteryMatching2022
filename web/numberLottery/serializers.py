@@ -13,8 +13,7 @@ class SlzListNumber(serializers.ModelSerializer):
     def to_representation(self, instance):
         response = super(SlzListNumber, self).to_representation(instance)
         try:
-            if (instance.user.admin):
-                response["idShop"] = Shop.objects.get(pk=instance.idShop).name
+            response["idShop"] = Shop.objects.get(pk=instance.idShop).name
             return response
         except:
             return response

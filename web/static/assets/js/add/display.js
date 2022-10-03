@@ -47,6 +47,16 @@ function createCol(result)
     return row
 }
 
+function onSelectSearch()
+{
+    var value = shopSearchSelect.options[shopSearchSelect.selectedIndex].text
+    console.log(value)
+    $("#dataTableBody tr").filter(function()
+    {
+        $(this).toggle($(this).text().indexOf(value) > -1)
+    })
+}
+
 function createDeleteButton(manageEle, result)
 {
     var a = document.createElement("a")

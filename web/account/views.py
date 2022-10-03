@@ -37,6 +37,9 @@ def signin(request):
 def homepage(request):
     if not(request.user.is_authenticated):
         return redirect(reverse('signinpage'))
+    
+    if not request.user.account.admin:
+        return redirect(reverse('addlotterypage'))
     lotteryCount = NumberLottery.objects.all().count
     prototype = PrototypeNumberLottery.objects.filter(matching__isnull=False).values('id').annotate(count=Count('id')).filter(count__gt=1)
 
@@ -60,7 +63,6 @@ def shoppage(request):
         context = { 'statusPostError':"สถานะไม่ถูกต้อง" }
         return render(request, 'shop.html', context=context)
     if statusPost == STATUS_POST[0]:
-        print(f"statusPost  === {statusPost}")
         form, isAddUser = addUsernameApi(request=request)
         if not isAddUser:
             context = { 'errorAddUser':form }
@@ -68,7 +70,6 @@ def shoppage(request):
         context = { 'successAddUser':"เพิ่มข้อมูลสำเร็จ" }
         return render(request, 'shop.html', context=context)
     elif statusPost == STATUS_POST[1]:
-        print(f"statusPost  === {statusPost}")
         form, isAddShop = addShopApi(request=request)
         if not isAddShop:
             context = { 'errorAddShop':form }
@@ -95,11 +96,11 @@ def addlotterypage(request):
     elif statusAdd == "many":
         form, isAddNumber = addManyNumberApi(request=request)
     else:
-        return render(request, 'addLottery.html', context=context)
+        return render(request, 'addLottery.html')
+    context = form
     if not isAddNumber:
-        context = form
         return render(request, 'addLottery.html', context=context)
-    context = { 'successAddNumber':"เพิ่มข้อมูลสำเร็จ" }
+    context['successAddNumber'] = "เพิ่มข้อมูลสำเร็จ"
     return render(request, 'addLottery.html', context=context)
 
 def deletelotterypage(request):

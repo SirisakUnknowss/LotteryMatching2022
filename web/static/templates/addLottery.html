@@ -16,6 +16,30 @@
         <div class="col-lg-12">
             <div class="card mb-4">
                 <div class="card-header mb-n4">
+                    <div class="h5 font-weight-bold text-uppercase mb-1">เพิ่มหลายหมายเลข</div>
+                </div>
+                <div class="card-body">
+                    <div class="row align-items-center text-center">
+                        <div class="col mr-2">
+                            <form id="formSendManyNumber" method="post" action="{% url 'addlotterypage' %}">
+                                {% csrf_token %}
+                                {% comment %} {% if user.account.admin %} {% endcomment %}
+                                <label for="shopSelect">กรุณาเลือกร้านค้า</label>
+                                <select class="form-control mb-3" id="shopAddManySelect" name="shopSelect"></select></br>
+                                {% comment %} <label for="exampleFormControlSelect1" class="text-danger">*สำหรับ admin เท่านั้น</label></br> {% endcomment %}
+                                {% comment %} {% endif %} {% endcomment %}
+                                <textarea class="form-control w-50" id="numberList" name="numberList" rows="5"></textarea>
+                                <input type="hidden" id="number" name="number">
+                                <input type="hidden" id="statusAdd" name="statusAdd" value="many"></br>
+                                <button id="confirmAddManyNumber" class="btn btn-primary">เพิ่มหมายเลข</button>
+                            </form>
+                            <p id="errorAddNumber"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header mb-n4">
                     <div class="h5 font-weight-bold text-uppercase mb-1">เพิ่มหมายเลขลอตเตอรี่</div>
                 </div>
                 <div class="card-body">
@@ -43,30 +67,6 @@
                     </div>
                 </div>
             </div>
-            <div class="card mb-4">
-                <div class="card-header mb-n4">
-                    <div class="h5 font-weight-bold text-uppercase mb-1">เพิ่มหลายหมายเลข</div>
-                </div>
-                <div class="card-body">
-                    <div class="row align-items-center text-center">
-                        <div class="col mr-2">
-                            <form id="formSendNumber" method="post" action="{% url 'addlotterypage' %}">
-                                {% csrf_token %}
-                                {% comment %} {% if user.account.admin %} {% endcomment %}
-                                <label for="shopSelect">กรุณาเลือกร้านค้า</label>
-                                <select class="form-control mb-3" id="shopAddManySelect" name="shopSelect"></select></br>
-                                {% comment %} <label for="exampleFormControlSelect1" class="text-danger">*สำหรับ admin เท่านั้น</label></br> {% endcomment %}
-                                {% comment %} {% endif %} {% endcomment %}
-                                <textarea class="form-control w-50" id="numberList" name="numberList" rows="5"></textarea>
-                                <input type="hidden" id="number" name="number">
-                                <input type="hidden" id="statusAdd" name="statusAdd" value="many"></br>
-                                <button id="confirmAddNumber" class="btn btn-primary">เพิ่มหมายเลข</button>
-                            </form>
-                            <p id="errorAddNumber"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <!-- DataTable -->
         <div class="col-lg-12">
@@ -78,6 +78,8 @@
             <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"></div>
                 <div class="table-responsive p-3">
+                    <label for="shopSearchSelect">แสดงข้อมูลตามร้านค้า : </label>
+                    <select class="form-control mb-3" id="shopSearchSelect" name="shopSearchSelect" onchange="onSelectSearch()"></select></br>
                     <table class="table align-items-center table-flush table-hover" id="dataTableHover">
                         <thead class="thead-light">
                             <tr>
@@ -121,14 +123,14 @@
     const urlshop = 'api/shop/list'
     const pageName = "addlotterypage"
     const csrf_token = "{{csrf_token}}"
+    const success = "{{ successAddNumber }}"
+    const error = "{{ errorAddNumber }}"
+    const numberList = "{{ numberList }}"
+    const idShop = "{{ idShop }}"
     $(window).on('load', function() {
-        const success = "{{ successAddNumber }}"
-        const error = "{{ errorAddNumber }}"
-        const numberList = "{{ numberList }}"
-        const idShop = "{{ idShop }}"
         if (success != "")
         {
-            $('#addSuccessModal').modal('show')
+            {% comment %} $('#addSuccessModal').modal('show') {% endcomment %}
         }
         if (error == "หมายเลขนี้มีอยู่แล้ว")
         {
