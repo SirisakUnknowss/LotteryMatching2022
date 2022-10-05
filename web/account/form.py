@@ -18,3 +18,16 @@ class AuthenForm(forms.Form):
             return cleaned_data
         except:
             return redirect(reverse('homepage'))
+
+class DeleteUserForm(forms.Form):
+    IDUserDelete = forms.CharField(max_length=50)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        try:
+            IDUserDelete = cleaned_data['IDUserDelete']
+            if not IDUserDelete:
+                self.add_error('IDUserDelete', "incorrect")
+            return cleaned_data
+        except:
+            return redirect(reverse('userpage'))

@@ -26,11 +26,12 @@ urlpatterns = [
     path('', accountViews.homepage, name='homepage'),
     path('signin', accountViews.signin, name='signinpage'),
     path('shop', accountViews.shoppage, name='shoppage'),
-    # path('user', accountViews.userpage, name='userpage'),
+    path('user', accountViews.userpage, name='userpage'),
     path('logout', accountViews.logoutpage, name='logoutpage'),
     path('deletelottery', accountViews.deletelotterypage, name='deletelotterypage'),
     path('numberLottery', accountViews.addlotterypage, name='addlotterypage'),
-    # path('add', accountViews.addlotterypage, name='addlotterypage'),
+    path('api/user/list', accountViews.ListAccount.as_view(), name='listAccount'),
+    path('api/user/deleteUser', accountViews.deleteuserpage, name='deleteuserpage'),
     ## numberLottery ##
     path('api/numberLottery/', include('numberLottery.urls')), 
     ## shop ##

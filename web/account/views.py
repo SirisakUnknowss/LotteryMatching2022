@@ -4,14 +4,17 @@ from django.urls import reverse
 from django.contrib.auth import login, logout
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Count
+from rest_framework.response import Response
 
 #Project
+from base.views import LottAPIGetView
 from account.models import Account
+from account.serializers import SlzAccount
 from numberLottery.models import NumberLottery, PrototypeNumberLottery
 from numberLottery.views import addNumberApi, deleteNumberApi, addManyNumberApi
 from shop.models import Shop
 from shop.views import addShopApi, addUsernameApi
-from .form import AuthenForm
+from .form import AuthenForm, DeleteUserForm
 
 # Create your views here.
 @csrf_exempt
@@ -77,10 +80,10 @@ def shoppage(request):
         context = { 'successAddShop':"เพิ่มข้อมูลสำเร็จ" }
         return render(request, 'shop.html', context=context)
 
-# def userpage(request):
-#     if not(request.user.is_authenticated):
-#         return redirect(reverse('homepage'))
-#     return render(request, 'user.html')
+def userpage(request):
+    if not(request.user.is_authenticated):
+        return redirect(reverse('homepage'))
+    return render(request, 'user.html')
 
 def addlotterypage(request):
     if request.method == "GET":
@@ -114,3 +117,31 @@ def deletelotterypage(request):
 def logoutpage(request):
     logout(request)
     return redirect(reverse('homepage'))
+
+class ListAccount(LottAPIGetView):
+    
+    queryset = Account.objects.all()
+    serializer_class = SlzAccount
+    pagination_class = None
+    
+    def get(self, request, *args, **kwargs):
+        queryset = Account.objects.all()
+        serializer = self.get_serializer(queryset, many=True)
+        self.response["result"] = serializer.data
+        return Response(self.response)
+
+def deleteuserpage(request):
+    if request.method == "GET":
+        return redirect(reverse('userpage'))
+    if not(request.user.is_authenticated):
+        return redirect(reverse('homepage'))
+    deleteUserApi(request=request)
+    return redirect(reverse('userpage'))
+
+def deleteUserApi(request):
+    form =DeleteUserForm(request.POST)
+    if not form.is_valid():
+        return 'ผู้ใช้งานนี้ไม่มีอยู่แล้ว', False
+    IDUserDelete = form['IDUserDelete'].data
+    Account.objects.filter(pk=IDUserDelete).delete()
+    return form, True
