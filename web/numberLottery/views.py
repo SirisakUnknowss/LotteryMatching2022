@@ -3,12 +3,13 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from rest_framework.response import Response
 from django.db.models import Count
+from rest_framework.permissions import AllowAny
 #Project
 from base.views import LottAPIGetView
 from account.models import Account
 from .models import NumberLottery, PrototypeNumberLottery
 from .form import DeleteNumberLotteryForm
-from .serializers import SlzListNumber, SlzListNumberMatching
+from .serializers import SlzListNumber, SlzListNumberMatching, SlzListNumberEachShop
 
 # Create your views here.
 class ListNumberLotteryMatching(LottAPIGetView):
@@ -16,6 +17,7 @@ class ListNumberLotteryMatching(LottAPIGetView):
     queryset = NumberLottery.objects.all()
     serializer_class = SlzListNumberMatching
     pagination_class = None
+    permission_classes = [ AllowAny ]
     
     def get(self, request, *args, **kwargs):
         prototype = PrototypeNumberLottery.objects.filter(matching__isnull=False).values('id', 'numberLottery').annotate(count=Count('id')).filter(count__gt=1)
@@ -142,3 +144,36 @@ def readNumberLottery(request):
     page = request.POST['page']
     NumberLottery.objects.filter(pk=idNumber).update(isRead=True)
     return redirect(reverse(page))
+
+class ListMatchingEachShop(LottAPIGetView):
+
+    queryset = NumberLottery.objects.all()
+    serializer_class = SlzListNumberEachShop
+    permission_classes = [ AllowAny ]
+    
+    def get(self, request, *args, **kwargs):
+        prototype = PrototypeNumberLottery.objects.filter(matching__isnull=False).values('id', 'numberLottery').annotate(count=Count('id')).filter(count__gt=1)
+        listNumber = []
+        queryset = None
+        for numberMatching in prototype:
+            listNumber.append(numberMatching['numberLottery'])
+        queryset = NumberLottery.objects.filter(numberLottery__in=listNumber).values('numberLottery', 'idShop').order_by('idShop')
+        queryset.group_by = ['idShop']
+        self.groupNumberByShop(queryset)
+        serializer = self.get_serializer(queryset, many=True)
+        self.response["result"] = serializer.data
+        return Response(self.response)
+    
+    def groupNumberByShop(self, querysets):
+        group = {}
+        l = []
+        for queryset in querysets:
+            if not queryset['idShop'] in group:
+                group[queryset['idShop']] = [(queryset['numberLottery'])]
+            else:
+                data = group[queryset['idShop']]
+                if data == None:
+                    group[queryset['idShop']] = [(queryset['numberLottery'])]
+                print(f"{queryset['idShop']} --- data ========= {data}")
+                group[queryset['idShop']] = data.append(queryset['numberLottery'])
+        print(group)

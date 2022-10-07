@@ -8,13 +8,13 @@ from rest_framework.response import Response
 
 #Project
 from base.views import LottAPIGetView
-from account.models import Account
-from account.serializers import SlzAccount
+from .models import Account
+from .serializers import SlzAccount
+from .form import AuthenForm, DeleteUserForm, AddUserForm
 from numberLottery.models import NumberLottery, PrototypeNumberLottery
 from numberLottery.views import addNumberApi, deleteNumberApi, addManyNumberApi
 from shop.models import Shop
-from shop.views import addShopApi, addUsernameApi
-from .form import AuthenForm, DeleteUserForm
+from shop.views import addShopApi
 
 # Create your views here.
 @csrf_exempt
@@ -60,30 +60,22 @@ def shoppage(request):
         if not(request.user.is_authenticated) or not request.user.account.admin:
             return redirect(reverse('homepage'))
         return render(request, 'shop.html')
-    STATUS_POST = [ 'addUser', 'addShop']   
-    statusPost = request.POST['statusPost']
-    if not statusPost in STATUS_POST:
-        context = { 'statusPostError':"สถานะไม่ถูกต้อง" }
+    form, isAddShop = addShopApi(request=request)
+    if not isAddShop:
+        context = { 'errorAddShop':form }
         return render(request, 'shop.html', context=context)
-    if statusPost == STATUS_POST[0]:
-        form, isAddUser = addUsernameApi(request=request)
-        if not isAddUser:
-            context = { 'errorAddUser':form }
-            return render(request, 'shop.html', context=context)
-        context = { 'successAddUser':"เพิ่มข้อมูลสำเร็จ" }
-        return render(request, 'shop.html', context=context)
-    elif statusPost == STATUS_POST[1]:
-        form, isAddShop = addShopApi(request=request)
-        if not isAddShop:
-            context = { 'errorAddShop':form }
-            return render(request, 'shop.html', context=context)
-        context = { 'successAddShop':"เพิ่มข้อมูลสำเร็จ" }
-        return render(request, 'shop.html', context=context)
+    context = { 'successAddShop':"เพิ่มข้อมูลสำเร็จ" }
+    return render(request, 'shop.html', context=context)
 
 def userpage(request):
-    if not(request.user.is_authenticated):
+    if not request.user.is_authenticated or not request.user.account.admin:
         return redirect(reverse('homepage'))
-    return render(request, 'user.html')
+    form, isAddUser = addUsernameApi(request=request)
+    if not isAddUser:
+        context = { 'errorAddUser':form }
+        return render(request, 'user.html', context=context)
+    context = { 'successAddUser':"เพิ่มข้อมูลสำเร็จ" }
+    return render(request, 'user.html', context=context)
 
 def addlotterypage(request):
     if request.method == "GET":
@@ -144,4 +136,19 @@ def deleteUserApi(request):
         return 'ผู้ใช้งานนี้ไม่มีอยู่แล้ว', False
     IDUserDelete = form['IDUserDelete'].data
     Account.objects.filter(pk=IDUserDelete).delete()
+    return form, True
+
+def addUsernameApi(request):
+    form = AddUserForm(request.POST)
+    if not form.is_valid():
+        if 'usernameExist' in str(form):
+            return 'ชื่อผู้ใช้งานนี้มีอยู่แล้ว', False
+        if 'incorrect' in str(form):
+            return 'ชื่อร้านค้านี้ไม่ถูกต้อง', False
+        return 'กรุณากรอกข้อมูลใหม่อีกครั้ง', False
+    inputName = form['inputName'].data
+    inputUsername = form['inputUsername'].data
+    inputPassword = form['inputPassword'].data
+    user = Account.createUser()
+    Account.objects.create(name=inputName, username=inputUsername, password=inputPassword, user=user)
     return form, True

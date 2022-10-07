@@ -27,3 +27,16 @@ class SlzListNumberMatching(serializers.ModelSerializer):
 
 class SlzAddNumberInput(serializers.Serializer):
     number = serializers.CharField(required=True, max_length=6)
+
+class SlzListNumberEachShop(serializers.ModelSerializer):
+    class Meta:
+        model = NumberLottery
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        response = super(SlzListNumberEachShop, self).to_representation(instance)
+        try:
+            response["idShop"] = Shop.objects.get(pk=instance.idShop).name
+            return response
+        except:
+            return response

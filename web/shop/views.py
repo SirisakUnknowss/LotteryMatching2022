@@ -1,12 +1,13 @@
 #Django
 from django.shortcuts import redirect
 from django.urls import reverse
+
 #Project
 from .serializers import SlzShop
-from .form import AddShopForm, DeleteShopForm, AddUserForm
+from .form import AddShopForm, DeleteShopForm
 from .models import Shop
 from base.views import LottListView
-from account.models import Account
+from numberLottery.models import NumberLottery
 
 # Create your views here.
 def addShopApi(request):
@@ -19,25 +20,6 @@ def addShopApi(request):
         return 'กรุณากรอกข้อมูลใหม่อีกครั้ง', False
     name = form['name'].data
     Shop.objects.create(name=name)
-    return form, True
-
-def addUsernameApi(request):
-    form = AddUserForm(request.POST)
-    if not form.is_valid():
-        if 'shopExist' in str(form):
-            return 'ไม่พบร้านค้านี้', False
-        if 'usernameExist' in str(form):
-            return 'ชื่อผู้ใช้งานนี้มีอยู่แล้ว', False
-        if 'incorrect' in str(form):
-            return 'ชื่อร้านค้านี้ไม่ถูกต้อง', False
-        return 'กรุณากรอกข้อมูลใหม่อีกครั้ง', False
-    inputName = form['inputName'].data
-    inputUsername = form['inputUsername'].data
-    inputPassword = form['inputPassword'].data
-    shopID = form['shopID'].data
-    shop = Shop.objects.get(pk=shopID)
-    user = Account.createUser()
-    Account.objects.create(name=inputName, username=inputUsername, password=inputPassword, shop=shop, user=user)
     return form, True
 
 class ListShow(LottListView):
@@ -60,5 +42,6 @@ def deleteShopApi(request):
     if not form.is_valid():
         return 'หมายเลขนี้ไม่มีอยู่แล้ว', False
     IDShopDelete = form['IDShopDelete'].data
+    NumberLottery.objects.filter(idShop=IDShopDelete).delete()
     Shop.objects.filter(pk=IDShopDelete).delete()
     return form, True

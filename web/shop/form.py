@@ -28,30 +28,6 @@ class AddShopForm(forms.Form):
         except Shop.DoesNotExist:
             return
 
-class AddUserForm(forms.Form):
-    shopID = forms.IntegerField(min_value=1)
-    inputName = forms.CharField(max_length=50)
-    inputUsername = forms.CharField(max_length=50)
-    inputPassword = forms.CharField(max_length=50)
-
-    def clean(self):
-        cleaned_data = super().clean()
-        try:
-            self.existShop(cleaned_data)
-            self.existUsername(cleaned_data)
-            return cleaned_data
-        except:
-            return redirect(reverse('shoppage'))
-
-    def existShop(self, cleaned_data):
-        try:
-            shopID = cleaned_data['shopID']
-            if not shopID:
-                self.add_error('shopID', "incorrect")
-            Shop.objects.get(pk=cleaned_data['shopID'])
-        except Shop.DoesNotExist:
-            self.add_error('shopID', "shopExist")
-
     def existUsername(self, cleaned_data):
         try:
             inputUsername = cleaned_data['inputUsername']

@@ -13,8 +13,8 @@ class SlzShop(serializers.ModelSerializer):
         model = Shop
         fields = '__all__'
 
-    def to_representation(self, instance):
-        response = super(SlzShop, self).to_representation(instance)
-        accounts = Account.objects.filter(shop=instance.pk)
-        response["account"] = SlzAccount(accounts, many=True).data
-        return response
+    # def to_representation(self, instance):
+    #     response = super(SlzShop, self).to_representation(instance)
+    #     accounts = Account.objects.filter(shop=instance.pk)
+    #     response["account"] = SlzAccount(accounts, many=True).data
+    #     return response

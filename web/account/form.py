@@ -31,3 +31,16 @@ class DeleteUserForm(forms.Form):
             return cleaned_data
         except:
             return redirect(reverse('userpage'))
+
+class AddUserForm(forms.Form):
+    inputName = forms.CharField(max_length=50)
+    inputUsername = forms.CharField(max_length=50)
+    inputPassword = forms.CharField(max_length=50)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        try:
+            self.existUsername(cleaned_data)
+            return cleaned_data
+        except:
+            return redirect(reverse('userpage'))
