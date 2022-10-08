@@ -53,7 +53,7 @@ def addNumberApi(request):
     shopSelect = request.POST['shopSelect']
     account = Account.objects.get(user=request.user)
     number = NumberLottery.objects.filter(numberLottery=numberLottery, user=account, idShop=shopSelect)
-    form = { "errorAddNumber":None, "numberList":None, "idShop":shopSelect }
+    form = { "errorAddNumber":None, "numberList":None, "idShop":shopSelect, "isManyNumber": False }
     if len(numberLottery) != 6:
         form["errorAddNumber"] = "หมายเลขนี้ไม่ถูกต้อง"
         form["numberList"] = numberLottery
@@ -77,7 +77,7 @@ def addManyNumberApi(request):
     numberList = request.POST['numberList']
     account = Account.objects.get(user=request.user)
     formData, isSuccess = validateAndAddNumber(account, shopSelect, numberList)
-    form = { "errorAddNumber":None, "numberList":None, "idShop":shopSelect }
+    form = { "errorAddNumber":None, "numberList":None, "idShop":shopSelect, "isManyNumber": True }
     if isSuccess:
         return form, True
     form["errorAddNumber"] = formData

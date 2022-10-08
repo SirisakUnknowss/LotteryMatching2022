@@ -127,6 +127,7 @@
     const error = "{{ errorAddNumber }}"
     const numberList = "{{ numberList }}"
     const idShop = "{{ idShop }}"
+    const isManyNumber = "{{ isManyNumber }}"
     $(window).on('load', function() {
         if (success != "")
         {
@@ -150,6 +151,14 @@
             confirmDuplicateNumber.addEventListener('click', event => {
                 formDuplicateNumber.submit()
             })
+        }
+        if (isManyNumber)
+        {
+            input_length1.focus()
+        }
+        else
+        {
+            document.querySelector("#numberList").focus()
         }
     })
   </script>
