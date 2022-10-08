@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block head_css_site %}
+{{ block.super }}
+{% endblock head_css_site %}
+{% block content %}
+{% include 'base/popupAddShop.html' %}
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mt-3 mb-4">
+        <h1 class="h3 mb-0 text-gray-800">ร้านค้าที่มีเลขลอตเตอรี่ตรงกัน</h1>
+    </div>
+
+    <div class="card mb-3 container w-50">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table align-items-center table-flush mb-2">
+                    <thead>
+                    <tr>
+                        <th>ชื่อร้านค้า</th>
+                        <th class="text-right">หมายเลขที่ตรงกัน</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 mb-4" id="divCardData">
+        </div>
+    </div>
+</div>
+{% endblock %} 
+{% block js %} 
+{{ block.super }}
+<script src="{{ STATIC_URL }}js/shopMatching/loadAllShopMatcing.js"></script>
+<script src="{{ STATIC_URL }}js/shopMatching/display.js"></script>
+<script type="text/javascript">
+    const url = 'api/numberLottery/listMatchingEachShop'
+</script>
+{% endblock %}

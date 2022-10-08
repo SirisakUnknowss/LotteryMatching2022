@@ -77,6 +77,12 @@ def userpage(request):
     context = { 'successAddUser':"เพิ่มข้อมูลสำเร็จ" }
     return render(request, 'user.html', context=context)
 
+def shopmatchingpage(request):
+    if request.method == "GET":
+        if (request.user.is_authenticated) or request.user.account.admin:
+            return render(request, 'shopMatching.html')
+    return redirect(reverse('homepage'))
+
 def addlotterypage(request):
     if request.method == "GET":
         if not(request.user.is_authenticated):

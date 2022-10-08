@@ -18,6 +18,7 @@ class NumberLotteryAdmin(ImportExportModelAdmin):
     resource_class = NumberLotteryResource
     list_display = ['id', 'numberLottery', 'isRead']
     search_fields = ['numberLottery']
+    list_filter    = ['numberLottery', 'idShop', 'isRead']
 
 class PrototypeNumberLotteryResource(resources.ModelResource):
     class Meta:
@@ -30,3 +31,4 @@ class PrototypeNumberLotteryAdmin(ImportExportModelAdmin):
     resource_class = PrototypeNumberLotteryResource
     list_display = ['id', 'numberLottery']
     search_fields = ['numberLottery']
+    list_filter    = ['numberLottery', 'matching__idShop', 'matching__isRead']

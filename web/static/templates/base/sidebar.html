@@ -37,12 +37,12 @@
         <span>ผู้ใช้งานทั้งหมด</span>
         </a>
     </li>
-    {% comment %} <li class="nav-item mt-0 my-0">
-        <a class="nav-link" href="{{ STATIC_URL }}#">
+    <li class="nav-item mt-0 my-0">
+        <a class="nav-link" href="{% url 'shopmatchingpage' %}">
         <i class="fas fa-fw fa fa-list"></i>
-        <span>หมายเลขทั้งหมด</span>
+        <span>ร้านค้าที่มีเลขตรงกัน</span>
         </a>
-    </li> {% endcomment %}
+    </li>
     
     {% else %}
     <li class="nav-item mt-0 my-0">

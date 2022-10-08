@@ -7,6 +7,7 @@ from rest_framework.permissions import AllowAny
 #Project
 from base.views import LottAPIGetView
 from account.models import Account
+from shop.models import Shop
 from .models import NumberLottery, PrototypeNumberLottery
 from .form import DeleteNumberLotteryForm
 from .serializers import SlzListNumber, SlzListNumberMatching, SlzListNumberEachShop
@@ -157,23 +158,24 @@ class ListMatchingEachShop(LottAPIGetView):
         queryset = None
         for numberMatching in prototype:
             listNumber.append(numberMatching['numberLottery'])
-        queryset = NumberLottery.objects.filter(numberLottery__in=listNumber).values('numberLottery', 'idShop').order_by('idShop')
-        queryset.group_by = ['idShop']
-        self.groupNumberByShop(queryset)
-        serializer = self.get_serializer(queryset, many=True)
-        self.response["result"] = serializer.data
+        queryset = NumberLottery.objects.filter(numberLottery__in=listNumber).values('id', 'numberLottery', 'idShop').order_by('idShop')
+        self.response["result"] = self.groupNumberByShop(queryset)
         return Response(self.response)
     
     def groupNumberByShop(self, querysets):
         group = {}
         l = []
+        shops = Shop.objects.all()
+        for shop in shops:
+            group[f"{shop.pk}"] = []
         for queryset in querysets:
-            if not queryset['idShop'] in group:
-                group[queryset['idShop']] = [(queryset['numberLottery'])]
-            else:
-                data = group[queryset['idShop']]
-                if data == None:
-                    group[queryset['idShop']] = [(queryset['numberLottery'])]
-                print(f"{queryset['idShop']} --- data ========= {data}")
-                group[queryset['idShop']] = data.append(queryset['numberLottery'])
-        print(group)
+            if not queryset['numberLottery'] in group[queryset['idShop']]:
+                group[queryset['idShop']].append(queryset['numberLottery'])
+        for shop in shops:
+            data = {}
+            if group[f"{shop.pk}"]:
+                data['name'] = shop.name
+                data['number'] = group[f"{shop.pk}"]
+                l.append(data)
+        return l
+            
