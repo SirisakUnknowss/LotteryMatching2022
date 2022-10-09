@@ -52,13 +52,10 @@ function createCol(result)
     })
     statusEle.appendChild(imgEle)
     statusEle.appendChild(pEle)
-    manageEle = document.createElement(tag)
-    createDeleteButton(manageEle, result)
     row.appendChild(numberEle)
     row.appendChild(shopEle)
     row.appendChild(userAddEle)
     row.appendChild(statusEle)
-    row.appendChild(manageEle)
     return row
 }
 
@@ -128,7 +125,6 @@ function createColBlock(name, parentClassSelector)
     className = "name"
     nameEle = createHTMLEle(tag, className)
     nameEle.innerHTML = name
-    // appendHTMLEle(nameEle, parentClassSelector)
 }
 
 function createHTMLEle(tag, className)

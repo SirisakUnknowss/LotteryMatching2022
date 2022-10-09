@@ -49,12 +49,8 @@ function createCol(result)
 
 function onSelectSearch()
 {
-    var value = shopSearchSelect.options[shopSearchSelect.selectedIndex].text
-    console.log(value)
-    $("#dataTableBody tr").filter(function()
-    {
-        $(this).toggle($(this).text().indexOf(value) > -1)
-    })
+    var value = shopSearchSelect.options[shopSearchSelect.selectedIndex].value
+    requestContent("?shop="+value)
 }
 
 function createDeleteButton(manageEle, result)
@@ -101,7 +97,6 @@ function createColBlock(name, parentClassSelector)
     className = "name"
     nameEle = createHTMLEle(tag, className)
     nameEle.innerHTML = name
-    // appendHTMLEle(nameEle, parentClassSelector)
 }
 
 function createHTMLEle(tag, className)

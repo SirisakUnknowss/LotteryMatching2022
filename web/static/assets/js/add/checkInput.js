@@ -9,7 +9,7 @@ const confirmAddManyNumber = document.querySelector("#confirmAddManyNumber")
 const confirmAddNumber = document.querySelector("#confirmAddNumber")
 const formSendNumber = document.querySelector("#formSendNumber")
 const formSendManyNumber = document.querySelector("#formSendManyNumber")
-const number = document.querySelector("#number")
+const addOneNumber = document.querySelector("#addOneNumber")
 // const shopAddSelect = document.querySelector("#shopSelect")
 // const shopAddManySelect = document.querySelector("#shopAddManySelect")
 
@@ -59,7 +59,6 @@ confirmAddManyNumber.addEventListener('click', event => {
     shopSelect.value = shopSelect.options[shopSelect.selectedIndex].value
     shopAddManySelect.value = shopAddManySelect.options[shopAddManySelect.selectedIndex].value
     event.preventDefault()
-    console.log(number.value)
     formSendManyNumber.submit()
 })
 
@@ -97,8 +96,8 @@ function checkTypeNumber()
     }
     else
     {
-        number.value = (input_length1.value + input_length2.value + input_length3.value + input_length4.value + input_length5.value + input_length6.value)
-        console.log(number.value)
+        addOneNumber.value = (input_length1.value + input_length2.value + input_length3.value + input_length4.value + input_length5.value + input_length6.value)
+        console.log(addOneNumber.value)
         formSendNumber.submit()
     }
 }

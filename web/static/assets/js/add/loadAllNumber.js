@@ -3,12 +3,13 @@
 ***********************************************/
 let isWorking = false;
 
-window.addEventListener('load', (event) => {
-    requestContent()
-})
+// window.addEventListener('load', (event) => {
+//     requestContent("?shop="+value)
+// })
 
 async function clearData() {
     const dataTableBody = document.querySelector("#dataTableBody")
+    dataTableBody.innerHTML = '';
 }
 
 async function loadContent(params = "") {
@@ -21,7 +22,6 @@ async function loadContent(params = "") {
         isWorking = false
     }
     const jsonObject = await response.json()
-    console.log(jsonObject)
     return jsonObject
 }
 

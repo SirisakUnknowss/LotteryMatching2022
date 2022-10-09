@@ -2,9 +2,11 @@
  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="modalLabelDelete" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="formDeleteNumber" method="post" action="{% url 'deletelotterypage' %}">
+            <form id="formDeleteNumber" method="post" action="{% url 'addlotterypage' %}">
                 {% csrf_token %}
+                <input type="hidden" id="statusAdd" name="statusAdd" value="delete">
                 <input type="hidden" id="IDNumberDelete" name="IDNumberDelete">
+                <input type="hidden" name="shopSelect" value="{{ idShop }}">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>

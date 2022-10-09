@@ -25,6 +25,11 @@ async function requestContentShop(params) {
     clearData()
     .then( () => loadContentShop(params))
     .then(jsonObject => displayShop(jsonObject))
+    .then(() => {
+        
+    var value = document.querySelector("#shopSearchSelect").options[document.querySelector("#shopSearchSelect").selectedIndex].value
+    requestContent("?shop="+value)
+    })
 }
 
 async function displayShop(jsonObject)
@@ -32,7 +37,6 @@ async function displayShop(jsonObject)
     let result = jsonObject.result
     if (result.length > 0)
     {
-        console.log("id === " + idShop)
         for (let index=0; index < result.length; index++)
         {
             optionEle = document.createElement("option")
@@ -46,8 +50,6 @@ async function displayShop(jsonObject)
             optionAddManyEle.innerHTML = result[index].name
             if (String(result[index].id) == String(idShop))
             {
-                console.log("index === " + String(result[index].id))
-                console.log("idShop === " + String(idShop))
                 optionAddManyEle.setAttribute("selected", "selected")
             }
             shopAddManySelect.appendChild(optionAddManyEle)
@@ -55,9 +57,8 @@ async function displayShop(jsonObject)
             optionSearchEle = document.createElement("option")
             optionSearchEle.value = result[index].id
             optionSearchEle.innerHTML = result[index].name
+            if (String(result[index].id) == String(idShop)) { optionSearchEle.setAttribute("selected", "selected") }
             shopSearchSelect.appendChild(optionSearchEle)
         }
-        $('shopSelect option').eq(idShop).attr('selected', 'selected')
-        $('shopAddManySelect option').eq(idShop).attr('selected', 'selected')
     }
 }

@@ -90,9 +90,11 @@ def addlotterypage(request):
         return render(request, 'addLottery.html')
     
     statusAdd = request.POST['statusAdd']
-    form = ""
+    form = {}
     isAddNumber = False
-    if statusAdd == "one":
+    if statusAdd == "delete":
+        form, isAddNumber = deleteNumberApi(request=request)
+    elif statusAdd == "one":
         form, isAddNumber = addNumberApi(request=request)
     elif statusAdd == "many":
         form, isAddNumber = addManyNumberApi(request=request)
@@ -103,14 +105,6 @@ def addlotterypage(request):
         return render(request, 'addLottery.html', context=context)
     context['successAddNumber'] = "เพิ่มข้อมูลสำเร็จ"
     return render(request, 'addLottery.html', context=context)
-
-def deletelotterypage(request):
-    if request.method == "GET":
-        return redirect(reverse('addlotterypage'))
-    if not(request.user.is_authenticated):
-        return redirect(reverse('homepage'))
-    deleteNumberApi(request=request)
-    return redirect(reverse('addlotterypage'))
 
 def logoutpage(request):
     logout(request)
