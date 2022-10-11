@@ -3,6 +3,8 @@ from django import forms
 from django.shortcuts import redirect
 from django.urls import reverse
 
+from account.models import Account
+
 class AuthenForm(forms.Form):
     username = forms.CharField(max_length=50)
     password = forms.CharField(max_length=50)
@@ -36,11 +38,13 @@ class AddUserForm(forms.Form):
     inputName = forms.CharField(max_length=50)
     inputUsername = forms.CharField(max_length=50)
     inputPassword = forms.CharField(max_length=50)
+    statusUser = forms.CharField()
 
     def clean(self):
         cleaned_data = super().clean()
         try:
-            self.existUsername(cleaned_data)
+            username = cleaned_data['inputUsername']
+            Account.objects.get(username=username)
+            self.add_error('inputUsername', "usernameExist")
+        except Account.DoesNotExist:
             return cleaned_data
-        except:
-            return redirect(reverse('userpage'))

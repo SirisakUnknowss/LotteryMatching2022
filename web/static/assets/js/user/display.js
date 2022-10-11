@@ -43,13 +43,13 @@ function createCol(result)
     row = createRow()
     tag = "td"
     nameEle = document.createElement(tag)
-    nameEle.className = "col-2"
+    nameEle.className = "col-2 text-center"
     nameEle.innerHTML = result.name
     userNameEle = document.createElement(tag)
-    userNameEle.className = "col-3"
+    userNameEle.className = "col-4 text-center"
     userNameEle.innerHTML = result.username
     passwordAccountEle = document.createElement(tag)
-    passwordAccountEle.className = "col-4 text-center"
+    passwordAccountEle.className = "col-2 text-center"
     inputPassword = document.createElement("INPUT")
     inputPassword.setAttribute("type", "password")
     inputPassword.className = "form-control form-login w-75 d-inline mr-3"
@@ -59,11 +59,17 @@ function createCol(result)
     passwordAccountEle.appendChild(inputPassword)
     passwordAccountEle.appendChild(hidePasswordEle)
     manageEle = document.createElement(tag)
+    statusEle = document.createElement(tag)
+    statusText = "ผุ้ใช้งาน"
+    if (result.admin) statusText = "ผู้ดูแลระบบ"
+    statusEle.className = "col-2 text-center"
+    statusEle.innerHTML = statusText
+    // createEditUserButton(manageEle, result)
     createDeleteButton(manageEle, result)
-    // createAddUserButton(manageEle, result)
     row.appendChild(nameEle)
     row.appendChild(userNameEle)
     row.appendChild(passwordAccountEle)
+    row.appendChild(statusEle)
     row.appendChild(manageEle)
     return row
 }
@@ -89,7 +95,7 @@ function onclickHidePassword(result, inputPassword)
 
 function createDeleteButton(manageEle, result)
 {
-    manageEle.className = "text-right col-3"
+    manageEle.className = "text-center col-2"
     var a = document.createElement("a")
     a.href = "javascript:void(0);"
     a.setAttribute("data-toggle", "modal")
@@ -100,14 +106,14 @@ function createDeleteButton(manageEle, result)
     onclickDelete(a, result)
 }
 
-function createAddUserButton(manageEle, result)
+function createEditUserButton(manageEle, result)
 {
-    manageEle.className = "text-right"
+    manageEle.className = "text-center"
     var a = document.createElement("a")
     a.href = "javascript:void(0);"
     a.setAttribute("data-toggle", "modal")
     a.setAttribute("data-target", "#addUserModal")
-    a.innerHTML = "เพิ่มผู้ใช้งาน"
+    a.innerHTML = "แก้ไขข้อมูล"
     a.className = "btn btn-info mx-3 mb-1"
     manageEle.appendChild(a)
     onclickUserPopup(a, result)

@@ -10,18 +10,29 @@
             </div>
             <form role="form" class="user" id="login-form" method="post" action="{% url 'userpage' %}">
                 {% csrf_token %}
-                <div class="form-group modal-body mx-5 mt-n3 mb-n3">
+                <div class="form-group modal-body mx-5 mt-n1 mb-n3">
                     <p class="text-sm-left">ชื่อจริง : </p>
                     <input type="text" class="form-control form-login" id="inputName" name="inputName" placeholder="ชื่อจริง..." minlength="2" required>
                 </div>
                 <div class="form-group modal-body mx-5 mt-n3 mb-n3">
                     <p class="text-sm-left">ชื่อผู้ใช้งาน : </p><p class="text-sm-left text-danger small mt-n3">(*ใช้สำหรับเข้าสู่ระบบ)</p>
-                    <input type="text" class="form-control form-login" id="inputUsername" name="inputUsername" placeholder="ชื่อผู้ใช้งาน..." minlength="8" required>
+                    <input type="text" class="form-control form-login" id="inputUsername" name="inputUsername" placeholder="ชื่อผู้ใช้งาน..." minlength="4" required>
                     {% if errorAddUser %}<p class="text-danger text-sm-left mt-3 mx-1">{{ errorAddUser }}</p>{% endif %}
                 </div>
                 <div class="form-group modal-body mx-5 mt-n3">
                     <p class="text-sm-left">รหัสผ่าน : </p><p class="text-sm-left text-danger small mt-n3">(*ใช้สำหรับเข้าสู่ระบบ)</p>
                     <input type="text" class="form-control form-login" id="inputPassword" name="inputPassword" placeholder="รหัสผ่าน..." minlength="8" required>
+                </div>
+                <div class="form-group modal-body mx-5 mt-n3 text-left">
+                    <label>สถานะ</label>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio3" name="statusUser" value="admin" class="custom-control-input">
+                        <label class="custom-control-label" for="customRadio3">ผู้ดูแลระบบ</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio4" name="statusUser" value="user" class="custom-control-input" checked>
+                        <label class="custom-control-label" for="customRadio4">ผู้ใช้งาน</label>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-primary" data-dismiss="modal">ยกเลิก</button>

@@ -68,8 +68,10 @@ def shoppage(request):
     return render(request, 'shop.html', context=context)
 
 def userpage(request):
-    if not request.user.is_authenticated or not request.user.account.admin:
-        return redirect(reverse('homepage'))
+    if request.method == "GET":
+        if not(request.user.is_authenticated) or not request.user.account.admin:
+            return redirect(reverse('homepage'))
+        return render(request, 'user.html')
     form, isAddUser = addUsernameApi(request=request)
     if not isAddUser:
         context = { 'errorAddUser':form }
@@ -149,6 +151,10 @@ def addUsernameApi(request):
     inputName = form['inputName'].data
     inputUsername = form['inputUsername'].data
     inputPassword = form['inputPassword'].data
+    statusUser = form['statusUser'].data
+    status = False
+    if statusUser == "admin":
+        status = True
     user = Account.createUser()
-    Account.objects.create(name=inputName, username=inputUsername, password=inputPassword, user=user)
+    Account.objects.create(name=inputName, username=inputUsername, password=inputPassword, user=user, admin=status)
     return form, True

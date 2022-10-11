@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
-{% block title %}ร้านค้า{% endblock title %}
+{% block title %}ข้อมูลผู้ใช้งาน{% endblock title %}
 {% block head_css_site %}
 {{ block.super }}
 {% endblock head_css_site %}
@@ -21,10 +21,11 @@
                 <table class="table align-items-center table-flush mb-2">
                     <thead class="thead-light">
                     <tr>
-                        <th>ชื่อจริง</th>
-                        <th>ชื่อผู้ใช้งาน</th>
-                        <th>รหัสผ่าน</th>
-                        <th>สถานะ</th>
+                        <th class="col-2 text-center">ชื่อจริง</th>
+                        <th class="col-4 text-center">ชื่อผู้ใช้งาน</th>
+                        <th class="col-2 text-center">รหัสผ่าน</th>
+                        <th class="col-2 text-center">สถานะ</th>
+                        <th class="col-2 text-center">จัดการข้อมูล</th>
                     </tr>
                     </thead>
                 </table>
@@ -51,13 +52,13 @@
         const errorAddUser = "{{ errorAddUser }}"
         const successAddShop = "{{ successAddShop }}"
         const errorAddShop = "{{ errorAddShop }}"
-        if (errorAddShop != "")
+        if (errorAddShop != "" || errorAddUser != "" || statusPostError != "")
         {
-            $('#ModalAddUser').modal('show')
+            $('#addUserModal').modal('show')
         }
         if (successAddShop != "")
         {
-            $('#addShopSuccessModal').modal('show')
+            $('#addUserSuccessModal').modal('show')
         }
     })
 </script>
