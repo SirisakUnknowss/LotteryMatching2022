@@ -2,10 +2,10 @@ from rest_framework import serializers
 
 from shop.models import Shop
 from .models import NumberLottery, PrototypeNumberLottery
-from account.serializers import SlzAccount
+from account.serializers import SlzAccount, SlzAccountNumList
 
 class SlzListNumber(serializers.ModelSerializer):
-    user = SlzAccount()
+    user = SlzAccountNumList()
     class Meta:
         model = NumberLottery
         fields = '__all__'

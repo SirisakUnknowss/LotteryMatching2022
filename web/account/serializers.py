@@ -8,3 +8,9 @@ class SlzAccount(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = '__all__'
+
+class SlzAccountNumList(serializers.ModelSerializer):
+    shop = SlzShop()
+    class Meta:
+        model = Account
+        fields = ['shop', 'username']

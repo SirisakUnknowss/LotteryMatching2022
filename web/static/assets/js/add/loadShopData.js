@@ -27,7 +27,7 @@ async function requestContentShop(params) {
     .then(jsonObject => displayShop(jsonObject))
     .then(() => {
         
-    var value = document.querySelector("#shopSearchSelect").options[document.querySelector("#shopSearchSelect").selectedIndex].value
+    var value = shopSearchSelect.options[shopSearchSelect.selectedIndex].value
     requestContent("?shop="+value)
     })
 }
