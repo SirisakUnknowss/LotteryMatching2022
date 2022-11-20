@@ -24,12 +24,14 @@ from account import views as accountViews
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', accountViews.homepage, name='homepage'),
+    path('read', accountViews.readpage, name='readpage'),
     path('signin', accountViews.signin, name='signinpage'),
     path('shop', accountViews.shoppage, name='shoppage'),
     path('user', accountViews.userpage, name='userpage'),
     path('shopmatching', accountViews.shopmatchingpage, name='shopmatchingpage'),
     path('logout', accountViews.logoutpage, name='logoutpage'),
-    path('numberLottery', accountViews.addlotterypage, name='addlotterypage'),
+    path('add', accountViews.addlotterypage, name='addlotterypage'),
+    path('addMany', accountViews.addmanylotterypage, name='addmanylotterypage'),
     path('api/user/list', accountViews.ListAccount.as_view(), name='listAccount'),
     path('api/user/deleteUser', accountViews.deleteuserpage, name='deleteuserpage'),
     ## numberLottery ##

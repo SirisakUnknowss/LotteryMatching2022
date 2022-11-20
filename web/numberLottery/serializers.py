@@ -2,16 +2,32 @@ from rest_framework import serializers
 
 from shop.models import Shop
 from .models import NumberLottery, PrototypeNumberLottery
-from account.serializers import SlzAccount, SlzAccountNumList
+from account.serializers import SlzAccountNumList
+from account.models import Account
 
 class SlzListNumber(serializers.ModelSerializer):
-    user = SlzAccountNumList()
     class Meta:
         model = NumberLottery
-        fields = '__all__'
+        fields = ['id', 'numberLottery']
 
     def to_representation(self, instance):
         response = super(SlzListNumber, self).to_representation(instance)
+        response["username"] = instance.username
+        try:
+            response["idShop"] = Shop.objects.get(pk=instance.idShop).name
+            return response
+        except:
+            return response
+
+class SlzNumberMatching(serializers.ModelSerializer):
+
+    class Meta:
+        model = NumberLottery
+        fields = []
+
+    def to_representation(self, instance):
+        response = super(SlzNumberMatching, self).to_representation(instance)
+        response["username"] = instance.username
         try:
             response["idShop"] = Shop.objects.get(pk=instance.idShop).name
             return response
@@ -19,7 +35,7 @@ class SlzListNumber(serializers.ModelSerializer):
             return response
 
 class SlzListNumberMatching(serializers.ModelSerializer):
-    matching = SlzListNumber(many=True)
+    matching = SlzNumberMatching(many=True)
     class Meta:
         model = PrototypeNumberLottery
         fields = '__all__'

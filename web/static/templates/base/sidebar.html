@@ -14,9 +14,21 @@
         </a>
     </li> {% endcomment %}
     <li class="nav-item mt-0 my-0">
+        <a class="nav-link" href="{% url 'readpage' %}">
+        <i class="far fa-fw fa fa-list-ol"></i>
+        <span>หมายเลขที่อ่านแล้ว</span>
+        </a>
+    </li>
+    <li class="nav-item mt-0 my-0">
         <a class="nav-link" href="{% url 'addlotterypage' %}">
         <i class="far fa-fw fa fa-list-ol"></i>
         <span>เพิ่มข้อมูลลอตเตอรี่</span>
+        </a>
+    </li>
+    <li class="nav-item mt-0 my-0">
+        <a class="nav-link" href="{% url 'addmanylotterypage' %}">
+        <i class="far fa-fw fa fa-list-ol"></i>
+        <span>เพิ่มข้อมูลลอตเตอรี่หลายชุด</span>
         </a>
     </li>
     {% comment %} <li class="nav-item">
@@ -49,6 +61,12 @@
         <a class="nav-link" href="{% url 'addlotterypage' %}">
         <i class="far fa-fw fa fa-list-ol"></i>
         <span>เพิ่มข้อมูลลอตเตอรี่</span>
+        </a>
+    </li>
+    <li class="nav-item mt-0 my-0">
+        <a class="nav-link" href="{% url 'addmanylotterypage' %}">
+        <i class="far fa-fw fa fa-list-ol"></i>
+        <span>เพิ่มข้อมูลลอตเตอรี่หลายชุด</span>
         </a>
     </li>
     {% endif %}

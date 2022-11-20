@@ -5,9 +5,12 @@ const input_length3 = document.querySelector("#input_length3")
 const input_length4 = document.querySelector("#input_length4")
 const input_length5 = document.querySelector("#input_length5")
 const input_length6 = document.querySelector("#input_length6")
-const confirmAddNumber = document.querySelector("#confirmAddNumber")
+const confirmAddManyNumber = document.querySelector("#confirmAddManyNumber")
 const formSendNumber = document.querySelector("#formSendNumber")
+const formSendManyNumber = document.querySelector("#formSendManyNumber")
 const addOneNumber = document.querySelector("#addOneNumber")
+// const shopAddSelect = document.querySelector("#shopSelect")
+// const shopAddManySelect = document.querySelector("#shopAddManySelect")
 
 function inputLength1()
 {
@@ -40,14 +43,11 @@ function inputLength6()
     else input_length5.focus()
 }
 
-confirmAddNumber.addEventListener('click', event => {
+confirmAddManyNumber.addEventListener('click', event => {
     shopSelect.value = shopSelect.options[shopSelect.selectedIndex].value
-    if (input_length1.value.length == 0 || input_length2.value.length == 0 ||
-        input_length3.value.length == 0 || input_length4.value.length == 0 ||
-        input_length5.value.length == 0 || input_length6.value.length == 0) return alert("กรุณากรอกหมายเลขให้ครบถ้วน!")
-    else { checkTypeNumber() }
+    shopAddManySelect.value = shopAddManySelect.options[shopAddManySelect.selectedIndex].value
     event.preventDefault()
-    
+    formSendManyNumber.submit()
 })
 
 function checkTypeNumber()

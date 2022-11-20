@@ -1,4 +1,4 @@
-const shopSelect = document.querySelector("#shopSelect")
+const shopAddManySelect = document.querySelector("#shopAddManySelect")
 const shopSearchSelect = document.querySelector("#shopSearchSelect")
 window.addEventListener('load', (event) => {
     requestContentShop()
@@ -38,11 +38,14 @@ async function displayShop(jsonObject)
     {
         for (let index=0; index < result.length; index++)
         {
-            optionEle = document.createElement("option")
-            optionEle.value = result[index].id
-            optionEle.innerHTML = result[index].name
-            if (String(result[index].id) == String(idShop)) { optionEle.setAttribute("selected", "selected") }
-            shopSelect.appendChild(optionEle)
+            optionAddManyEle = document.createElement("option")
+            optionAddManyEle.value = result[index].id
+            optionAddManyEle.innerHTML = result[index].name
+            if (String(result[index].id) == String(idShop))
+            {
+                optionAddManyEle.setAttribute("selected", "selected")
+            }
+            shopAddManySelect.appendChild(optionAddManyEle)
 
             optionSearchEle = document.createElement("option")
             optionSearchEle.value = result[index].id

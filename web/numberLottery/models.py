@@ -13,6 +13,10 @@ class NumberLottery(models.Model):
     
     def __str__(self):
         return self.numberLottery
+
+    @property
+    def username(self):
+        return str(self.user.username)
     
     @staticmethod
     def createNumberRecord(number, user):

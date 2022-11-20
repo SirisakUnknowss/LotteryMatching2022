@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block head_css_site %}
+{{ block.super }}
+{% endblock head_css_site %}
+{% block content %}
+
+
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+  <div class="d-sm-flex align-items-center justify-content-between mt-3 mb-4">
+    <h1 class="h3 mb-0 text-gray-800">หมายเลขที่อ่านแล้ว</h1>
+  </div>
+
+  <div class="row mb-3">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between mt-3 mb-3">
+      <h5 class="m-0 font-weight-bold text-primary">รายการหมายเลขลอตเตอรี่ที่ตรงกัน (อ่านแล้ว)</h5>
+    </div>
+    {% include 'base/dataTable.html' %}
+    {% include 'base/popupDelete.html' %}
+  </div>
+</div>
+
+{% endblock %} 
+{% block js %} 
+{{ block.super }}
+  <script id="scriptDatabase" src="{{ STATIC_URL }}vendor/datatables/jquery.dataTables.js"></script>
+  <script src="{{ STATIC_URL }}vendor/datatables/dataTables.bootstrap4.js"></script>
+  <script src="{{ STATIC_URL }}js/homepage/loadAllNumber.js"></script>
+  <script src="{{ STATIC_URL }}js/homepage/display.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script>
+    const imgRead = "{{ STATIC_URL }}images/read.png"
+    const imgUnRead = "{{ STATIC_URL }}images/unread.png"
+    const url = 'api/numberLottery/listMatching/read'
+    const pageName = "homepage"
+  </script>
+{% endblock %}

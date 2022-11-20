@@ -21,7 +21,30 @@ class ListNumberLotteryMatching(LottAPIGetView):
     permission_classes = [ AllowAny ]
     
     def get(self, request, *args, **kwargs):
-        prototype = PrototypeNumberLottery.objects.filter(matching__isnull=False).values('id', 'numberLottery').annotate(count=Count('id')).filter(count__gt=1)
+        prototype = PrototypeNumberLottery.objects.filter(matching__isnull=False, isRead=False)
+        prototype = prototype.values('id', 'numberLottery')
+        prototype = prototype.annotate(count=Count('id')).filter(count__gt=1)
+        listNumber = []
+        queryset = None
+        for numberMatching in prototype:
+            listNumber.append(numberMatching['numberLottery'])
+        queryset = PrototypeNumberLottery.objects.filter(numberLottery__in=listNumber)
+        serializer = self.get_serializer(queryset, many=True)
+        self.response["result"] = serializer.data
+        return Response(self.response)
+
+# Create your views here.
+class ListNumberLotteryMatchingRead(LottAPIGetView):
+
+    queryset = NumberLottery.objects.all()
+    serializer_class = SlzListNumberMatching
+    pagination_class = None
+    permission_classes = [ AllowAny ]
+    
+    def get(self, request, *args, **kwargs):
+        prototype = PrototypeNumberLottery.objects.filter(matching__isnull=False, isRead=True)
+        prototype = prototype.values('id', 'numberLottery')
+        prototype = prototype.annotate(count=Count('id')).filter(count__gt=1)
         listNumber = []
         queryset = None
         for numberMatching in prototype:
@@ -52,7 +75,7 @@ def addNumberApi(request):
     shopSelect = request.POST['shopSelect']
     account = Account.objects.get(user=request.user)
     number = NumberLottery.objects.filter(numberLottery=numberLottery, user=account, idShop=shopSelect)
-    form = { "errorAddNumber":None, "numberList":None, "idShop":shopSelect, "isManyNumber": False }
+    form = { "errorAddNumber":None, "numberList":None, "idShop":shopSelect}
     if len(numberLottery) != 6:
         form["errorAddNumber"] = "หมายเลขนี้ไม่ถูกต้อง1"
         form["numberList"] = numberLottery
@@ -74,7 +97,7 @@ def addManyNumberApi(request):
     numberList = request.POST['numberList']
     account = Account.objects.get(user=request.user)
     formData, isSuccess = validateAndAddNumber(account, shopSelect, numberList)
-    form = { "errorAddNumber":None, "numberList":None, "idShop":shopSelect, "isManyNumber": True }
+    form = { "errorAddNumber":None, "numberList":None, "idShop":shopSelect }
     if isSuccess:
         return form, True
     form["errorAddNumber"] = formData
@@ -122,7 +145,7 @@ def deleteNumberApi(request):
     IDNumberDelete = form['IDNumberDelete'].data
     NumberLottery.objects.filter(pk=IDNumberDelete).delete()
     shopSelect = request.POST['shopSelect']
-    form = { "errorAddNumber":None, "numberList":None, "idShop":shopSelect, "isManyNumber": False }
+    form = { "errorAddNumber":None, "numberList":None, "idShop":shopSelect }
     return form, True
 
 def addDuplicateNumber(request):

@@ -55,6 +55,15 @@ def homepage(request):
             }
     return render(request, 'base/index.html', context)
 
+def readpage(request):
+    if not(request.user.is_authenticated):
+        return redirect(reverse('signinpage'))
+    
+    if not request.user.account.admin:
+        return redirect(reverse('addlotterypage'))
+    context = { }
+    return render(request, 'base/read.html', context)
+
 def shoppage(request):
     if request.method == "GET":
         if not(request.user.is_authenticated) or not request.user.account.admin:
@@ -107,6 +116,33 @@ def addlotterypage(request):
         return render(request, 'addLottery.html', context=context)
     context['successAddNumber'] = "เพิ่มข้อมูลสำเร็จ"
     return render(request, 'addLottery.html', context=context)
+
+def logoutpage(request):
+    logout(request)
+    return redirect(reverse('homepage'))
+
+def addmanylotterypage(request):
+    if request.method == "GET":
+        if not(request.user.is_authenticated):
+            return redirect(reverse('homepage'))
+        return render(request, 'addManyLottery.html')
+    
+    statusAdd = request.POST['statusAdd']
+    form = {}
+    isAddNumber = False
+    if statusAdd == "delete":
+        form, isAddNumber = deleteNumberApi(request=request)
+    elif statusAdd == "one":
+        form, isAddNumber = addNumberApi(request=request)
+    elif statusAdd == "many":
+        form, isAddNumber = addManyNumberApi(request=request)
+    else:
+        return render(request, 'addManyLottery.html')
+    context = form
+    if not isAddNumber:
+        return render(request, 'addManyLottery.html', context=context)
+    context['successAddNumber'] = "เพิ่มข้อมูลสำเร็จ"
+    return render(request, 'addManyLottery.html', context=context)
 
 def logoutpage(request):
     logout(request)

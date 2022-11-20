@@ -65,8 +65,7 @@ function getnameShops(numbers)
     for (let i=0; i < numbers.length; i++)
     {
         if (numbers[i].idShop != null && numbers[i].idShop.length > 0) nameShop += numbers[i].idShop + "<br />"
-        else if (numbers[i].user.shop == null) nameShop += "ไม่มีข้อมูล<br />"
-        else nameShop += numbers[i].user.shop.name + "<br />"
+        else nameShop += "ไม่มีข้อมูล<br />"
     }
     return nameShop
 }
@@ -76,7 +75,7 @@ function getuserNames(usernames)
     var usernameList = ""
     for (let i=0; i < usernames.length; i++)
     {
-        usernameList += usernames[i].user.username + "<br />"
+        usernameList += usernames[i].username + "<br />"
     }
     return usernameList
 }
