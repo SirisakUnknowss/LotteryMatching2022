@@ -10,4 +10,7 @@ urlpatterns = [
     path('addDuplicateNumber', numberLotteryViews.addDuplicateNumber, name='addDuplicateNumber'),
     path('readNumber', numberLotteryViews.readNumberLottery, name='readNumberLottery'),
     path('listMatchingEachShop', numberLotteryViews.ListMatchingEachShop.as_view(), name='listMatchingEachShop'),
+    
+    
+    path('listMatching/page', numberLotteryViews.ListNumberLotteryMatchingPagination.as_view(), name='listNumberLotteryMatchingPagination'),
 ]

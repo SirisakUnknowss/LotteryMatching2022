@@ -21,7 +21,7 @@
                 <div class="card-body">
                     <div class="row align-items-center text-center">
                         <div class="col mr-2">
-                            <form id="formSendManyNumber" method="post" action="{% url 'addlotterypage' %}">
+                            <form id="formSendManyNumber" method="post" action="{% url 'addmanylotterypage' %}">
                                 {% csrf_token %}
                                 {% comment %} {% if user.account.admin %} {% endcomment %}
                                 <label for="shopSelect">กรุณาเลือกร้านค้า</label>

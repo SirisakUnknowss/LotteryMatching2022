@@ -2,8 +2,6 @@ from rest_framework import serializers
 
 from shop.models import Shop
 from .models import NumberLottery, PrototypeNumberLottery
-from account.serializers import SlzAccountNumList
-from account.models import Account
 
 class SlzListNumber(serializers.ModelSerializer):
     class Meta:
