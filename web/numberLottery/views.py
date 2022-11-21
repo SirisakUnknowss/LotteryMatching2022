@@ -33,7 +33,7 @@ class ListNumberLotteryMatching(LottAPIGetView):
         queryset = None
         for numberMatching in prototype:
             listNumber.append(numberMatching['numberLottery'])
-        queryset = PrototypeNumberLottery.objects.filter(numberLottery__in=listNumber)
+        queryset = PrototypeNumberLottery.objects.filter(numberLottery__in=listNumber)[:100]
         serializer = self.get_serializer(queryset, many=True)
         self.response["result"] = serializer.data
         return Response(self.response)
