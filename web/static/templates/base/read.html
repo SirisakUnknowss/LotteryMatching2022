@@ -28,12 +28,16 @@
   <script src="{{ STATIC_URL }}vendor/datatables/dataTables.bootstrap4.js"></script>
   <script src="{{ STATIC_URL }}js/homepage/loadAllNumber.js"></script>
   <script src="{{ STATIC_URL }}js/homepage/display.js"></script>
+  <script src="{{ STATIC_URL }}js/homepage/readNumber.js"></script>
+  <script src="{{ STATIC_URL }}js/createNextPage.js"></script>
 
   <!-- Page level custom scripts -->
   <script>
     const imgRead = "{{ STATIC_URL }}images/read.png"
     const imgUnRead = "{{ STATIC_URL }}images/unread.png"
     const url = 'api/numberLottery/listMatching/read'
-    const pageName = "homepage"
+    const readNumberUrl = 'api/numberLottery/readNumber'
+    const pageName = "readpage"
+    const CSRF_TOKEN = '{{ csrf_token }}'
   </script>
 {% endblock %}

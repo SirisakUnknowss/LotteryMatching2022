@@ -4,6 +4,8 @@ async function display(jsonObject)
     let result = jsonObject.result
     if (result.length > 0)
     {
+        createPreviousButton(jsonObject.links.previous)
+        createNextButton(jsonObject.links.next)
         for (let number=1; number < result.length + 1; number++)
         {
             index = number - 1

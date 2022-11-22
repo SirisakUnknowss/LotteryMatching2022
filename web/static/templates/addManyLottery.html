@@ -51,7 +51,7 @@
                 <div class="table-responsive p-3">
                     <label for="shopSearchSelect">แสดงข้อมูลตามร้านค้า : </label>
                     <select class="form-control mb-3" id="shopSearchSelect" name="shopSearchSelect" onchange="onSelectSearch()"></select></br>
-                    <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                    <table class="table align-items-center table-flush">
                         <thead class="thead-light">
                             <tr>
                                 <th>เลขลอตเตอรี่</th>
@@ -63,6 +63,29 @@
                         <tbody id="dataTableBody">
                         </tbody>
                     </table>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-5">
+                            <div class="dataTables_info" id="dataTableHover_info" role="status" aria-live="polite"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-7">
+                            <div class="dataTables_paginate paging_simple_numbers" id="dataTableHover_paginate">
+                                <ul class="pagination">
+                                    <li class="paginate_button page-item previous disabled" id="dataTableHover_previous">
+                                    </li>
+                                    {% comment %} <li class="paginate_button page-item active">
+                                        <a href="#" aria-controls="dataTableHover" data-dt-idx="1" tabindex="0" class="page-link">1</a>
+                                    </li>
+                                    <li class="paginate_button page-item ">
+                                        <a href="#" aria-controls="dataTableHover" data-dt-idx="2" tabindex="0" class="page-link">2</a>
+                                    </li> {% endcomment %}
+                                    <li class="paginate_button page-item next disabled" id="dataTableHover_next">
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -82,6 +105,7 @@
     <script src="{{ STATIC_URL }}js/addMany/loadShopData.js"></script>
     <script src="{{ STATIC_URL }}js/addMany/loadAllNumber.js"></script>
     <script src="{{ STATIC_URL }}js/addMany/display.js"></script>
+    <script src="{{ STATIC_URL }}js/createNextPage.js"></script>
     
     {% comment %} {% if user.account.admin %} {% endcomment %}
     {% comment %} {% endif %} {% endcomment %}

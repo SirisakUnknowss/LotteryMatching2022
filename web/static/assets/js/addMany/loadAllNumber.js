@@ -3,17 +3,15 @@
 ***********************************************/
 let isWorking = false;
 
-// window.addEventListener('load', (event) => {
-//     requestContent("?shop="+value)
-// })
-
 async function clearData() {
     const dataTableBody = document.querySelector("#dataTableBody")
-    dataTableBody.innerHTML = '';
+    while (dataTableBody.hasChildNodes()) {
+        dataTableBody.removeChild(dataTableBody.firstChild)
+    }
 }
 
-async function loadContent(params = "") {
-    const response = await fetch(url + params, {
+async function loadContent(url="") {
+    const response = await fetch(url, {
         method: 'GET',
         headers: {'Content-type': 'application/json'},
         cache: 'no-store'
@@ -22,11 +20,12 @@ async function loadContent(params = "") {
         isWorking = false
     }
     const jsonObject = await response.json()
+    console.log(jsonObject)
     return jsonObject
 }
 
-async function requestContent(params) {
+async function requestContent(url="") {
     clearData()
-    .then( () => loadContent(params))
+    .then( () => loadContent(url))
     .then(jsonObject => display(jsonObject))
 }

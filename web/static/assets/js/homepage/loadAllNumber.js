@@ -2,17 +2,19 @@
     For load Order by API
 ***********************************************/
 let isWorking = false;
-
 window.addEventListener('load', (event) => {
-    requestContent()
+    requestContent(url)
 })
 
 async function clearData() {
     const dataTableBody = document.querySelector("#dataTableBody")
+    while (dataTableBody.hasChildNodes()) {
+        dataTableBody.removeChild(dataTableBody.firstChild)
+    }
 }
 
-async function loadContent(params = "") {
-    const response = await fetch(url + params, {
+async function loadContent(url="") {
+    const response = await fetch(url, {
         method: 'GET',
         headers: {'Content-type': 'application/json'},
         cache: 'no-store'
@@ -25,8 +27,8 @@ async function loadContent(params = "") {
     return jsonObject
 }
 
-async function requestContent(params) {
+async function requestContent(url="") {
     clearData()
-    .then( () => loadContent(params))
+    .then( () => loadContent(url))
     .then(jsonObject => display(jsonObject))
 }

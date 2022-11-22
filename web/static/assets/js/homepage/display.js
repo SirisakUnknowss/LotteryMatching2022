@@ -1,9 +1,10 @@
-
 async function display(jsonObject)
 {
     let result = jsonObject.result
     if (result.length > 0)
     {
+        createPreviousButton(jsonObject.links.previous)
+        createNextButton(jsonObject.links.next)
         for (let number=1; number < result.length + 1; number++)
         {
             index = number - 1
@@ -13,6 +14,52 @@ async function display(jsonObject)
         }
         $('#dataTableHover').DataTable();
     }
+}
+
+function createPreviousButton(urlPreviousPage)
+{
+    while (dataTableHover_previous.hasChildNodes()) {
+        dataTableHover_previous.removeChild(dataTableHover_previous.firstChild)
+    }
+    previousPageEle = document.createElement("button")
+    previousPageEle.innerHTML = "ก่อนหน้า"
+    previousPageEle.className = "page-link"
+    if (urlPreviousPage != null)
+    {
+        previousPageEle.addEventListener('click', event => {
+            clearData()
+            requestContent(urlPreviousPage)
+        })
+        dataTableHover_previous.className = "paginate_button page-item previous"
+    }
+    else
+    {
+        dataTableHover_previous.className = "paginate_button page-item previous disabled"
+    }
+    dataTableHover_previous.appendChild(previousPageEle)
+}
+
+function createNextButton(urlNextPage)
+{
+    while (dataTableHover_next.hasChildNodes()) {
+        dataTableHover_next.removeChild(dataTableHover_next.firstChild)
+    }
+    nextPageEle = document.createElement("button")
+    nextPageEle.innerHTML = "ถัดไป"
+    nextPageEle.className = "page-link"
+    if (urlNextPage != null)
+    {
+        nextPageEle.addEventListener('click', event => {
+            clearData()
+            requestContent(urlNextPage)
+        })
+        dataTableHover_next.className = "paginate_button page-item next"
+    }
+    else
+    {
+        dataTableHover_next.className = "paginate_button page-item next disabled"
+    }
+    dataTableHover_next.appendChild(nextPageEle)
 }
 
 function createCol(result)
@@ -42,13 +89,14 @@ function createCol(result)
     imgEle.src = imageRead
     pEle.innerHTML = isRead
     imgEle.addEventListener('click', event => {
-        idNumber = document.querySelector("#idNumber")
-        page = document.querySelector("#page")
-        idNumber.value = result.id
-        page.value = pageName
-        event.preventDefault()
-        formIsRead = document.querySelector("#from-readNumber")
-        formIsRead.submit()
+        readNumber(result.id)
+        // idNumber = document.querySelector("#idNumber")
+        // page = document.querySelector("#page")
+        // idNumber.value = result.id
+        // page.value = pageName
+        // event.preventDefault()
+        // formIsRead = document.querySelector("#from-readNumber")
+        // formIsRead.submit()
     })
     statusEle.appendChild(imgEle)
     statusEle.appendChild(pEle)

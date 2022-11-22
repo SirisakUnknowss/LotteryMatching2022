@@ -8,7 +8,7 @@ urlpatterns = [
     path('listMatching', numberLotteryViews.ListNumberLotteryMatching.as_view(), name='listNumberLotteryMatching'),
     path('listMatching/read', numberLotteryViews.ListNumberLotteryMatchingRead.as_view(), name='listNumberLotteryMatchingRead'),
     path('addDuplicateNumber', numberLotteryViews.addDuplicateNumber, name='addDuplicateNumber'),
-    path('readNumber', numberLotteryViews.readNumberLottery, name='readNumberLottery'),
+    path('readNumber', numberLotteryViews.ReadNumberLottery.as_view(), name='readNumberLottery'),
     path('listMatchingEachShop', numberLotteryViews.ListMatchingEachShop.as_view(), name='listMatchingEachShop'),
     
     

@@ -27,7 +27,7 @@ async function requestContentShop(params) {
     .then(() => {
         
     var value = shopSearchSelect.options[shopSearchSelect.selectedIndex].value
-    requestContent("?shop="+value)
+    requestContent(url + "?shop="+value)
     })
 }
 

@@ -1,26 +1,42 @@
-<!-- DataTable -->
-<div class="col-lg-12">
-    <form role="form" class="user" id="from-readNumber" method="post" action="{% url 'readNumberLottery' %}">
-        {% csrf_token %}
-        <input type="hidden" id="idNumber" name="idNumber">
-        <input type="hidden" id="page" name="page">
-    </form>
-    <div class="card mb-4">
-        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"></div>
-        <div class="table-responsive p-3">
-            <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+<div class="col-lg-12 mb-4">
+    <!-- Simple Tables -->
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                     <tr>
                         <th>เลขลอตเตอรี่</th>
                         <th>ร้านค้า</th>
                         <th>ผู้เพิ่มข้อมูล</th>
                         <th>สถานะ</th>
-                        {% comment %} <th>การจัดการข้อมูล</th> {% endcomment %}
                     </tr>
                 </thead>
                 <tbody id="dataTableBody">
                 </tbody>
             </table>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-sm-12 col-md-5">
+                    <div class="dataTables_info" id="dataTableHover_info" role="status" aria-live="polite"></div>
+                </div>
+                <div class="col-sm-12 col-md-7">
+                    <div class="dataTables_paginate paging_simple_numbers" id="dataTableHover_paginate">
+                        <ul class="pagination">
+                            <li class="paginate_button page-item previous disabled" id="dataTableHover_previous">
+                            </li>
+                            {% comment %} <li class="paginate_button page-item active">
+                                <a href="#" aria-controls="dataTableHover" data-dt-idx="1" tabindex="0" class="page-link">1</a>
+                            </li>
+                            <li class="paginate_button page-item ">
+                                <a href="#" aria-controls="dataTableHover" data-dt-idx="2" tabindex="0" class="page-link">2</a>
+                            </li> {% endcomment %}
+                            <li class="paginate_button page-item next disabled" id="dataTableHover_next">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

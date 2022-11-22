@@ -7,25 +7,24 @@ from rest_framework.permissions import AllowAny
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 #Project
-from base.views import LottAPIGetView, LottListPaginatedView, LottListView
+from base.views import LottAPIGetView, LottListView
 from account.models import Account
 from shop.models import Shop
 from numberLottery.models import NumberLottery, PrototypeNumberLottery
 from numberLottery.form import DeleteNumberLotteryForm
 from numberLottery.serializers import SlzListNumber, SlzListNumberMatching, SlzListNumberEachShop
 from numberLottery.paginations import (
-    TwentyPerPagination
+    FiftyPerPagination, TwentyPerPagination, TenPerPagination, SixPerPagePagination
 )
 
 # Create your views here.
-class ListNumberLotteryMatching(LottAPIGetView):
-
-    queryset = NumberLottery.objects.all()
+class ListNumberLotteryMatching(LottListView):
     serializer_class = SlzListNumberMatching
-    pagination_class = None
     permission_classes = [ AllowAny ]
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    pagination_class = SixPerPagePagination
     
-    def get(self, request, *args, **kwargs):
+    def get_queryset(self):
         prototype = PrototypeNumberLottery.objects.filter(matching__isnull=False, isRead=False)
         prototype = prototype.values('id', 'numberLottery')
         prototype = prototype.annotate(count=Count('id')).filter(count__gt=1)
@@ -33,16 +32,14 @@ class ListNumberLotteryMatching(LottAPIGetView):
         queryset = None
         for numberMatching in prototype:
             listNumber.append(numberMatching['numberLottery'])
-        queryset = PrototypeNumberLottery.objects.filter(numberLottery__in=listNumber)[:100]
-        serializer = self.get_serializer(queryset, many=True)
-        self.response["result"] = serializer.data
-        return Response(self.response)
+        queryset = PrototypeNumberLottery.objects.filter(numberLottery__in=listNumber)
+        return queryset
 
 class ListNumberLotteryMatchingPagination(LottListView):
-    serializer_class = SlzListNumberMatching
-    permission_classes = [ AllowAny ]
-    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
-    pagination_class = TwentyPerPagination
+    serializer_class    = SlzListNumberMatching
+    permission_classes  = [ AllowAny ]
+    filter_backends     = [DjangoFilterBackend, filters.OrderingFilter]
+    pagination_class    = TenPerPagination
     
     def get_queryset(self):
         prototype = PrototypeNumberLottery.objects.filter(matching__isnull=False, isRead=False)
@@ -58,14 +55,13 @@ class ListNumberLotteryMatchingPagination(LottListView):
         return queryset
 
 # Create your views here.
-class ListNumberLotteryMatchingRead(LottAPIGetView):
-
-    queryset = NumberLottery.objects.all()
+class ListNumberLotteryMatchingRead(LottListView):
     serializer_class = SlzListNumberMatching
-    pagination_class = None
     permission_classes = [ AllowAny ]
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    pagination_class = SixPerPagePagination
     
-    def get(self, request, *args, **kwargs):
+    def get_queryset(self):
         prototype = PrototypeNumberLottery.objects.filter(matching__isnull=False, isRead=True)
         prototype = prototype.values('id', 'numberLottery')
         prototype = prototype.annotate(count=Count('id')).filter(count__gt=1)
@@ -74,25 +70,20 @@ class ListNumberLotteryMatchingRead(LottAPIGetView):
         for numberMatching in prototype:
             listNumber.append(numberMatching['numberLottery'])
         queryset = PrototypeNumberLottery.objects.filter(numberLottery__in=listNumber)
-        serializer = self.get_serializer(queryset, many=True)
-        self.response["result"] = serializer.data
-        return Response(self.response)
+        return queryset
 
-class ListNumberLottery(LottAPIGetView):
-    
-    queryset = NumberLottery.objects.all()
+class ListNumberLottery(LottListView):
     serializer_class = SlzListNumber
-    pagination_class = None
+    permission_classes = [ AllowAny ]
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    pagination_class = SixPerPagePagination
     
-    def get(self, request, *args, **kwargs):
+    def get_queryset(self):
         shop = self.request.GET.get('shop', None)
         queryset = NumberLottery.objects.filter(idShop=shop).order_by('-id')
         if not self.request.user.account.admin:
             queryset = NumberLottery.objects.filter(user=self.request.user.account,idShop=shop).order_by('-id')
-    
-        serializer = self.get_serializer(queryset, many=True)
-        self.response["result"] = serializer.data
-        return Response(self.response)
+        return queryset
 
 def addNumberApi(request):
     numberLottery = request.POST['number']
@@ -189,8 +180,39 @@ def addDuplicateNumber(request):
 def readNumberLottery(request):
     idNumber = request.POST['idNumber']
     page = request.POST['page']
-    PrototypeNumberLottery.objects.filter(pk=idNumber).update(isRead=True)
-    return redirect(reverse('readpage'))
+    print(f"page  == {page}")
+    try:
+        matching = PrototypeNumberLottery.objects.get(pk=idNumber)
+        if matching.isRead:
+            matching.isRead = False
+        else:
+            matching.isRead = True
+        matching.save()
+        return ""
+    except PrototypeNumberLottery.DoesNotExist:
+        return ""
+
+class ReadNumberLottery(LottAPIGetView):
+
+    queryset = PrototypeNumberLottery.objects.all()
+    serializer_class = SlzListNumberMatching
+    permission_classes = [ AllowAny ]
+    
+    def post(self, request, *args, **kwargs):
+        idNumber = self.request.data.get("idNumber")
+        print(f"idNumber == {idNumber}")
+        try:
+            matching = PrototypeNumberLottery.objects.get(pk=idNumber)
+            if matching.isRead:
+                matching.isRead = False
+            else:
+                matching.isRead = True
+            matching.save()
+            self.response["result"] = self.get_serializer(matching).data
+            return Response(self.response)
+        except PrototypeNumberLottery.DoesNotExist as ex:
+            self.response["error"] = str(ex)
+            return Response(self.response)
 
 class ListMatchingEachShop(LottAPIGetView):
 
