@@ -65,6 +65,7 @@ function createNextButton(urlNextPage)
 function createCol(result)
 {
     row = createRow()
+    row.id = "row-number" + result.id
     tag = "td"
     numberEle = document.createElement(tag)
     numberEle.innerHTML = result.numberLottery
@@ -90,13 +91,6 @@ function createCol(result)
     pEle.innerHTML = isRead
     imgEle.addEventListener('click', event => {
         readNumber(result.id)
-        // idNumber = document.querySelector("#idNumber")
-        // page = document.querySelector("#page")
-        // idNumber.value = result.id
-        // page.value = pageName
-        // event.preventDefault()
-        // formIsRead = document.querySelector("#from-readNumber")
-        // formIsRead.submit()
     })
     statusEle.appendChild(imgEle)
     statusEle.appendChild(pEle)

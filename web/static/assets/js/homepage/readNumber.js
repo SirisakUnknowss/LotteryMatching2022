@@ -1,24 +1,22 @@
 
 async function readNumber(idNumber) {
-    let data = new FormData();
-    data.append('idNumber', idNumber)
-    data.append('page', pageName)
-    // var raw = JSON.stringify({
-    //     "idNumber": idNumber,
-    //     "page": pageName
-    //     });
-        
-    data.append('csrfmiddlewaretoken', $('#csrf-helper input[name="csrfmiddlewaretoken"]').attr('value'))
-    var requestOptions = {
-    method: 'POST',
-    headers: {'Content-type': 'multipart/form-data'},
-    body: data,
-    cache: 'no-store',
-    credentials: 'same-origin',
-    };
-    
-    fetch(readNumberUrl, requestOptions)
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
+    var $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value')
+    $.ajax({
+        type: "POST",
+        url: readNumberUrl,
+        data: JSON.stringify({
+                  "idNumber": idNumber,
+                  "page": pageName
+                }),
+        headers:{"X-CSRFToken": $crf_token,  "Content-Type": "application/json"},
+        success: function (newEnd)
+        {
+            const dataTableBody = document.getElementById("dataTableBody")
+            const rowNumber = document.getElementById("row-number" + idNumber)
+            dataTableBody.removeChild(rowNumber)
+        },
+        error: function () {
+            alert("can't not read is number")
+        }
+    })
 }

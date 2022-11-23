@@ -2,10 +2,12 @@
 from django.shortcuts import redirect
 from django.urls import reverse
 from rest_framework.response import Response
-from django.db.models import Count
 from rest_framework.permissions import AllowAny
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from django.db.models import Count
+from django_filters.rest_framework import DjangoFilterBackend
+from django.views.decorators.csrf import csrf_exempt
 #Project
 from base.views import LottAPIGetView, LottListView
 from account.models import Account
@@ -193,11 +195,12 @@ def readNumberLottery(request):
         return ""
 
 class ReadNumberLottery(LottAPIGetView):
-
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
     queryset = PrototypeNumberLottery.objects.all()
     serializer_class = SlzListNumberMatching
     permission_classes = [ AllowAny ]
     
+    @csrf_exempt
     def post(self, request, *args, **kwargs):
         idNumber = self.request.data.get("idNumber")
         print(f"idNumber == {idNumber}")
