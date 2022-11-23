@@ -16,7 +16,7 @@ from numberLottery.models import NumberLottery, PrototypeNumberLottery
 from numberLottery.form import DeleteNumberLotteryForm
 from numberLottery.serializers import SlzListNumber, SlzListNumberMatching, SlzListNumberEachShop
 from numberLottery.paginations import (
-    FiftyPerPagination, TwentyPerPagination, TenPerPagination, SixPerPagePagination
+    FiftyPerPagination
 )
 
 # Create your views here.
@@ -24,7 +24,7 @@ class ListNumberLotteryMatching(LottListView):
     serializer_class = SlzListNumberMatching
     permission_classes = [ AllowAny ]
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
-    pagination_class = SixPerPagePagination
+    pagination_class = FiftyPerPagination
     
     def get_queryset(self):
         prototype = PrototypeNumberLottery.objects.filter(matching__isnull=False, isRead=False)
@@ -41,7 +41,7 @@ class ListNumberLotteryMatchingPagination(LottListView):
     serializer_class    = SlzListNumberMatching
     permission_classes  = [ AllowAny ]
     filter_backends     = [DjangoFilterBackend, filters.OrderingFilter]
-    pagination_class    = TenPerPagination
+    pagination_class    = FiftyPerPagination
     
     def get_queryset(self):
         prototype = PrototypeNumberLottery.objects.filter(matching__isnull=False, isRead=False)
@@ -61,7 +61,7 @@ class ListNumberLotteryMatchingRead(LottListView):
     serializer_class = SlzListNumberMatching
     permission_classes = [ AllowAny ]
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
-    pagination_class = SixPerPagePagination
+    pagination_class = FiftyPerPagination
     
     def get_queryset(self):
         prototype = PrototypeNumberLottery.objects.filter(matching__isnull=False, isRead=True)
@@ -78,7 +78,7 @@ class ListNumberLottery(LottListView):
     serializer_class = SlzListNumber
     permission_classes = [ AllowAny ]
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
-    pagination_class = SixPerPagePagination
+    pagination_class = FiftyPerPagination
     
     def get_queryset(self):
         shop = self.request.GET.get('shop', None)
