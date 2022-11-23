@@ -85,7 +85,6 @@ function checkTypeNumber()
     else
     {
         addOneNumber.value = (input_length1.value + input_length2.value + input_length3.value + input_length4.value + input_length5.value + input_length6.value)
-        console.log(addOneNumber.value)
         formSendNumber.submit()
     }
 }

@@ -7,9 +7,6 @@ async function display(jsonObject)
     {
         for (let number=0; number < result.length; number++)
         {
-            // table = createCol(result[number])
-            // console.log(table)
-            // dataTableBody.appendChild(table)
             parentClassSelector = "#divCardData"
             table = createTable()
             tbodyEle = document.createElement('tbody')

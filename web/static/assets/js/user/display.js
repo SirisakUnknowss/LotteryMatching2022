@@ -122,7 +122,6 @@ function createEditUserButton(manageEle, result)
 function onclickDelete(button, result)
 {
     button.addEventListener('click', event => {
-        console.log(result.id)
         const userDelete = document.querySelector("#userDelete")
         const IDUserDelete = document.querySelector("#IDUserDelete")
         IDUserDelete.value = result.id
@@ -133,7 +132,6 @@ function onclickDelete(button, result)
 function onclickUserPopup(button, result)
 {
     button.addEventListener('click', event => {
-        console.log(result.id)
         const userID = document.querySelector("#userID")
         const userName = document.querySelector("#userName")
         userID.value = result.id

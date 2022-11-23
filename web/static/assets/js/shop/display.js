@@ -68,7 +68,6 @@ function createDeleteButton(manageEle, result)
 function onclickDelete(button, result)
 {
     button.addEventListener('click', event => {
-        console.log(result.id)
         const shopDelete = document.querySelector("#shopDelete")
         const IDShopDelete = document.querySelector("#IDShopDelete")
         IDShopDelete.value = result.id
@@ -79,7 +78,6 @@ function onclickDelete(button, result)
 function onclickShopPopup(button, result)
 {
     button.addEventListener('click', event => {
-        console.log(result.id)
         const shopID = document.querySelector("#shopID")
         const shopName = document.querySelector("#shopName")
         shopID.value = result.id

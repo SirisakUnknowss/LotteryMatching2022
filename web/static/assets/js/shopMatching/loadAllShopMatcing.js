@@ -21,7 +21,6 @@ async function loadContent(params = "") {
         isWorking = false
     }
     const jsonObject = await response.json()
-    console.log(jsonObject)
     return jsonObject
 }
 
