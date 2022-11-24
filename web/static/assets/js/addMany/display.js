@@ -51,6 +51,13 @@ function onSelectSearch()
     requestContent(url + "?shop="+value)
 }
 
+function onSearchNumber()
+{
+    var value = shopSearchSelect.options[shopSearchSelect.selectedIndex].value
+    var number =  document.querySelector("#searchNumber").value
+    requestContent(url + "?shop="+value + "&number="+number)
+}
+
 function createDeleteButton(manageEle, result)
 {
     var a = document.createElement("a")

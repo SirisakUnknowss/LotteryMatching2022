@@ -16,6 +16,12 @@ async function display(jsonObject)
     }
 }
 
+function onSearchNumber()
+{
+    var number =  document.querySelector("#searchNumber").value
+    requestContent(url + "?number="+number)
+}
+
 function createPreviousButton(urlPreviousPage)
 {
     while (dataTableHover_previous.hasChildNodes()) {

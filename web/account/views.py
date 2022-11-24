@@ -149,10 +149,8 @@ def logoutpage(request):
     return redirect(reverse('homepage'))
 
 class ListAccount(LottAPIGetView):
-    
-    queryset = Account.objects.all()
-    serializer_class = SlzAccount
-    pagination_class = None
+    queryset            = Account.objects.all()
+    serializer_class    = SlzAccount
     
     def get(self, request, *args, **kwargs):
         queryset = Account.objects.all()

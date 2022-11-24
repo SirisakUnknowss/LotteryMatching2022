@@ -56,6 +56,10 @@
                 <div class="table-responsive p-3">
                     <label for="shopSearchSelect">แสดงข้อมูลตามร้านค้า : </label>
                     <select class="form-control mb-3" id="shopSearchSelect" name="shopSearchSelect" onchange="onSelectSearch()"></select></br>
+                    <div class="form-group align-items-right text-right">
+                        <input type="text" class="form-control form-control-md mb-3" maxlength="6" id="searchNumber">
+                        <button onclick="onSearchNumber()" class="btn btn-primary text-sm-center">ค้นหา</button>
+                    </div>
                     <table class="table align-items-center table-flush">
                         <thead class="thead-light">
                             <tr>
@@ -79,12 +83,6 @@
                                 <ul class="pagination">
                                     <li class="paginate_button page-item previous disabled" id="dataTableHover_previous">
                                     </li>
-                                    {% comment %} <li class="paginate_button page-item active">
-                                        <a href="#" aria-controls="dataTableHover" data-dt-idx="1" tabindex="0" class="page-link">1</a>
-                                    </li>
-                                    <li class="paginate_button page-item ">
-                                        <a href="#" aria-controls="dataTableHover" data-dt-idx="2" tabindex="0" class="page-link">2</a>
-                                    </li> {% endcomment %}
                                     <li class="paginate_button page-item next disabled" id="dataTableHover_next">
                                     </li>
                                 </ul>
