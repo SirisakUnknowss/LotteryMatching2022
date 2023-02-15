@@ -28,12 +28,7 @@
                                 <select class="form-control mb-3" id="shopSelect" name="shopSelect"></select></br>
                                 {% comment %} <label for="exampleFormControlSelect1" class="text-danger">*สำหรับ admin เท่านั้น</label></br> {% endcomment %}
                                 {% comment %} {% endif %} {% endcomment %}
-                                <input class="form-control form-input-one-number mb-3" type="text" id="input_length1" maxlength="1" onkeyup="inputLength1()">
-                                <input class="form-control form-input-one-number mb-3" type="text" id="input_length2" maxlength="1" onkeyup="inputLength2()">
-                                <input class="form-control form-input-one-number mb-3" type="text" id="input_length3" maxlength="1" onkeyup="inputLength3()">
-                                <input class="form-control form-input-one-number mb-3" type="text" id="input_length4" maxlength="1" onkeyup="inputLength4()">
-                                <input class="form-control form-input-one-number mb-3" type="text" id="input_length5" maxlength="1" onkeyup="inputLength5()">
-                                <input class="form-control form-input-one-number mb-3" type="text" id="input_length6" maxlength="1" onkeyup="inputLength6()">
+                                <input class="form-control mb-3" type="text" id="input_length" maxlength="6" onkeyup="inputLength()">
                                 <input type="hidden" id="addOneNumber" name="number">
                                 <input type="hidden" id="statusAdd" name="statusAdd" value="one">
                                 <button id="confirmAddNumber" class="btn btn-primary">เพิ่มหมายเลข</button>
@@ -149,7 +144,7 @@
                 formDuplicateNumber.submit()
             })
         }
-        input_length1.focus()
+        input_length.focus()
     })
   </script>
 {% endblock %}
