@@ -242,7 +242,7 @@ class ListMatchingEachShop(LottAPIGetView):
         return Response({'result': result})
     
     def groupNumberByShop(self, querysets):
-        shops = Shop.objects.all()
+        shops = list(Shop.objects.all())
         groups = {str(shop.pk): [] for shop in shops}
         for queryset in querysets:
             try:
@@ -256,7 +256,7 @@ class ListMatchingEachShop(LottAPIGetView):
                 print(f" ============== EXCEPT {idShop} ============== ")
         result = []
         for shop in shops:
-            numberList = groups[shop.pk]
+            numberList = groups[str(shop.pk)]
             if numberList:
                 data = {'name': shop.name, 'number': numberList}
                 result.append(data)
