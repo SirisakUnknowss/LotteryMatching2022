@@ -245,10 +245,15 @@ class ListMatchingEachShop(LottAPIGetView):
         shops = Shop.objects.all()
         groups = {shop.pk: [] for shop in shops}
         for queryset in querysets:
-            numberLottery = queryset['numberLottery']
-            idShop = queryset['idShop']
-            if numberLottery not in groups[idShop]:
-                groups[idShop].append(numberLottery)
+            try:
+                numberLottery = queryset['numberLottery']
+                idShop = queryset['idShop']
+                if numberLottery not in groups[idShop]:
+                    groups[idShop].append(numberLottery)
+            except:
+                print(" ============== EXCEPT groupNumberByShop ============== ")
+                print(f" ============== EXCEPT {numberLottery} ============== ")
+                print(f" ============== EXCEPT {idShop} ============== ")
         result = []
         for shop in shops:
             numberList = groups[shop.pk]
