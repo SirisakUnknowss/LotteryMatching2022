@@ -243,11 +243,11 @@ class ListMatchingEachShop(LottAPIGetView):
     
     def groupNumberByShop(self, querysets):
         shops = Shop.objects.all()
-        groups = {shop.pk: [] for shop in shops}
+        groups = {str(shop.pk): [] for shop in shops}
         for queryset in querysets:
             try:
                 numberLottery = queryset['numberLottery']
-                idShop = queryset['idShop']
+                idShop = str(queryset['idShop'])
                 if numberLottery not in groups[idShop]:
                     groups[idShop].append(numberLottery)
             except:
