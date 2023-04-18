@@ -19,6 +19,7 @@ class NumberLotteryAdmin(ImportExportModelAdmin):
     list_display = ['id', 'numberLottery', 'isRead']
     search_fields = ['numberLottery']
     list_filter    = ['idShop', 'isRead']
+    list_per_page = 250
 
 class PrototypeNumberLotteryResource(resources.ModelResource):
     class Meta:
