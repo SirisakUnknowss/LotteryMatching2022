@@ -11,6 +11,6 @@ urlpatterns = [
     path('readNumber', numberLotteryViews.ReadNumberLottery.as_view(), name='readNumberLottery'),
     path('listMatchingEachShop', numberLotteryViews.ListMatchingEachShop.as_view(), name='listMatchingEachShop'),
     
-    path('deleteAll', numberLotteryViews.DeleteAll.as_view(), name='DeleteAll'),
+    # path('deleteAll', numberLotteryViews.DeleteAll.as_view(), name='DeleteAll'),
     path('listMatching/page', numberLotteryViews.ListNumberLotteryMatchingPagination.as_view(), name='listNumberLotteryMatchingPagination'),
 ]
