@@ -10,6 +10,7 @@ ENV PYTHONUNBUFFERED 1
 
 # install dependencies
 RUN python -m pip install pip
+RUN python -m pip install -U pip
 RUN python -m pip install --upgrade setuptools pip
 RUN apt update && apt-get upgrade -y
 # Install Pillow dependencies

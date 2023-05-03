@@ -9,6 +9,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 # RUN python -m pip install pip
 RUN python -m ensurepip --upgrade
+RUN python -m pip install -U pip
 RUN python -m pip install --upgrade setuptools
 RUN apt update && apt-get upgrade -y
 # Install Pillow dependencies
