@@ -288,12 +288,3 @@ class ListMatchingEachShop(LottAPIGetView):
     #             data['number'] = group[f"{shop.pk}"]
     #             l.append(data)
     #     return l
-
-class DeleteNumberLotteryAll(LottAPIGetView):
-    queryset            = NumberLottery.objects.all()
-    permission_classes  = [ AllowAny ]
-    
-    def get(self, request, *args, **kwargs):
-        NumberLottery.objects.all().delete()
-
-        return Response({'result': "Delete NumberLottery All Complete"})

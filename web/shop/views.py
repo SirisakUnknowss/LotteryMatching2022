@@ -1,14 +1,12 @@
 #Django
 from django.shortcuts import redirect
 from django.urls import reverse
-from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
 
 #Project
 from .serializers import SlzShop
 from .form import AddShopForm, DeleteShopForm
 from .models import Shop
-from base.views import LottListView, LottAPIGetView
+from base.views import LottListView
 from numberLottery.models import NumberLottery
 
 # Create your views here.
@@ -47,12 +45,3 @@ def deleteShopApi(request):
     NumberLottery.objects.filter(idShop=IDShopDelete).delete()
     Shop.objects.filter(pk=IDShopDelete).delete()
     return form, True
-
-class DeleteShopAll(LottAPIGetView):
-    queryset            = Shop.objects.all()
-    permission_classes  = [ AllowAny ]
-    
-    def get(self, request, *args, **kwargs):
-        Shop.objects.all().delete()
-
-        return Response({'result': "Delete Shop All Complete"})
