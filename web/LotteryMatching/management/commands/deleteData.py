@@ -7,7 +7,8 @@ from numberLottery.models import NumberLottery
 from shop.models import Shop
 
 class Command(BaseCommand):
-    
+    #sudo docker-compose -f docker-compose-prod.yaml exec web sh -c "python manage.py deleteData --name shop"
+    #sudo docker-compose -f docker-compose-prod.yaml exec web sh -c "python manage.py deleteData --name numberLottery"
     help = "delete data by name"
 
     LIST_DATA = [
