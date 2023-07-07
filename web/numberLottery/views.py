@@ -163,7 +163,8 @@ def checkNumber(numberLottery, shopSelect, account):
 def deleteNumberApi(request):
     form = DeleteNumberLotteryForm(request.POST)
     if not form.is_valid():
-        return 'หมายเลขนี้ไม่มีอยู่แล้ว', False
+        form = { "errorAddNumber":"หมายเลขนี้ไม่มีอยู่แล้ว", "numberList":None, "idShop":shopSelect }
+        return form, False
     IDNumberDelete = form['IDNumberDelete'].data
     NumberLottery.objects.filter(pk=IDNumberDelete).delete()
     shopSelect = request.POST['shopSelect']
