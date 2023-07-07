@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 
 class DeleteNumberLotteryForm(forms.Form):
-    IDNumberDelete = forms.CharField(max_length=6)
+    IDNumberDelete = forms.IntegerField()
 
     def clean(self):
         cleaned_data = super().clean()
