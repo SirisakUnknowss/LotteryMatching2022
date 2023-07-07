@@ -112,7 +112,7 @@ def addlotterypage(request):
     else:
         return render(request, 'addLottery.html')
     context = form
-    if not isAddNumber:
+    if not isAddNumber or statusAdd == "delete":
         return render(request, 'addLottery.html', context=context)
     context['successAddNumber'] = "เพิ่มข้อมูลสำเร็จ"
     return render(request, 'addLottery.html', context=context)
