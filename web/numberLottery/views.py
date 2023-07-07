@@ -167,7 +167,7 @@ def deleteNumberApi(request):
     shopSelect = request.POST['shopSelect']
     form = DeleteNumberLotteryForm(request.POST)
     if not form.is_valid():
-        form = { "errorAddNumber":form.errors, "numberList":None, "idShop":shopSelect }
+        form = { "errorAddNumber":form.errors.as_json(), "numberList":IDNumberDelete, "idShop":shopSelect }
         return form, False
     IDNumberDelete = form['IDNumberDelete'].data
     NumberLottery.objects.filter(pk=IDNumberDelete).delete()
