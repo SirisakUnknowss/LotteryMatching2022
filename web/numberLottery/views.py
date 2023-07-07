@@ -161,13 +161,16 @@ def checkNumber(numberLottery, shopSelect, account):
         prototype.matching.add(number)
 
 def deleteNumberApi(request):
+    
+    IDNumberDelete = form['IDNumberDelete'].data
+    print(" ================== {} ================== ".format(IDNumberDelete))
+    shopSelect = request.POST['shopSelect']
     form = DeleteNumberLotteryForm(request.POST)
     if not form.is_valid():
-        form = { "errorAddNumber":"หมายเลขนี้ไม่มีอยู่แล้ว", "numberList":None, "idShop":None }
+        form = { "errorAddNumber":"หมายเลขนี้ไม่มีอยู่แล้ว", "numberList":None, "idShop":shopSelect }
         return form, False
     IDNumberDelete = form['IDNumberDelete'].data
     NumberLottery.objects.filter(pk=IDNumberDelete).delete()
-    shopSelect = request.POST['shopSelect']
     form = { "errorAddNumber":None, "numberList":None, "idShop":shopSelect }
     return form, True
 
