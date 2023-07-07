@@ -162,7 +162,7 @@ def checkNumber(numberLottery, shopSelect, account):
 
 def deleteNumberApi(request):
     
-    IDNumberDelete = form['IDNumberDelete'].data
+    IDNumberDelete = request.POST['IDNumberDelete']
     print(" ================== {} ================== ".format(IDNumberDelete))
     shopSelect = request.POST['shopSelect']
     form = DeleteNumberLotteryForm(request.POST)
