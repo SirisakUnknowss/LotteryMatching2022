@@ -1,0 +1,29 @@
+version: "3.9"
+# Prod only
+services:
+  lottery-db:
+    image: postgres
+    volumes:
+      - lottery-postgres:/var/lib/postgresql/data/
+    env_file:
+      - ./web/docker/prodDB/.postgres
+    container_name: Lottery_db_prod
+
+  lottery-web:
+    build: 
+      context: ./web
+      dockerfile: ./docker/prodDB/Dockerfile
+    volumes:
+      - ./web:/usr/src/app/
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./web/docker/prodDB/.prod
+    command: "python manage.py runserver 0.0.0.0:8000"
+    container_name: Lottery_web_prod
+    depends_on:
+      - lottery-db
+    restart: always
+
+volumes:
+  lottery-postgres:

@@ -1,0 +1,19 @@
+DJANGO_SETTINGS_MODULE=settings.prodDB
+LOTTERYMATCHING_ENV=prod
+LOTTERYMATCHING_SITE=landing
+# python manage.py createsuperuser --noinput
+DJANGO_SUPERUSER_USERNAME=admin
+DJANGO_SUPERUSER_PASSWORD=Unknowss172540
+DJANGO_SUPERUSER_EMAIL=sirisak.unknowss@gmail.com
+# DB settings
+DJANGO_DB_ENGINE=django.db.backends.postgresql_psycopg2
+DJANGO_DB_NAME=LotteryProd
+DJANGO_DB_USER=postgres
+DJANGO_DB_PASSWORD=8YSB6u"7&rqeY<eK
+DJANGO_DB_HOST=lottery-db
+DJANGO_DB_PORT=5432
+
+#sudo docker-compose -f docker-compose-prod-db.yaml exec web sh -c "python manage.py createsuperuser --noinput"
+#sudo docker-compose -f docker-compose-prod-db.yaml exec web sh -c "python manage.py collectstatic --noinput"
+#sudo docker-compose -f docker-compose-prod-db.yaml exec web sh -c "python manage.py makemigrations --noinput"
+#sudo docker-compose -f docker-compose-prod-db.yaml exec web sh -c "python manage.py migrate --noinput"

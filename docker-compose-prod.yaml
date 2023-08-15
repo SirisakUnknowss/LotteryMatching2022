@@ -1,5 +1,5 @@
-version: "3.3"
-# Staging only
+version: "3.9"
+# Prod only
 services:
 
   web:
