@@ -13,6 +13,7 @@ function inputLength()
 }
 
 confirmAddManyNumber.addEventListener('click', event => {
+    waiting()
     shopSelect.value = shopSelect.options[shopSelect.selectedIndex].value
     shopAddManySelect.value = shopAddManySelect.options[shopAddManySelect.selectedIndex].value
     event.preventDefault()
@@ -31,4 +32,14 @@ function checkTypeNumber()
         addOneNumber.value = (input_length.value)
         formSendNumber.submit()
     }
+}
+
+function waiting() {
+	$('*').css('cursor','wait');
+	$('*').css('pointer-events','none');
+}
+
+function stopWaiting() {
+	$('*').css('cursor','default');
+	$('*').css('pointer-events','auto');
 }

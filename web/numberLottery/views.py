@@ -163,7 +163,6 @@ def checkNumber(numberLottery, shopSelect, account):
 def deleteNumberApi(request):
     
     IDNumberDelete = request.POST['IDNumberDelete']
-    print(" ================== {} ================== ".format(IDNumberDelete))
     shopSelect = request.POST['shopSelect']
     form = DeleteNumberLotteryForm(request.POST)
     if not form.is_valid():
@@ -191,7 +190,6 @@ def addDuplicateNumber(request):
 def readNumberLottery(request):
     idNumber = request.POST['idNumber']
     page = request.POST['page']
-    print(f"page  == {page}")
     try:
         matching = PrototypeNumberLottery.objects.get(pk=idNumber)
         if matching.isRead:
@@ -211,7 +209,6 @@ class ReadNumberLottery(LottAPIGetView):
     @csrf_exempt
     def post(self, request, *args, **kwargs):
         idNumber = self.request.data.get("idNumber")
-        print(f"idNumber == {idNumber}")
         try:
             matching = PrototypeNumberLottery.objects.get(pk=idNumber)
             if matching.isRead:
@@ -255,9 +252,7 @@ class ListMatchingEachShop(LottAPIGetView):
                 if numberLottery not in groups[idShop]:
                     groups[idShop].append(numberLottery)
             except:
-                print(" ============== EXCEPT groupNumberByShop ============== ")
-                print(f" ============== EXCEPT {numberLottery} ============== ")
-                print(f" ============== EXCEPT {idShop} ============== ")
+                pass
         result = []
         for shop in shops:
             numberList = groups[str(shop.pk)]
