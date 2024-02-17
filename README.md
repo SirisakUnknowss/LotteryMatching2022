@@ -43,6 +43,11 @@
   - ``` docker-compose exec web sh -c "python manage.py migrate --noinput" ```
 7. Create superuser
   - ``` docker-compose exec web sh -c "python manage.py createsuperuser --noinput" ```
+
+8. Delete Data
+
+   - ``` sudo docker-compose -f docker-compose-prod.yaml exec web sh -c "python manage.py deleteData --name shop" ```
+   - ``` sudo docker-compose -f docker-compose-prod.yaml exec web sh -c "python manage.py deleteData --name numberLottery" ```
 8. go to http://localhost:8000
 
 > PS. admin page: http://localhost:8000/admin
