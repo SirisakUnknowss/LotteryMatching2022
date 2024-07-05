@@ -3,7 +3,7 @@
 # Django
 from django.core.management.base import BaseCommand, CommandError
 # Project
-from numberLottery.models import NumberLottery
+from numberLottery.models import NumberLottery, PrototypeNumberLottery
 from shop.models import Shop
 
 class Command(BaseCommand):
@@ -11,10 +11,7 @@ class Command(BaseCommand):
     #sudo docker-compose -f docker-compose-prod.yaml exec web sh -c "python manage.py deleteData --name numberLottery"
     help = "delete data by name"
 
-    LIST_DATA = [
-                        'shop',
-                        'numberLottery',
-                    ]
+    LIST_DATA = [ 'shop', 'numberLottery', ]
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -34,4 +31,5 @@ class Command(BaseCommand):
             Shop.objects.all().delete()
         elif name == Command.LIST_DATA[1]:
             NumberLottery.objects.all().delete()
+            PrototypeNumberLottery.objects.all().update(isRead=False)
         self.stdout.write(self.style.SUCCESS('Delete {} All Complete').format(name))

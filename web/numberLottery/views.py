@@ -187,20 +187,6 @@ def addDuplicateNumber(request):
         prototype.matching.add(number)
     return redirect(reverse('addlotterypage'))
 
-def readNumberLottery(request):
-    idNumber = request.POST['idNumber']
-    page = request.POST['page']
-    try:
-        matching = PrototypeNumberLottery.objects.get(pk=idNumber)
-        if matching.isRead:
-            matching.isRead = False
-        else:
-            matching.isRead = True
-        matching.save()
-        return ""
-    except PrototypeNumberLottery.DoesNotExist:
-        return ""
-
 class ReadNumberLottery(LottAPIGetView):
     queryset            = PrototypeNumberLottery.objects.all()
     serializer_class    = SlzListNumberMatching

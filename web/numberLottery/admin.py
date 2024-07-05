@@ -10,7 +10,7 @@ class NumberLotteryResource(resources.ModelResource):
     class Meta:
         model = NumberLottery
         import_id_fields = ('numberLottery',)
-        exclude = ('id',)
+        exclude = ('id', 'user')
 
 
 @admin.register(NumberLottery)
