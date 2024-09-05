@@ -15,8 +15,7 @@ class Command(BaseCommand):
     
     def removeDataAll(self):
         numberList = NumberLottery.objects.all()
-        shopList = Shop.objects.all()
-        print(f"number count before === {numberList.count()}")
-        for shop in shopList:
-            numberList.exclude(idShop=shop.pk)
-        print(f"number count after === {numberList.count()}")
+        for number in numberList:
+            if not Shop.objects.filter(pk=number.idShop).exists():
+                print(f"number === {number.numberLottery}")
+        
