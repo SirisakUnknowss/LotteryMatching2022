@@ -1,5 +1,5 @@
 # Python
-
+import json
 # Django
 from django.core.management.base import BaseCommand
 # Project
@@ -16,10 +16,19 @@ class Command(BaseCommand):
     def removeDataAll(self):
         numberList = NumberLottery.objects.all()
         count = 0
-        for number in numberList:
-            if not Shop.objects.filter(pk=number.idShop).exists():
-                # print(f"number === {number.numberLottery}")
-                count += 1
+        with open('missing_shops.json', 'w') as file:
+            missing_shops = []
+            for number in numberList:
+                if not Shop.objects.filter(pk=number.idShop).exists():
+                    number.delete()
+                    missing_shops.append({
+                        'number_id': number.pk,
+                        'isRead': number.isRead,
+                        'idShop': number.idShop,
+                        'user': number.user.pk,
+                    })
+
+            json.dump(missing_shops, file, indent=4)
                 
         print(numberList.count())
         print(count)
