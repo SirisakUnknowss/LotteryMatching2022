@@ -25,7 +25,7 @@
 (If deploy on linux, see change at the bottom )
 1. Get Project 
   - ```https://github.com/SirisakUnknowss/LotteryMatching2022.git```
-  - ``` cd Arkarus ```
+  - ``` cd LotteryMatching2022 ```
 2. See [Setup container ip](#setup-container-ip)
   
 3. Prepare web service to chosen \<IP\>
