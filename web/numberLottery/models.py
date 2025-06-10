@@ -24,7 +24,7 @@ class NumberLottery(models.Model):
 
 class PrototypeNumberLottery(models.Model):
         
-    numberLottery   = models.CharField(max_length=6, unique=True)
+    numberLottery   = models.CharField(max_length=6, unique=True, db_index=True)
     matching        = models.ManyToManyField(NumberLottery, blank=True)
     isRead          = models.BooleanField(default=False)
     

@@ -31,9 +31,9 @@ function createCol(result)
     }
     else
     {
-        nameShop = "ไม่มีข้อมูล"
+        nameShop = shopSearchSelect.options[shopSearchSelect.selectedIndex].innerHTML
     }
-    shopEle.innerHTML =nameShop
+    shopEle.innerHTML = nameShop
     userAddEle = document.createElement(tag)
     userAddEle.innerHTML = result.username
     manageEle = document.createElement(tag)

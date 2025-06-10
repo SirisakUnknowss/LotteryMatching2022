@@ -1,12 +1,13 @@
 #Django
+from collections import defaultdict
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.db.models import Count
+from django.views.decorators.csrf import csrf_exempt
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework import filters
-from django.db.models import Count
-from django_filters.rest_framework import DjangoFilterBackend
-from django.views.decorators.csrf import csrf_exempt
 #Project
 from base.views import LottAPIGetView, LottListView
 from account.models import Account
@@ -14,12 +15,9 @@ from shop.models import Shop
 from numberLottery.models import NumberLottery, PrototypeNumberLottery
 from numberLottery.filter import NumberListFilter, NumberMatchingListFilter
 from numberLottery.form import DeleteNumberLotteryForm
-from numberLottery.serializers import SlzListNumber, SlzListNumberMatching, SlzListNumberEachShop
-from numberLottery.paginations import (
-    FiftyPerPagination, TwentyPerPagination
-)
+from numberLottery.serializers import SlzListNumber, SlzListNumberMatching
+from numberLottery.paginations import (FiftyPerPagination, TwentyPerPagination)
 
-# Create your views here.
 class ListNumberLotteryMatching(LottListView):
     serializer_class    = SlzListNumberMatching
     permission_classes  = [ AllowAny ]
@@ -28,22 +26,13 @@ class ListNumberLotteryMatching(LottListView):
     filter_class        = NumberMatchingListFilter
 
     def get_queryset(self):
-        matching_prototypes = PrototypeNumberLottery.objects.filter(matching__isnull=False, isRead=False)
-        matching_prototypes = matching_prototypes.values('numberLottery')
-        number_lotteries = matching_prototypes.annotate(count=Count('id')).filter(count__gt=1).values_list('numberLottery', flat=True)
-        queryset = PrototypeNumberLottery.objects.filter(numberLottery__in=number_lotteries)
-        return queryset
-    
-    # def get_queryset(self):
-    #     prototype = PrototypeNumberLottery.objects.filter(matching__isnull=False, isRead=False)
-    #     prototype = prototype.values('id', 'numberLottery')
-    #     prototype = prototype.annotate(count=Count('id')).filter(count__gt=1)
-    #     listNumber = []
-    #     queryset = None
-    #     for numberMatching in prototype:
-    #         listNumber.append(numberMatching['numberLottery'])
-    #     queryset = PrototypeNumberLottery.objects.filter(numberLottery__in=listNumber)
-    #     return queryset
+        return (
+            PrototypeNumberLottery.objects
+            .filter(isRead=False, matching__isnull=False)
+            .annotate(match_count=Count('matching'))
+            .filter(match_count__gt=1)  # มีคนกรอกซ้ำมากกว่า 1 คน
+            .prefetch_related('matching')  # preload matching เพื่อไม่ query ซ้ำตอน serialize
+        )
 
 class ListNumberLotteryMatchingPagination(LottListView):
     serializer_class    = SlzListNumberMatching
@@ -72,14 +61,12 @@ class ListNumberLotteryMatchingRead(LottListView):
     filter_class        = NumberMatchingListFilter
     
     def get_queryset(self):
-        prototype = PrototypeNumberLottery.objects.filter(matching__isnull=False, isRead=True)
-        prototype = prototype.values('id', 'numberLottery')
-        prototype = prototype.annotate(count=Count('id')).filter(count__gt=1)
-        listNumber = []
-        queryset = None
-        for numberMatching in prototype:
-            listNumber.append(numberMatching['numberLottery'])
-        queryset = PrototypeNumberLottery.objects.filter(numberLottery__in=listNumber)
+        duplicate_numbers = PrototypeNumberLottery.objects.filter(matching__isnull=False, isRead=True) \
+            .values('numberLottery').annotate(count=Count('numberLottery')).filter(count__gt=1) \
+            .values_list('numberLottery', flat=True)
+
+        queryset = PrototypeNumberLottery.objects.filter(numberLottery__in=duplicate_numbers)
+
         return queryset
 
 class ListNumberLottery(LottListView):
@@ -209,67 +196,21 @@ class ReadNumberLottery(LottAPIGetView):
             return Response(self.response)
 
 class ListMatchingEachShop(LottAPIGetView):
-    queryset            = NumberLottery.objects.all()
-    serializer_class    = SlzListNumberEachShop
-    permission_classes  = [ AllowAny ]
-    
+    permission_classes = [AllowAny]
+
     def get(self, request, *args, **kwargs):
-        matching_prototypes = PrototypeNumberLottery.objects.filter(matching__isnull=False).annotate(
-            count=Count('id')
-        ).filter(count__gt=1).values_list('numberLottery', flat=True)
-
-        queryset = NumberLottery.objects.filter(numberLottery__in=matching_prototypes).order_by('idShop').values(
-            'id',
-            'numberLottery',
-            'idShop'
-        )
-
-        result = self.groupNumberByShop(queryset)
-
+        duplicate_numbers = (
+            PrototypeNumberLottery.objects.filter(matching__isnull=False).values('numberLottery')
+            .annotate(num=Count('id')).filter(num__gt=1).values_list('numberLottery', flat=True))
+        numberlottery_qs = (NumberLottery.objects.filter(numberLottery__in=duplicate_numbers).select_related(None)
+            .values('idShop', 'numberLottery'))
+        shop_number_map = defaultdict(set)
+        for row in numberlottery_qs:
+            shop_number_map[row['idShop']].add(row['numberLottery'])
+        shops = Shop.objects.filter(pk__in=shop_number_map.keys())
+        shop_name_map = {str(shop.pk): shop.name for shop in shops}
+        result = [
+            {'name': shop_name_map[str(shop_id)], 'number': list(numbers)}
+            for shop_id, numbers in shop_number_map.items()
+        ]
         return Response({'result': result})
-    
-    def groupNumberByShop(self, querysets):
-        shops = list(Shop.objects.all())
-        groups = {str(shop.pk): [] for shop in shops}
-        for queryset in querysets:
-            try:
-                numberLottery = queryset['numberLottery']
-                idShop = str(queryset['idShop'])
-                if numberLottery not in groups[idShop]:
-                    groups[idShop].append(numberLottery)
-            except:
-                pass
-        result = []
-        for shop in shops:
-            numberList = groups[str(shop.pk)]
-            if numberList:
-                data = {'name': shop.name, 'number': numberList}
-                result.append(data)
-        return result
-        
-    # def get(self, request, *args, **kwargs):
-    #     prototype = PrototypeNumberLottery.objects.filter(matching__isnull=False).values('id', 'numberLottery').annotate(count=Count('id')).filter(count__gt=1)
-    #     listNumber = []
-    #     queryset = None
-    #     for numberMatching in prototype:
-    #         listNumber.append(numberMatching['numberLottery'])
-    #     queryset = NumberLottery.objects.filter(numberLottery__in=listNumber).values('id', 'numberLottery', 'idShop').order_by('idShop')
-    #     self.response["result"] = self.groupNumberByShop(queryset)
-    #     return Response(self.response)
-    
-    # def groupNumberByShop(self, querysets):
-    #     group = {}
-    #     l = []
-    #     shops = Shop.objects.all()
-    #     for shop in shops:
-    #         group[f"{shop.pk}"] = []
-    #     for queryset in querysets:
-    #         if not queryset['numberLottery'] in group[queryset['idShop']]:
-    #             group[queryset['idShop']].append(queryset['numberLottery'])
-    #     for shop in shops:
-    #         data = {}
-    #         if group[f"{shop.pk}"]:
-    #             data['name'] = shop.name
-    #             data['number'] = group[f"{shop.pk}"]
-    #             l.append(data)
-    #     return l

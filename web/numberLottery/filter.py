@@ -15,15 +15,15 @@ class CharIgnoreNoneFilter(filters.CharFilter):
         return qs.distinct() if self.distinct else qs
 
 class NumberListFilter(filters.FilterSet):
-    shop    = filters.ModelMultipleChoiceFilter(field_name="idShop", queryset=NumberLottery.objects.all(), to_field_name='idShop')
+    shop    = filters.CharFilter(field_name="idShop", lookup_expr='exact')
     number  = CharIgnoreNoneFilter(field_name="numberLottery", lookup_expr='icontains')
 
     class Meta:
         model = NumberLottery
-        fields = ['numberLottery']
+        fields = ['numberLottery', 'shop']
 
 class NumberMatchingListFilter(filters.FilterSet):
-    number  = CharIgnoreNoneFilter(field_name="numberLottery", lookup_expr='icontains')
+    numberLottery = CharIgnoreNoneFilter(lookup_expr='icontains')
 
     class Meta:
         model = PrototypeNumberLottery

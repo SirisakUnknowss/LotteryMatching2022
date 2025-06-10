@@ -38,21 +38,33 @@ def signin(request):
         return render(request, 'base/login.html', context)
 
 def homepage(request):
-    if not(request.user.is_authenticated):
+    if not request.user.is_authenticated:
         return redirect(reverse('signinpage'))
-    
+
     if not request.user.account.admin:
         return redirect(reverse('addlotterypage'))
-    lotteryCount = NumberLottery.objects.all().count
-    prototype = PrototypeNumberLottery.objects.filter(matching__isnull=False).values('id').annotate(count=Count('id')).filter(count__gt=1)
 
-    matchNumberCount = prototype.count
-    shopCount = Shop.objects.all().count
-    context = { 
-               'lotteryCount': lotteryCount,
-               'matchNumberCount': matchNumberCount,
-               'shopCount': shopCount,
-            }
+    # ✅ นับจำนวนทั้งหมด
+    lotteryCount = NumberLottery.objects.count()
+
+    # ✅ ดึงเฉพาะ Prototype ที่มี matching มากกว่า 1 (เลขที่มีคนกรอกซ้ำ)
+    prototype = (
+        PrototypeNumberLottery.objects
+        .filter(matching__isnull=False)
+        .annotate(count=Count('matching'))
+        .filter(count__gt=1)
+    )
+    matchNumberCount = prototype.count()
+
+    # ✅ นับร้านค้า
+    shopCount = Shop.objects.count()
+
+    context = {
+        'lotteryCount': lotteryCount,
+        'matchNumberCount': matchNumberCount,
+        'shopCount': shopCount,
+    }
+
     return render(request, 'base/index.html', context)
 
 def readpage(request):

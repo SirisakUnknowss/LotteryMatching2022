@@ -23,11 +23,8 @@
                         <div class="col mr-2">
                             <form id="formSendManyNumber" method="post" action="{% url 'addmanylotterypage' %}">
                                 {% csrf_token %}
-                                {% comment %} {% if user.account.admin %} {% endcomment %}
                                 <label for="shopSelect">กรุณาเลือกร้านค้า</label>
                                 <select class="form-control mb-3" id="shopAddManySelect" name="shopSelect"></select></br>
-                                {% comment %} <label for="exampleFormControlSelect1" class="text-danger">*สำหรับ admin เท่านั้น</label></br> {% endcomment %}
-                                {% comment %} {% endif %} {% endcomment %}
                                 <textarea class="form-control w-50" id="numberList" name="numberList" rows="5"></textarea>
                                 <input type="hidden" id="addManyNumber" name="number">
                                 <input type="hidden" id="statusAdd" name="statusAdd" value="many"></br>
@@ -78,12 +75,6 @@
                                 <ul class="pagination">
                                     <li class="paginate_button page-item previous disabled" id="dataTableHover_previous">
                                     </li>
-                                    {% comment %} <li class="paginate_button page-item active">
-                                        <a href="#" aria-controls="dataTableHover" data-dt-idx="1" tabindex="0" class="page-link">1</a>
-                                    </li>
-                                    <li class="paginate_button page-item ">
-                                        <a href="#" aria-controls="dataTableHover" data-dt-idx="2" tabindex="0" class="page-link">2</a>
-                                    </li> {% endcomment %}
                                     <li class="paginate_button page-item next disabled" id="dataTableHover_next">
                                     </li>
                                 </ul>
@@ -108,11 +99,8 @@
     <script src="{{ STATIC_URL }}js/addMany/checkInput.js"></script>
     <script src="{{ STATIC_URL }}js/addMany/loadShopData.js"></script>
     <script src="{{ STATIC_URL }}js/addMany/loadAllNumber.js"></script>
-    <script src="{{ STATIC_URL }}js/addMany/display.js"></script>
+    <script src="{{ STATIC_URL }}js/display.js"></script>
     <script src="{{ STATIC_URL }}js/createNextPage.js"></script>
-    
-    {% comment %} {% if user.account.admin %} {% endcomment %}
-    {% comment %} {% endif %} {% endcomment %}
 
   <!-- Page level custom scripts -->
   <script>

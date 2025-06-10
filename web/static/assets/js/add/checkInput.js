@@ -30,3 +30,13 @@ function checkTypeNumber()
         formSendNumber.submit()
     }
 }
+
+function waiting() {
+	$('*').css('cursor','wait');
+	$('*').css('pointer-events','none');
+}
+
+function stopWaiting() {
+	$('*').css('cursor','default');
+	$('*').css('pointer-events','auto');
+}
