@@ -23,8 +23,12 @@ class NumberListFilter(filters.FilterSet):
         fields = ['numberLottery', 'shop']
 
 class NumberMatchingListFilter(filters.FilterSet):
-    numberLottery = CharIgnoreNoneFilter(lookup_expr='icontains')
+    number = filters.CharFilter(method='filter_by_number')
+    numberLottery = filters.CharFilter(method='filter_by_number')
 
     class Meta:
         model = PrototypeNumberLottery
-        fields = ['numberLottery']
+        fields = []
+
+    def filter_by_number(self, queryset, name, value):
+        return queryset.filter(numberLottery__icontains=value)
