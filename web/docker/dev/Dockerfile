@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.9.4-buster
+FROM python:3.9.18-bullseye
 
 # Add build image as user
 RUN groupadd docker

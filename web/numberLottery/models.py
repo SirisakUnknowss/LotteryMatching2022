@@ -31,6 +31,10 @@ class PrototypeNumberLottery(models.Model):
     def __str__(self):
         return self.numberLottery
 
+    def matching_ids(self):
+        return ','.join(str(obj.id) for obj in self.matching.all())
+
+
     @staticmethod
     def createNumberRecord(number):
         PrototypeNumberLottery.objects.create(numberLottery=number)
